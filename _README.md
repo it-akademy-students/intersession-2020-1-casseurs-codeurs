@@ -2,7 +2,20 @@
     <img src="https://www.swapp.fr/img/logo.png" alt="SWAPP logo" title="SWAPP" align="right" height="60" />
 </a>
 
-## "Open Source Security Scanner for web apps"
+## "SWAPP : Open Source Security Scanner for web apps"
+
+----------------
+
+## Description :
+
+
+Application permettant de détecter les erreurs et failles de sécurité dans le code de projets déposés sur GitHub et codés en PHP 7.0 minimum.
+
+Version : 1.0.0  
+Date : 2020-07-27  
+Responsables : [Team](TEAM.md)  
+
+----------------
 
 ![Version flag](https://img.shields.io/badge/Version-2.0.0-green?style=flat-square)
 ![Date flag](https://img.shields.io/badge/Date-27%2F07%2F2020-blue?style=flat-square)

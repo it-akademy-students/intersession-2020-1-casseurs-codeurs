@@ -33,13 +33,13 @@
 ## Issues tracker :
 
 Tout d'abord: **Ne signalez PAS les vulnérabilités de sécurité dans les problèmes publics!**  
-Veuillez le divulguer de manière responsable en informant [l'équipe SWAPP](mailto: team@.com? Subject = Security).  
+Veuillez le divulguer de manière responsable en informant [l'équipe SWAPP](<mailto:team@.com?subject=Security>).  
 Nous évaluerons le problème dans les meilleurs délais et vous donnerons une estimation du moment où nous aurons un correctif et une version disponibles pour une éventuelle divulgation publique.
 
 L'outil issue tracker est le moyen à priviligier pour les [bug reports](#bugs),
 [features requests](#features) et [pull requests](#pull-requests), mais veillez à observer les restrictions suivantes :
 
-* Veuillez **ne pas** utiliser l'outil issue tracker pour les demandes d'assistance personnelle. Adressez-vous plutôt à [l'équipe SWAPP](mailto: team@.com? Subject = Support).
+* Veuillez **ne pas** utiliser l'outil issue tracker pour les demandes d'assistance personnelle. Adressez-vous plutôt à [l'équipe SWAPP](<mailto:team@.com?subject=Support>).
 
 * Veuillez également **ne pas** vous éloigner du sujet ou troller les issues. Gardez la discussion sur le sujet et veillez à respecter les opinions des autres.
 
@@ -172,10 +172,11 @@ Optionnellement, vous pouvez nous aider avec cette marche à suivre. Mais ne vou
    - Commit corrections de bugs préfixés avec `fix: ...` or `fix(scope): ...`
    - Commit nouvelles fonctionnalités préfixés avec `feat: ...` or `feat(scope): ...`
    - Commit changements dans `package.json`, `.gitignore` et autres fichiers méta préfixés avec `chore(filename without ext): ...`
-   - Commit modifications des fichiers README ou commentaires préfixés avec `docs: ...`
+   - Commit modifications des fichiers README ou commentaires préfixés avec `docs: filename without ext`
    - Commit changements de style préfixés avec `style: standard`
 
 ### Explain your preferred style for code, if you have any.
+
 
 **IMPORTANT**: En soumettant un correctif, vous acceptez de concéder une licence pour votre travail sous la
 même licence que celle utilisée par le projet.
