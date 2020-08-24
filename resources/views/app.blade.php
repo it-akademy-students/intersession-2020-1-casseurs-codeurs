@@ -15,7 +15,10 @@
         <!-- Icons -->
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-        
+
+        <!-- favicon -->
+        <link rel="shortcut icon" type="image/png" href="{{ mix('img/swapp_image_logo.png') }}" sizes="16x16">
+
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     </head>

@@ -25,6 +25,8 @@
                               <input
                                 id="repository"
                                 type="url"
+                                pattern="https://github.com/.+"
+                                title="The URL must start with https://github.com/"
                                 class="form__input form__input--green"
                                 placeholder="https://github.com/example"
                               />
@@ -43,8 +45,6 @@
             </v-row>
           </v-container>
 
-          <!-- <v-spacer class="hidden-md-and-down"></v-spacer> -->
-          
           <!-- separator between welcome and donate -->
           <v-container fluid class="ma-0 pa-0">
             <v-row justify="center">
@@ -53,8 +53,6 @@
               </v-col>
             </v-row>
           </v-container>
-
-          <!-- <v-spacer class="hidden-md-and-down"></v-spacer> -->
 
           <!-- donate section -->
           <v-container fluid class="px-5 mt-5 hidden-md-and-down">
