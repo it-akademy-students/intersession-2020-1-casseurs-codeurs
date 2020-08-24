@@ -1,0 +1,44 @@
+// hack clearfix pour les float elements pour prévenir les "sauts"
+@mixin clearfix {
+    &::after {
+        content:'';
+        display: table;
+        clear: both;
+    }
+}
+
+// pour centrer absolument un élément dans son parent quand celui-ci est en position: relative
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// pour la position absolue 0 0 
+@mixin absTopLeft0 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+// MEDIA QUERY MANAGER
+@mixin responsive($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) { @content }; // 600px
+    }
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content }; // 900px
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) { @content }; // 1200px
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content }; // 1800px
+    }
+}
+
+// pour appeler le mixin dans un fichier :
+// @include responsive(tab-port) {
+//     top: 4rem;
+//     right: 4rem;
+// }
