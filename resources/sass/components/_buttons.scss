@@ -1,0 +1,107 @@
+.btn {
+    &,
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        min-width: 15ch;
+        display: inline-block;
+        border-radius: 5px;
+        transition: all .2s;
+        position: relative;
+        font-size: $default-font-size;
+        cursor: pointer;
+        box-shadow: 0 0.5rem 1rem rgba($color-black,.2);
+    }
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba($color-black,.2);
+
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+    &:active,
+    &:focus  {
+        outline: none;
+        transform: translateY(-1px);
+        box-shadow: 0 .5rem 1rem rgba($color-black,.2);
+    }
+    &::after {
+        content:'';
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        @include absTopLeft0;
+        z-index: -1;
+        transition: all .4s;
+    }
+    &--green {
+        border: 1px solid $color-secondary;
+        color: $color-secondary;
+        &::after {
+            border-color: $color-tertiary;
+        }
+        &:hover {
+            color: $color-tertiary;
+            border-color: $color-tertiary;
+        }
+    }
+    &--violet {
+        border: 1px solid $color-tertiary-light;
+        color: $color-tertiary-light;
+        background-color: rgba($color-primary-light, .35);
+        &::after {
+            border-color: $color-tertiary;
+        }
+        &:hover {
+            color: $color-tertiary;
+            border-color: $color-tertiary;
+            background-color: rgba($color-primary-light, .45);
+        }
+    }
+
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+      display: inline-block;
+      text-decoration: none;
+      padding: 3px;
+      transition: all 0.2s;
+    }
+    &:hover {
+      box-shadow: 0 1rem 2rem rgba($color-primary, 0.15);
+      transform: translateY(-2px);
+    }
+    &:active {
+      box-shadow: 0 0.5rem 1rem rgba($color-primary, 0.15);
+      transform: translateY(0);
+    }
+    &--green {
+        color: $color-secondary !important;
+        &:hover {
+            color: $color-tertiary !important;
+        }
+    }
+    &--violet {
+        color: $color-tertiary !important;
+        &:hover {
+            color: $color-tertiary-light !important;
+        }
+    }
+    &--form {
+
+        &--violet {
+            color: $color-grey-light !important;
+            font-size: 1.2rem;
+            &:hover {
+                color: $color-tertiary-light !important;
+            }
+        }
+    }
+}
