@@ -15,11 +15,6 @@ const Route = new VueRouter({
             name: "home",
             component: Home
         },
-        {
-            path: "/contact",
-            name: "contact",
-            component: Contact
-        },
         { 
             path: "*", 
             name: "404",
