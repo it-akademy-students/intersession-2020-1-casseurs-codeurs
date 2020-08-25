@@ -4,13 +4,13 @@
         max-width="600px"
         v-if="showContact"
         adaptative
-        persistent
     >
         <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
     </template>-->
 
-        <v-card color="colorPrimaryUltraLight" class="pa-3">
+        <v-card color="colorPrimaryUltraLight" class="pa-3 card">
+            <p class="top-right" @click="closeModal">&#215;</p>
             <v-card-title>
                 <v-card-text class="headline text-center colorSecondary--text"
                     >Any question? Contact us!
@@ -79,3 +79,19 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    .card {
+        position: relative;
+    }
+    .top-right {
+        position:absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 22px;
+        color: white;
+        font-weight: bold;
+        cursor:pointer;
+        padding: 5px;
+    }
+</style>
