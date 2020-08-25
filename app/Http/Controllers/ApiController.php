@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessSecurity;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -23,22 +24,18 @@ class ApiController extends Controller
     }
 
     /**
-     * @param $path
-     * @param $content
-     * @param string $baseFolder
-     * Permet de créer l'architecture des sous dossier si nécéssaire
-     * Créer le fichier
+     * @return false|string
+     * Renvoie la date à laquelle la limite sera remis à 0
      */
-    private function addFile($path, $content, $baseFolder = 'Scan/'){
-        $folders = explode("/", $path);
-        $quantity = sizeof($folders)-1;
-        if ($quantity != 0){
-            $folderPath = str_replace(end($folders),"", $path);
-            if (!file_exists($baseFolder.$folderPath)){
-                mkdir($baseFolder.$folderPath, 0644, true);
-            }
-        }
-        file_put_contents($baseFolder.$path, $content);
+    private function getRateLimitInfo(){
+        $curl = curl_init("https://api.github.com/rate_limit");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_USERAGENT,'User-Agent: PHP');
+        $content = curl_exec($curl);
+        curl_close($curl);
+        // Ajouter 2 heure pour obtenir heure fr:
+        return date('d-m-Y H:i:s', json_decode($content)->rate->reset +7200);
     }
 
     /**
@@ -53,21 +50,21 @@ class ApiController extends Controller
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
             //Url API v3 Github pour lister l'architecture d'un repos:
             $listingUrl = $baseUrl."git/trees/master?recursive=1";
-            $content = $this->getGithubContent($listingUrl);
+            $list = $this->getGithubContent($listingUrl);
             // Cas d'erreur: retourner le message d'erreur de Github
-            if (isset($content->message)){
-                strpos($content->message, 'API rate limit exceeded') !== false ? $code = 403 : $code = 404;
-                return ['type' => 'Error', 'code' => $code, 'message' => $content->message, 'url' => $baseUrl];
+            if (isset($list->message)){
+                strpos($list->message, 'API rate limit exceeded') !== false ? ($code = 403 AND $reset = $this->getRateLimitInfo()) : ($code = 404 AND $reset = null);
+                return ['type' => 'Error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
-             else{
-                 //On récupère les chemin des fichiers php du repos:
+            else{
+                //        On récupère les chemin des fichiers php du repos:
                 $paths = [];
-                foreach ($content->tree as $tree){
+                foreach ($list->tree as $tree){
                     if (substr($tree->path, -4) == '.php'){
                         $paths[] = $tree->path;
                     }
                 }
-                $baseContentUrl = $baseUrl . "contents/";
+                $baseContentUrl = $this->baseUrl . "contents/";
                 foreach ($paths as $path){
                     //$baseContentUrl . path pour récupérer le contenu du fichier:
                     $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
