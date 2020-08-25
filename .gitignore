@@ -17,4 +17,4 @@ Dockerfile
 /mysql
 cmd.md
 .vscode/
- public/mix-manifest.json
+public/mix-manifest.json
