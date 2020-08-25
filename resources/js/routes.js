@@ -1,10 +1,11 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import Home from "@/js/pages/Home"
-import Contact from "@/js/pages/Contact"
+import Home from "@/js/pages/Home";
+import Contact from "@/js/pages/Contact";
+import PageNotFound from "@/js/pages/PageNotFound"
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const Route = new VueRouter({
     mode: "history",
@@ -19,8 +20,12 @@ const Route = new VueRouter({
             name: "contact",
             component: Contact
         },
-
+        { 
+            path: "*", 
+            name: "404",
+            component: PageNotFound 
+        }
     ]
-})
+});
 
-export default Route
+export default Route;
