@@ -13,6 +13,8 @@ import store from "./stores/store"
 
 Vue.use(VueResource)
 
+Vue.http.options.root = "https://localhost:8000/api";
+
 const app = new Vue({
     el: "#app",
     vuetify,

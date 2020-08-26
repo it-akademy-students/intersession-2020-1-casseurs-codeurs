@@ -41,13 +41,16 @@
 import store from "../stores/store";
 export default {
   name: "ContactForm",
-  data: () => ({
-    dialog: true,
-    message: "",
-    email: "",
-    firstname: "",
-    lastname: ""
-  }),
+  data() {
+    return {
+      dialog: true,
+      message: "",
+      email: "",
+      firstname: "",
+      lastname: "",
+      isSubmitSucced: false
+    };
+  },
   computed: {
     showContact() {
       return this.$store.getters.isShowContact;
@@ -60,18 +63,16 @@ export default {
     updateMessage: e => {
       this.$store.commit("updateContact", e.target.value);
     },
-    submitForm: () => {
+    submitForm () {
       const postData = {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
         message: this.message
       };
-      this.$http
-        .post("https://jsonplaceholder.typicode.com/posts", postData)
-        .then(res => {
-          console.log(res.body);
-        });
+      this.$http.post("contact", postData).then((res) => {
+        this.isSubmitSucced = true
+      });
     }
   }
 };
