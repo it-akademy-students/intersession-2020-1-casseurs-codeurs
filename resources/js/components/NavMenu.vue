@@ -40,15 +40,15 @@
         <div
           slot-scope="{ hover }"
           :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    pl-4
-                    contact
-                    `                   
-                "
+            `${
+                hover
+                  ? 'colorTertiary--text'
+                  : 'colorSecondary--text'
+            }
+            pl-4
+            contact
+              `                   
+          "
           @click="showModalContact"
         >Contact</div>
       </v-hover>
@@ -56,26 +56,19 @@
         <div
           slot-scope="{ hover }"
           :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    pl-4
-                    mt-4`
-                "
+            `${
+                hover
+                  ? 'colorTertiary--text'
+                  : 'colorSecondary--text'
+            }
+            pl-4
+            mt-4`
+          "
         >
           <a
             target="_blank"
             href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
-            :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    mt-4`
-                "
+             :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'} mt-4`"
           >Github</a>
         </div>
       </v-hover>
@@ -87,12 +80,12 @@
           @click.stop="drawer = !drawer"
           slot-scope="{ hover }"
           :class="
-                        `${
-                            hover
-                                ? 'colorTertiary--text hidden-md-and-up'
-                                : 'colorSecondary--text hidden-md-and-up'
-                        }`
-                    "
+            `${
+                hover
+                  ? 'colorTertiary--text hidden-md-and-up'
+                  : 'colorSecondary--text hidden-md-and-up'
+            }`
+          "
         ></v-app-bar-nav-icon>
       </v-hover>
       <v-spacer class="hidden-md-and-up"></v-spacer>
@@ -120,12 +113,12 @@
               <v-list-item-content
                 slot-scope="{ hover }"
                 :class="
-                                    `${
-                                        hover
-                                            ? 'colorTertiary--text'
-                                            : 'colorSecondary--text '
-                                    }`
-                                "
+                  `${
+                      hover
+                        ? 'colorTertiary--text'
+                        : 'colorSecondary--text '
+                  }`
+                "
               >
                 <v-list-item-title v-text="navItems[1].title"></v-list-item-title>
               </v-list-item-content>
@@ -137,12 +130,12 @@
               <v-list-item-content
                 slot-scope="{ hover }"
                 :class="
-                                    `${
-                                        hover
-                                            ? 'colorTertiary--text'
-                                            : 'colorSecondary--text '
-                                    }`
-                                "
+                  `${
+                      hover
+                        ? 'colorTertiary--text'
+                        : 'colorSecondary--text '
+                  }`
+                "
               >
                 <v-list-item-title v-text="navItems[0].title"></v-list-item-title>
               </v-list-item-content>
@@ -165,12 +158,12 @@
                         size="20"
                         slot-scope="{ hover }"
                         :class="
-                                                    `${
-                                                        hover
-                                                            ? 'colorTertiary--text'
-                                                            : 'colorSecondary--text '
-                                                    }`
-                                                "
+                          `${
+                              hover
+                                ? 'colorTertiary--text'
+                                : 'colorSecondary--text '
+                          }`
+                        "
                       >mdi-account</v-icon>
                     </v-hover>
                   </v-btn>
