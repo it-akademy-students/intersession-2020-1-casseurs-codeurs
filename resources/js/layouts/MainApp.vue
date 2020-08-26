@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <v-container fluid class="py-0">
         <v-card flat class="pa-3" color="colorPrimaryLight">
             <v-row align-content="space-around" justify="center">
                 <v-col cols="12" lg="7">
@@ -19,11 +19,11 @@
                 </v-col>
                 <v-col cols="12" lg="4">
                     <v-card color="colorPrimaryUltraLight" class="pa-5 mt-5">
-                        <sign-in-on />
-                        <!-- <login-form /> -->
-                        <!-- <registrar-form /> -->
-                        <!-- <user-profile /> -->
-                        <!-- <logged /> -->
+                        <sign-in-on v-show="this.$store.getters.isShowSignInOn" />
+                        <login-form v-show="this.$store.getters.isShowLoginForm" />
+                        <register-form  v-show="this.$store.getters.isShowRegisterForm" />
+                        <user-profile v-show="this.$store.getters.isShowUserProfile" />
+                        <logged v-show="this.$store.getters.isShowLoggedIn" />
                     </v-card>
                 </v-col>
             </v-row>
@@ -35,7 +35,7 @@
 import MainWelcomeDonate from "@/js/components/MainWelcomeDonate";
 import SignInOn from "@/js/components/SignInOn";
 import LoginForm from "@/js/components/LoginForm";
-import RegistrarForm from "@/js/components/RegistrarForm";
+import RegisterForm from "@/js/components/RegisterForm";
 import UserProfile from "@/js/components/UserProfile";
 import Logged from "@/js/components/Logged";
 import Contact from "@/js/pages/Contact";
@@ -46,7 +46,7 @@ export default {
         MainWelcomeDonate,
         SignInOn,
         LoginForm,
-        RegistrarForm,
+        RegisterForm,
         UserProfile,
         Logged,
         Contact
