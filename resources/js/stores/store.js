@@ -1,23 +1,16 @@
 import Vue from "vue"
-import Vuex, { createLogger } from "vuex"
+import Vuex from "vuex"
 
 import { auth } from './auth.module';
 
 Vue.use(Vuex)
 
-const contact = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    message: ""
-}
 const store = new Vuex.Store({
     modules: {
         auth
     },
     state: {
         showModalContact: false,
-        contact,
         showLogin: false,
         showRegister: false,
         showSign: true,
@@ -53,19 +46,6 @@ const store = new Vuex.Store({
         },
         hideContact: state => {
             state.showModalContact = false
-        },
-        updateContact : (state, message) => {
-            state.contact.message = message
-            console.log({contact})
-        }
-    },
-    actions: {},
-    getters: {
-        isShowContact: state => {
-            return state.showModalContact
-        },
-        contact: state => {
-            return state.contact
         },
         SHOW_LOGIN_FORM: (state, val) => {
             state.showLogin = val
