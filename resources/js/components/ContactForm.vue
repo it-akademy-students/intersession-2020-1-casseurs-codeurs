@@ -71,6 +71,7 @@ export default {
         message: this.message
       };
       this.$http.post("contact", postData).then((res) => {
+        console.log(res)
         this.isSubmitSucced = true
       });
     }
