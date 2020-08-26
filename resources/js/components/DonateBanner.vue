@@ -1,8 +1,8 @@
 <template>
   <v-banner class="hidden-lg-and-up" elevation="2" outlined sticky app>
-    <span>Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos. Participez vous aussi au maintiens de ce projet ! Faites un don pour nous permettre de garantir ce service.</span>
+    <span>Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos. Participate in the maintenance of this project! Make a donation to allow us to guarantee this service.</span>
     <template v-slot:actions>
-      <v-btn text class="btn-text btn-text--green" to="/" link>Je fais un don</v-btn>
+      <v-btn text class="btn-text btn-text--green" to="/" link>I support !</v-btn>
     </template>
   </v-banner>
 </template>   

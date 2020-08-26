@@ -42,14 +42,14 @@ export default {
       singleExpand: true,
       headers: [
         {
-          text: "Répertoire",
+          text: "Repository",
           align: "start",
           sortable: false,
           value: "name",
           class: "colorGreyDark colorSecondary--text",
         },
         {
-          text: "Problèmes",
+          text: "Problems",
           value: "problem",
           class: "colorGreyDark colorSecondary--text",
         },
@@ -66,12 +66,12 @@ export default {
       ],
       headersExpanded: [
         {
-          text: "Nom du fichier",
+          text: "File name",
           value: "file",
           class: "colorGreyDark colorTertiaryLight--text",
         },
         {
-          text: "Problème",
+          text: "Problem",
           value: "problem",
           class: "colorGreyDark colorTertiaryLight--text",
         },

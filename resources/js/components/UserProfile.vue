@@ -1,12 +1,22 @@
 <template>
-  <v-card flat color="colorPrimaryUltraLight">
+  <v-card flat color="colorPrimaryUltraLight" id="user-profile">
     <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary">Félicitations! Votre compte est modifié !</span>
+      <span color="colorPrimary">Congratulations! Your profile has been successfully upgraded !</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
-      <h2 class="pa-4 text-center">Vos informations personnelles</h2>
+      <v-row>
+        <v-col cols="11">
+          <h2
+            class="pa-2 text-center"
+          >Your Profile:</h2>
+        </v-col>
+        <v-col cols="1">
+          <v-icon @click="initShowForm">mdi-close</v-icon>
+        </v-col>
+      </v-row>
     </v-col>
+
     <v-form ref="form" @submit.prevent="submit">
       <v-container fluid>
         <v-row>
@@ -15,7 +25,7 @@
               v-model="form.username"
               :rules="rules.username"
               color="colorTertiaryLight"
-              label="Nom d'utilisateur"
+              label="Username"
               required
             ></v-text-field>
           </v-col>
@@ -35,7 +45,7 @@
               :rules="rules.password"
               :type="show1 ? 'text' : 'password'"
               name="input-10-1"
-              label="Mot de passe"
+              label="Password"
               hint="Minimum 8 characters"
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
@@ -47,7 +57,7 @@
               :items="jobs"
               :rules="rules.job"
               color="colorTertiaryLight"
-              label="Votre Job"
+              label="Your Job"
               required
             ></v-select>
           </v-col>
@@ -57,7 +67,7 @@
         <v-container fluid>
           <v-row>
             <v-col xs="6" md="auto">
-              <v-btn text @click="resetForm" class="colorDanger--text">Supprimer mon compte</v-btn>
+              <v-btn text @click="resetForm" class="colorDanger--text">Delete Account</v-btn>
             </v-col>
             <v-col xs="6" md="auto">
               <v-btn
@@ -65,10 +75,10 @@
                 text
                 class="colorWarning--text"
                 type="submit"
-              >Modifier mon compte</v-btn>
+              >Edit Profile</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
-              <v-btn text @click="resetForm" class="colorTertiaryLight--text">Me déconnecter</v-btn>
+              <v-btn text @click="handleLogout" class="colorTertiaryLight--text">Logout</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -78,6 +88,8 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex'
+
 export default {
   name: "UserProfile",
   data() {
@@ -127,6 +139,13 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      "toggleRegisterForm",
+      "toggleLoginForm",
+      "toggleSignInOn",
+      "toggleUserProfile",
+      "toggleLoggedIn",
+    ]),
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
@@ -134,6 +153,19 @@ export default {
     submit() {
       this.snackbar = true;
       this.resetForm();
+    },
+    initShowForm() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", true),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false)
+      );
+    },
+    handleLogout() {
+      this.initShowForm();
+      return this.$router.push('/')
     },
   },
 };
