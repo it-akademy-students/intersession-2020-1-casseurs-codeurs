@@ -12,3 +12,4 @@
 */
 
 Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
+//Route::get('github/{username}/{repos}', 'ApiController@github');
