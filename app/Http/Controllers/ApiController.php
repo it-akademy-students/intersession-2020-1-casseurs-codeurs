@@ -20,7 +20,7 @@ class ApiController extends Controller
         $content = curl_exec($curl);
         curl_close($curl);
 
-        return json_decode($content);
+        return $content;
     }
 
     /**
@@ -57,19 +57,7 @@ class ApiController extends Controller
                 return ['type' => 'Error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
             else{
-                //        On récupère les chemin des fichiers php du repos:
-                $paths = [];
-                foreach ($list->tree as $tree){
-                    if (substr($tree->path, -4) == '.php'){
-                        $paths[] = $tree->path;
-                    }
-                }
-                $baseContentUrl = $this->baseUrl . "contents/";
-                foreach ($paths as $path){
-                    //$baseContentUrl . path pour récupérer le contenu du fichier:
-                    $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
-                    $this->addFile($path, $content);
-                }
+                $this->dispatch(new ProcessSecurity($list, $baseUrl));
                 header('Content-Type: application/json');
                 return ['type' => 'Success', 200];
             }
