@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('github/{username}/{repos}', 'ApiController@github');
+
+Route::post('contact', 'ContactController@insert');
