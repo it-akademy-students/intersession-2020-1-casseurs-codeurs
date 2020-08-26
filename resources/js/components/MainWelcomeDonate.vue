@@ -13,7 +13,7 @@
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
                       <div class="my-3">
-                        <h3 class="display-1">Je scanne mon repo</h3>
+                        <h3 class="display-1">I scan my repository</h3>
                       </div>
                     </v-col>
                     <!-- form -->
@@ -30,10 +30,10 @@
                                 class="form__input form__input--green"
                                 placeholder="https://github.com/example"
                               />
-                              <label for="repository" class="form__label">Entrez l'url de votre repo</label>
+                              <label for="repository" class="form__label">Enter the URL of your repo</label>
                             </v-col>
                             <v-col cols="12" lg="2">
-                              <button class="btn btn--green">Envoyer</button>
+                              <button class="btn btn--green">Submit</button>
                             </v-col>
                           </v-row>
                         </v-container>
@@ -68,10 +68,10 @@
                           <v-col cols="12" lg="10">
                             <h3
                               class="title my-5 mr-5"
-                            >Participez vous aussi au maintiens de ce projet !</h3>
+                            >Participate in the maintenance of this project! Make a donation to allow us to guarantee this service.</h3>
                           </v-col>
                           <v-col cols="12" lg="2">
-                            <button class="btn btn--green">Je soutiens !</button>
+                            <button class="btn btn--green">I support!</button>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -91,10 +91,10 @@
 export default {
   name: "MainWelcome",
   data: () => ({
-    welcome: "Bienvenue sur SWAPP !",
-    donate: "Soutenez le projet",
+    welcome: "Welcome on SWAPP!",
+    donate: "Support the project",
     donateText:
-      "SWAPP est un projet open source permettant d’automatiser la détection de failles de sécurité et/ou de bug dans le code.",
+      "SWAPP is an open source project that automates the detection of security vulnerabilities and / or code bugs.",
     lorem:
       "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
   }),

@@ -10,58 +10,45 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item v-for="(item, i) in AccountItems" :key="i" :to="item.link" link>
-            <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>
-                {{
-                item.title
-                }}
-              </v-list-item-title>
+          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" to="#user-profile" @click.stop="drawer = !drawer" @click="showProfile">
+            <v-list-item-content class="colorTertiaryLight--text" >
+              <v-list-item-title>Profile</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showLoginForm" to="/#login-form" @click.stop="drawer = !drawer">
+            <v-list-item-content class="colorTertiaryLight--text" >
+              <v-list-item-title>Sign in</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showRegisterForm" to="/#register-form" @click.stop="drawer = !drawer">
+            <v-list-item-content class="colorTertiaryLight--text" >
+              <v-list-item-title>Sign up</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" @click="handleLogout" to="/" @click.stop="drawer = !drawer">
+            <v-list-item-content class="colorTertiaryLight--text" >
+              <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
       </v-list>
-      <!-- 
-            <v-list>
-                <v-list-item-group v-model="navItems">
-                    <v-list-item
-                        v-for="(item, index) in navItems"
-                        :key="index"
-                        :href="item.link"
-                        link
-                    >
-                        <v-hover>
-                            <v-list-item-content
-                                slot-scope="{ hover }"
-                                :class="
-                                    `${
-                                        hover
-                                            ? 'colorTertiary--text'
-                                            : 'colorSecondary--text'
-                                    }`
-                                "
-                            >
-                                <v-list-item-title
-                                    v-text="item.title"
-                                ></v-list-item-title>
-                            </v-list-item-content>
-                        </v-hover>
-                    </v-list-item>
-                </v-list-item-group>
-      </v-list>-->
+
       <v-hover>
         <div
           slot-scope="{ hover }"
           :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    pl-4
-                    contact
-                    `                   
-                "
+            `${
+                hover
+                  ? 'colorTertiary--text'
+                  : 'colorSecondary--text'
+            }
+            pl-4
+            contact
+              `                   
+          "
           @click="showModalContact"
         >Contact</div>
       </v-hover>
@@ -69,26 +56,19 @@
         <div
           slot-scope="{ hover }"
           :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    pl-4
-                    mt-4`
-                "
+            `${
+                hover
+                  ? 'colorTertiary--text'
+                  : 'colorSecondary--text'
+            }
+            pl-4
+            mt-4`
+          "
         >
           <a
             target="_blank"
             href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
-             :class="
-                    `${
-                        hover
-                            ? 'colorTertiary--text'
-                            : 'colorSecondary--text'
-                    }
-                    mt-4`
-                "
+             :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'} mt-4`"
           >Github</a>
         </div>
       </v-hover>
@@ -100,12 +80,12 @@
           @click.stop="drawer = !drawer"
           slot-scope="{ hover }"
           :class="
-                        `${
-                            hover
-                                ? 'colorTertiary--text hidden-md-and-up'
-                                : 'colorSecondary--text hidden-md-and-up'
-                        }`
-                    "
+            `${
+                hover
+                  ? 'colorTertiary--text hidden-md-and-up'
+                  : 'colorSecondary--text hidden-md-and-up'
+            }`
+          "
         ></v-app-bar-nav-icon>
       </v-hover>
       <v-spacer class="hidden-md-and-up"></v-spacer>
@@ -128,43 +108,34 @@
 
       <v-list class="hidden-sm-and-down colorPrimary">
         <v-list-item-group class="d-flex" v-model="navItems">
-          <!-- <v-list-item v-for="(item, index) in navItems" :key="index" :href="item.link" link>
-            <v-hover>
-              <v-list-item-content
-                slot-scope="{ hover }"
-                :class="`${hover? 'colorTertiary--text' : 'colorSecondary--text '}`"
-              >
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-              </v-list-item-content>
-            </v-hover>
-          </v-list-item>-->
           <v-list-item v-on:click="showModalContact">
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
                 :class="
-                                    `${
-                                        hover
-                                            ? 'colorTertiary--text'
-                                            : 'colorSecondary--text '
-                                    }`
-                                "
+                  `${
+                      hover
+                        ? 'colorTertiary--text'
+                        : 'colorSecondary--text '
+                  }`
+                "
               >
                 <v-list-item-title v-text="navItems[1].title"></v-list-item-title>
               </v-list-item-content>
             </v-hover>
           </v-list-item>
+
           <v-list-item :href="navItems[0].link" link target="_blank">
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
                 :class="
-                                    `${
-                                        hover
-                                            ? 'colorTertiary--text'
-                                            : 'colorSecondary--text '
-                                    }`
-                                "
+                  `${
+                      hover
+                        ? 'colorTertiary--text'
+                        : 'colorSecondary--text '
+                  }`
+                "
               >
                 <v-list-item-title v-text="navItems[0].title"></v-list-item-title>
               </v-list-item-content>
@@ -187,35 +158,69 @@
                         size="20"
                         slot-scope="{ hover }"
                         :class="
-                                                    `${
-                                                        hover
-                                                            ? 'colorTertiary--text'
-                                                            : 'colorSecondary--text '
-                                                    }`
-                                                "
+                          `${
+                              hover
+                                ? 'colorTertiary--text'
+                                : 'colorSecondary--text '
+                          }`
+                        "
                       >mdi-account</v-icon>
                     </v-hover>
                   </v-btn>
                 </template>
                 <v-list class="py-0 colorPrimary">
-                  <v-list-item v-for="(item, i) in AccountItems" :key="i" :to="item.link" link>
+                  <v-list-item link v-if="this.$store.state.auth.status.loggedIn">
                     <v-hover>
                       <v-list-item-content
                         class="pr-3 colorPrimary"
                         slot-scope="{ hover }"
                         :class="
-                                                    `${
-                                                        hover
-                                                            ? 'colorTertiary--text'
-                                                            : 'colorSecondary--text '
-                                                    }`
-                                                "
+                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        @click="showProfile"
                       >
-                        <v-list-item-title>
-                          {{
-                          item.title
-                          }}
-                        </v-list-item-title>
+                        <v-list-item-title>Profile</v-list-item-title>
+                      </v-list-item-content>
+                    </v-hover>
+                  </v-list-item>
+
+                  <v-list-item link v-if="!this.$store.state.auth.status.loggedIn">
+                    <v-hover>
+                      <v-list-item-content
+                        class="pr-3 colorPrimary"
+                        slot-scope="{ hover }"
+                        :class="
+                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        @click="showLoginForm"
+                      >
+                        <v-list-item-title>Sign in</v-list-item-title>
+                      </v-list-item-content>
+                    </v-hover>
+                  </v-list-item>
+
+                  <v-list-item link v-if="!this.$store.state.auth.status.loggedIn">
+                    <v-hover>
+                      <v-list-item-content
+                        class="pr-3 colorPrimary"
+                        slot-scope="{ hover }"
+                        :class="
+                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        @click="showRegisterForm"
+                      >
+                        <v-list-item-title>Sign up</v-list-item-title>
+                      </v-list-item-content>
+                    </v-hover>
+                  </v-list-item>
+
+                  <v-list-item link v-if="this.$store.state.auth.status.loggedIn">
+                    <v-hover>
+                      <v-list-item-content
+                        class="pr-3 colorPrimary"
+                        slot-scope="{ hover }"
+                        :class="
+                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        @click="handleLogout"
+                      >
+                        <v-list-item-title>Logout</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -232,8 +237,11 @@
 <script>
 import NavMenu from "@/js/components/NavMenu";
 import store from "../stores/store";
+import { mapGetters, mapState, mapActions } from "vuex";
+
 export default {
   name: "NavMenu",
+  store: store,
   data: () => ({
     drawer: false,
     appName: "SWAPP ",
@@ -242,37 +250,77 @@ export default {
       {
         title: "GitHub",
         link:
-          "https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
+          "https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs",
       },
       {
-        title: "Contact"
+        title: "Contact",
         // link: "/contact"
-      }
+      },
     ],
-    AccountItems: [
-      {
-        title: "Profile",
-        link: "/"
-      },
-      {
-        title: "Sign up",
-        link: "/"
-      },
-      {
-        title: "Login",
-        link: "/"
-      },
-      {
-        title: "Logout",
-        link: "/"
-      }
-    ]
   }),
   methods: {
+    ...mapActions([
+      "toggleRegisterForm",
+      "toggleLoginForm",
+      "toggleSignInOn",
+      "toggleUserProfile",
+      "toggleLoggedIn",
+    ]),
     showModalContact: () => {
       store.commit("showContact");
-    }
-  }
+    },
+    showLoginForm() {
+      return (
+        this.$store.dispatch("toggleLoginForm", true),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false)
+      );
+      // return this.$router.push('/login')
+    },
+    showRegisterForm() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", true),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false)
+      );
+      // return this.$router.push('/register')
+    },
+    showProfile() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", true)
+      );
+    },
+    showLoggedIn() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", true),
+        this.$store.dispatch("toggleUserProfile", false)
+      );
+    },
+    initShowForm() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", true),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false)
+      );
+    },
+    handleLogout() {
+      return this.initShowForm();
+      // return this.$router.push("/login");
+    },
+  },
 };
 </script>
 
@@ -297,6 +345,6 @@ a {
 }
 
 .contact {
-    cursor: pointer;
+  cursor: pointer;
 }
 </style>
