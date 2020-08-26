@@ -10,25 +10,25 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" to="#user-profile" @click.stop="drawer = !drawer" @click="showProfile">
+          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" href="#user-profile" @click.stop="drawer = !drawer" @click="showProfile">
             <v-list-item-content class="colorTertiaryLight--text" >
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showLoginForm" to="/#login-form" @click.stop="drawer = !drawer">
+          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showLoginForm" href="/#login-form" @click.stop="drawer = !drawer">
             <v-list-item-content class="colorTertiaryLight--text" >
               <v-list-item-title>Sign in</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showRegisterForm" to="/#register-form" @click.stop="drawer = !drawer">
+          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showRegisterForm" href="/#register-form" @click.stop="drawer = !drawer">
             <v-list-item-content class="colorTertiaryLight--text" >
               <v-list-item-title>Sign up</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" @click="handleLogout" to="/" @click.stop="drawer = !drawer">
+          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" @click="handleLogout" href="/" @click.stop="drawer = !drawer">
             <v-list-item-content class="colorTertiaryLight--text" >
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
