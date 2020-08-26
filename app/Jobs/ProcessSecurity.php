@@ -73,8 +73,8 @@ class ProcessSecurity implements ShouldQueue
      */
     public function handle()
     {
-        $list = json_decode($this->list);
         //____________________Copie en local des fichiers php cibles________________________////
+        $list = json_decode($this->list);
         // On récupère les chemin des fichiers php du repos:
         $paths = [];
         foreach ($list->tree as $tree){
