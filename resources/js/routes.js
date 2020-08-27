@@ -9,6 +9,7 @@ import PageNotFound from "@/js/pages/PageNotFound";
 
 Vue.use(VueRouter);
 
+
 const Route = new VueRouter({
     history: true,
     mode: "history",
@@ -22,9 +23,9 @@ const Route = new VueRouter({
             }
         },
         {
-            path: "/register",
+            path: "/register/",
             name: "register",
-            component: RegisterForm,
+            component: Home,
             meta: {
                 auth: false
               }
