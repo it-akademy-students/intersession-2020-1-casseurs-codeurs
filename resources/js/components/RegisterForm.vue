@@ -16,57 +16,72 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-form ref="form" @submit.prevent="handleRegister">
+    <v-form ref="form" name="form" @submit.prevent="register" method="post">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
             <v-text-field
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
+              v-model="name"
               type="text"
               name="username"
-              color="colorTertiaryLight"
               label="Username"
+              required
+              color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
+              v-model="email"
               type="email"
               name="email"
-              color="colorTertiaryLight"
               label="Email"
+              required
+              color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              name="password"
+              v-model="password"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
+              name="password"
               label="Password"
               hint="Minimum 8 characters"
+              required
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
+
+          <v-col cols="12">
+            <v-text-field
+              v-model="password_confirmation"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              name="password_confirmation"
+              label="Password Confirmation"
+              hint="Minimum 8 characters"
+              required
+              color="colorTertiaryLight"
+              @click:append="show1 = !show1"
+            ></v-text-field>
+          </v-col>
+
           <v-col cols="12">
             <v-select
-              v-model="user.job"
+              v-model="job"
               :items="jobs"
-              color="colorTertiaryLight"
               label="Your Job"
               name="job"
               required
+              color="colorTertiaryLight"
             ></v-select>
           </v-col>
           <v-col cols="12">
-            <v-checkbox v-model="form.terms" color="colorTertiaryLight">
+            <v-checkbox v-model="accept_terms" color="colorTertiaryLight">
               <template v-slot:label>
                 <div @click.stop>
-                  Please read and accept 
+                  Please read and accept
                   <a
                     href="javascript:;"
                     @click.stop="terms = true"
@@ -119,33 +134,28 @@
 </template>
 
 <script>
-import User from "@/models/user";
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "RegisterForm",
   data() {
     const defaultForm = Object.freeze({
-      username: "",
+      name: "",
       email: "",
       password: "",
+      password_confirmation: "",
       job: "",
-      terms: false,
+      accept_terms: false,
     });
 
     return {
       show1: false,
       form: Object.assign({}, defaultForm),
-
-      // rules: {
-      //   password: [
-      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-      //   ],
-      //   username: [
-      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-      //   ],
-      //   email: [(val) => (val || "").length > 0 || "Ce champ est obligatoire"],
-      // },
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+      job: "",
       jobs: [
         "Frontend Developer",
         "Backend Developer",
@@ -155,96 +165,84 @@ export default {
         "Project Manager",
         "Other",
       ],
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
-      snackbar: false,
+      accept_terms: false,
       terms: false,
       conditions: false,
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
+      snackbar: false,
       defaultForm,
-      user: new User("", "", ""),
-      submitted: false,
-      successful: false,
-      message: "",
+      has_error: false,
+      error: "",
+      // errors: {},
+      success: false,
     };
   },
 
-  // computed: {
-  //   formIsValid() {
-  //     return (
-  //       this.form.username &&
-  //       this.form.email &&
-  //       this.form.password &&
-  //       this.form.job &&
-  //       this.form.terms
-  //     );
-  //   },
-
-  // },
-  // methods: {
-  //   resetForm() {
-  //     this.form = Object.assign({}, this.defaultForm);
-  //     this.$refs.form.reset();
-  //   },
-  //   submit() {
-  //     this.resetForm();
-  //     this.snackbar = true;
-  //   },
-  // },
-
   computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
+    // loggedIn() {
+    //   return this.$store.state.auth.status.loggedIn;
+    // },
     formIsValid() {
       return (
-        this.user.username &&
-        this.user.email &&
-        this.user.password &&
-        this.user.job &&
-        this.form.terms
+        this.name &&
+        this.email &&
+        this.password &&
+        this.password_confirmation &&
+        this.job &&
+        this.accept_terms
       );
     },
   },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/profile");
-    }
-  },
+  // mounted() {
+  //   if (this.loggedIn) {
+  //     this.$router.push("/profile");
+  //   }
+  // },
   methods: {
-    ...mapActions([
-        'toggleRegisterForm',
-        'toggleSignInOn',
-    ]),
-    handleRegister() {
-      this.message = "";
-      this.submitted = true;
-      this.$validator.validate().then((isValid) => {
-        if (isValid) {
-          this.$store.dispatch("auth/register", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
+    ...mapActions(["toggleRegisterForm", "toggleSignInOn"]),
+    register() {
+      var app = this;
+      this.$auth.register({
+        data: {
+          name: app.name,
+          email: app.email,
+          password: app.password,
+          password_confirmation: app.password_confirmation,
+          job: app.job,
+        },
+        success: function () {
+          app.success = true;
+
+          // this.$router.push({
+          //   name: "login",
+          //   params: { successRegistrationRedirect: true },
+          // });
+          return (
+            this.$store.dispatch("toggleLoginForm", true),
+            this.$store.dispatch("toggleSignInOn", false)
           );
-        }
+        },
+        error: function (res) {
+          console.log(res.response.data.errors);
+          app.has_error = true;
+          app.error = res.response.data.error;
+          // app.errors = res.response.data.errors || {};
+        },
       });
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    initShowForm () {
-      return this.$store.dispatch('toggleSignInOn', true), this.$store.dispatch('toggleRegisterForm', false)
+    initShowForm() {
+      return (
+        this.$store.dispatch("toggleSignInOn", true),
+        this.$store.dispatch("toggleRegisterForm", false)
+      );
     },
-    handleCancelled () {
-        return this.resetForm(), this.initShowForm()
-    }
+    handleCancelled() {
+      return this.resetForm(), this.initShowForm();
+    },
   },
 };
 </script>

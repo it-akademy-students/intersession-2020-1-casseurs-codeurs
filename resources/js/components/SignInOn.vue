@@ -10,12 +10,20 @@
       </v-col>
       <v-col cols="12">
         <v-row justify="center">
-          <button class="my-5 btn btn--violet" style="min-width:20ch;" @click="showLoginForm">Sign in</button>
+          <button
+            class="my-5 btn btn--violet"
+            style="min-width:20ch;"
+            @click="showLoginForm"
+          >Sign in</button>
         </v-row>
       </v-col>
       <v-col cols="12">
         <v-row justify="center">
-          <button class="my-5 btn btn--violet" style="min-width:20ch;" @click="showRegisterForm">Sign up</button>
+          <button
+            class="my-5 btn btn--violet"
+            style="min-width:20ch;"
+            @click="showRegisterForm"
+          >Sign up</button>
         </v-row>
       </v-col>
       <v-col cols="12">
@@ -31,23 +39,24 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "SignInOn",
   methods: {
-    ...mapActions([
-        'toggleRegisterForm',
-        'toggleLoginForm',
-        'toggleSignInOn',
-    ]),
-    showLoginForm () {
-
-      return this.$store.dispatch('toggleLoginForm', true), this.$store.dispatch('toggleSignInOn', false)
+    ...mapActions(["toggleRegisterForm", "toggleLoginForm", "toggleSignInOn"]),
+    showLoginForm() {
+      return (
+        this.$store.dispatch("toggleLoginForm", true),
+        this.$store.dispatch("toggleSignInOn", false)
+      );
       // return this.$router.push('/login')
     },
-    showRegisterForm () {
-      return this.$store.dispatch('toggleRegisterForm', true), this.$store.dispatch('toggleSignInOn', false)
+    showRegisterForm() {
+      return (
+        this.$store.dispatch("toggleRegisterForm", true),
+        this.$store.dispatch("toggleSignInOn", false)
+      );
       // return this.$router.push('/register')
     },
   },
