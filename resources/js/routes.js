@@ -17,28 +17,43 @@ const Route = new VueRouter({
             path: "/",
             name: "home",
             component: Home,
+            meta: {
+                auth: undefined
+            }
         },
         {
             path: "/register",
             name: "register",
             component: RegisterForm,
+            meta: {
+                auth: false
+              }
         },
         {
             path: "/login",
             name: "login",
             component: LoginForm,
+            meta: {
+                auth: false
+              }
         },
         // USER ROUTES
         {
             path: "/profile",
             name: "profile",
             component: UserProfile,
+            meta: {
+                auth: true
+            }
         },
         // 404 ROUTE
         {
             path: "*",
             name: "404",
             component: PageNotFound,
+            meta: {
+                auth: undefined
+            }
         }
     ]
 });

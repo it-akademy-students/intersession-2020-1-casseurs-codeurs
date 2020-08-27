@@ -1,5 +1,12 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
+    <div class="alert alert-danger" v-if="has_error && !success">
+      <p v-if="error == 'registration_validation_error'">Validation Errors.</p>
+      <p
+        v-else
+      >Error, can not register at the moment. If the problem persists, please contact an administrator.</p>
+    </div>
+
     <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
       <span color="colorPrimary">Congratulations! Your account have been successfully created !</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
@@ -16,57 +23,88 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-form ref="form" @submit.prevent="handleRegister">
+    <!-- <v-form ref="form" @submit.prevent="handleRegister"> -->
+    <v-form ref="form" @submit.prevent="register" v-if="!success" method="post">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
-            <v-text-field
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              name="username"
-              color="colorTertiaryLight"
-              label="Username"
-            ></v-text-field>
+            <div class="form-group" v-bind:class="{ 'has-error': has_error && errors.name }">
+              <v-text-field
+                v-model="name"
+                v-validate="'required|min:3|max:20'"
+                type="text"
+                name="username"
+                color="colorTertiaryLight"
+                label="Username"
+              ></v-text-field>
+              <span class="help-block" v-if="has_error && errors.name">{{ errors.name }}</span>
+            </div>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
-              type="email"
-              name="email"
-              color="colorTertiaryLight"
-              label="Email"
-            ></v-text-field>
+            <div class="form-group" v-bind:class="{ 'has-error': has_error && errors.email }">
+              <v-text-field
+                v-model="email"
+                v-validate="'required|email|max:50'"
+                type="email"
+                name="email"
+                color="colorTertiaryLight"
+                label="Email"
+              ></v-text-field>
+              <span class="help-block" v-if="has_error && errors.email">{{ errors.email }}</span>
+            </div>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              name="password"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show1 ? 'text' : 'password'"
-              label="Password"
-              hint="Minimum 8 characters"
-              color="colorTertiaryLight"
-              @click:append="show1 = !show1"
-            ></v-text-field>
+            <div class="form-group" v-bind:class="{ 'has-error': has_error && errors.password }">
+              <v-text-field
+                v-model="password"
+                v-validate="'required|min:6|max:40'"
+                name="password"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                label="Password"
+                hint="Minimum 8 characters"
+                color="colorTertiaryLight"
+                @click:append="show1 = !show1"
+              ></v-text-field>
+              <span class="help-block" v-if="has_error && errors.password">{{ errors.password }}</span>
+            </div>
           </v-col>
+
           <v-col cols="12">
-            <v-select
-              v-model="user.job"
-              :items="jobs"
-              color="colorTertiaryLight"
-              label="Your Job"
-              name="job"
-              required
-            ></v-select>
+            <div class="form-group" v-bind:class="{ 'has-error': has_error && errors.password }">
+              <v-text-field
+                v-model="password_confirmation"
+                v-validate="'required|min:6|max:40'"
+                name="password_confirmation"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                label="Password Confirmation"
+                hint="Minimum 8 characters"
+                color="colorTertiaryLight"
+                @click:append="show1 = !show1"
+              ></v-text-field>
+            </div>
+          </v-col>
+
+          <v-col cols="12">
+            <div class="form-group" v-bind:class="{ 'has-error': has_error && errors.job }">
+              <v-select
+                v-model="user.job"
+                :items="jobs"
+                color="colorTertiaryLight"
+                label="Your Job"
+                name="job"
+                required
+              ></v-select>
+
+              <span class="help-block" v-if="has_error && errors.job">{{ errors.job }}</span>
+            </div>
           </v-col>
           <v-col cols="12">
             <v-checkbox v-model="form.terms" color="colorTertiaryLight">
               <template v-slot:label>
                 <div @click.stop>
-                  Please read and accept 
+                  Please read and accept
                   <a
                     href="javascript:;"
                     @click.stop="terms = true"
@@ -120,32 +158,24 @@
 
 <script>
 import User from "@/models/user";
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "RegisterForm",
   data() {
     const defaultForm = Object.freeze({
-      username: "",
+      name: "",
       email: "",
       password: "",
+      password_confirmation: "",
       job: "",
       terms: false,
+      conditions: false,
     });
 
     return {
       show1: false,
       form: Object.assign({}, defaultForm),
-
-      // rules: {
-      //   password: [
-      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-      //   ],
-      //   username: [
-      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-      //   ],
-      //   email: [(val) => (val || "").length > 0 || "Ce champ est obligatoire"],
-      // },
       jobs: [
         "Frontend Developer",
         "Backend Developer",
@@ -160,10 +190,10 @@ export default {
       terms: false,
       conditions: false,
       defaultForm,
-      user: new User("", "", ""),
-      submitted: false,
-      successful: false,
-      message: "",
+      has_error: false,
+      error: "",
+      errors: {},
+      success: false,
     };
   },
 
@@ -210,41 +240,44 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-        'toggleRegisterForm',
-        'toggleSignInOn',
-    ]),
-    handleRegister() {
-      this.message = "";
-      this.submitted = true;
-      this.$validator.validate().then((isValid) => {
-        if (isValid) {
-          this.$store.dispatch("auth/register", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
-          );
-        }
+    ...mapActions(["toggleRegisterForm", "toggleSignInOn"]),
+    register() {
+      var app = this;
+      this.$auth.register({
+        data: {
+          name: app.name,
+          email: app.email,
+          password: app.password,
+          password_confirmation: app.password_confirmation,
+        },
+        success: function () {
+          app.success = true;
+          this.$router.push({
+            name: "login",
+            params: { successRegistrationRedirect: true },
+          });
+        },
+        error: function (res) {
+          // console.log(res.response.data.errors)
+          app.has_error = true;
+          app.error = res.response.data.error;
+          app.errors = res.response.data.errors || {};
+        },
       });
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    initShowForm () {
-      return this.$store.dispatch('toggleSignInOn', true), this.$store.dispatch('toggleRegisterForm', false)
+    initShowForm() {
+      return (
+        this.$store.dispatch("toggleSignInOn", true),
+        this.$store.dispatch("toggleRegisterForm", false)
+      );
     },
-    handleCancelled () {
-        return this.resetForm(), this.initShowForm()
-    }
+    handleCancelled() {
+      return this.resetForm(), this.initShowForm();
+    },
   },
 };
 </script>
