@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('create-checkout-session', 'StripeController@checkout');
+
 Route::get('github/{username}/{repos}', 'ApiController@github');
 
 Route::post('contact', 'ContactController@insert');

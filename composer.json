@@ -13,6 +13,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
+        "stripe/stripe-php": "^7.49",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {

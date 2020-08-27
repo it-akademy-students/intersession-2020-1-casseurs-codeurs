@@ -59,7 +59,7 @@ class ApiController extends Controller
             else{
                 $this->dispatch(new ProcessSecurity($list, $baseUrl));
                 header('Content-Type: application/json');
-                return ['type' => 'Success', 200];
+                return ['type' => 'Success', 'code' => 200];
             }
         } catch (Exeption $e){
             return $e->getMessage();
