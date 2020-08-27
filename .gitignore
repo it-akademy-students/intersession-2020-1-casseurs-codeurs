@@ -10,3 +10,13 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+<<<<<<< HEAD
+.idea/
+docker-compose.yml
+Dockerfile
+/php/*
+/nginx/*
+/mysql/*
+cmd.md
+.vscode/*
+public/mix-manifest.json
