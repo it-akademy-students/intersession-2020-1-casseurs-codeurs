@@ -29,11 +29,12 @@
                                 title="The URL must start with https://github.com/"
                                 class="form__input form__input--green"
                                 placeholder="https://github.com/example"
+                                v-model="repository"
                               />
                               <label for="repository" class="form__label">Enter the URL of your repo</label>
                             </v-col>
                             <v-col cols="12" lg="2">
-                              <button class="btn btn--green">Submit</button>
+                              <button class="btn btn--green" @click="handleClick">Submit</button>
                             </v-col>
                           </v-row>
                         </v-container>
@@ -97,7 +98,20 @@ export default {
       "SWAPP is an open source project that automates the detection of security vulnerabilities and / or code bugs.",
     lorem:
       "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
+    repository: ""
   }),
+  methods: {
+    handleClick: function() {
+      console.log('click')
+      const splittedUrl = this.repository.split('/')
+      const username = splittedUrl[splittedUrl.length - 2]
+      const repo = splittedUrl[splittedUrl.length - 1]
+      const url = `github/${username}/${repo}`
+      this.$http.get(url).then(response => {
+        console.log(response)
+      }, (err) => console.log(err))
+    }
+  }
 };
 </script>
 
