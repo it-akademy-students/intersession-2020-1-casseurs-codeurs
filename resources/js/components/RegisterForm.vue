@@ -1,43 +1,52 @@
 <template>
-  <v-card flat color="colorPrimaryUltraLight">
+  <v-card flat color="colorPrimaryUltraLight" id="register-form">
     <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary">Félicitations! Votre compte est crée !</span>
+      <span color="colorPrimary">Congratulations! Your account have been successfully created !</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
-      <h2
-        class="pa-4 text-center"
-      >Inscrivez-vous afin de bénéficier de toutes les fonctionnalités de l’application SWAPP</h2>
+      <v-row>
+        <v-col cols="11">
+          <h2
+            class="pa-2 text-center"
+          >Register to benefit from all the features of the SWAPP application</h2>
+        </v-col>
+        <v-col cols="1">
+          <v-icon @click="initShowForm">mdi-close</v-icon>
+        </v-col>
+      </v-row>
     </v-col>
-    <v-form ref="form" @submit.prevent="submit">
+    <v-form ref="form" @submit.prevent="handleRegister">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
             <v-text-field
-              v-model="form.username"
-              :rules="rules.username"
+              v-model="user.username"
+              v-validate="'required|min:3|max:20'"
+              type="text"
+              name="username"
               color="colorTertiaryLight"
-              label="Nom d'utilisateur"
-              required
+              label="Username"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="form.email"
-              :rules="rules.email"
+              v-model="user.email"
+              v-validate="'required|email|max:50'"
+              type="email"
+              name="email"
               color="colorTertiaryLight"
               label="Email"
-              required
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="form.password"
+              v-model="user.password"
+              v-validate="'required|min:6|max:40'"
+              name="password"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="rules.password"
               :type="show1 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Mot de passe"
+              label="Password"
               hint="Minimum 8 characters"
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
@@ -45,11 +54,11 @@
           </v-col>
           <v-col cols="12">
             <v-select
-              v-model="form.job"
+              v-model="user.job"
               :items="jobs"
-              :rules="rules.job"
               color="colorTertiaryLight"
-              label="Votre Job"
+              label="Your Job"
+              name="job"
               required
             ></v-select>
           </v-col>
@@ -57,13 +66,13 @@
             <v-checkbox v-model="form.terms" color="colorTertiaryLight">
               <template v-slot:label>
                 <div @click.stop>
-                  Merci de lire et accepter les
+                  Please read and accept 
                   <a
                     href="javascript:;"
                     @click.stop="terms = true"
                     class="btn-text btn-text--violet"
                   >terms</a>
-                  et
+                  and
                   <a
                     href="javascript:;"
                     @click.stop="conditions = true"
@@ -76,14 +85,14 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="resetForm">Annuler</v-btn>
+        <v-btn text @click="handleCancelled">Cancel</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           color="colorTertiaryLight"
           type="submit"
-        >Créer mon compte</v-btn>
+        >Create my account</v-btn>
       </v-card-actions>
     </v-form>
     <v-dialog v-model="terms" width="70%">
@@ -110,8 +119,11 @@
 </template>
 
 <script>
+import User from "@/models/user";
+import { mapGetters, mapState, mapActions } from 'vuex'
+
 export default {
-  name: "RegistrarForm",
+  name: "RegisterForm",
   data() {
     const defaultForm = Object.freeze({
       username: "",
@@ -124,53 +136,115 @@ export default {
     return {
       show1: false,
       form: Object.assign({}, defaultForm),
-      rules: {
-        password: [
-          (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-        ],
-        username: [
-          (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-        ],
-        email: [(val) => (val || "").length > 0 || "Ce champ est obligatoire"],
-      },
+
+      // rules: {
+      //   password: [
+      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
+      //   ],
+      //   username: [
+      //     (val) => (val || "").length > 0 || "Ce champ est obligatoire",
+      //   ],
+      //   email: [(val) => (val || "").length > 0 || "Ce champ est obligatoire"],
+      // },
       jobs: [
-        "Développeur Frontend",
-        "Développeur Backend",
-        "Développeur Full Stack",
+        "Frontend Developer",
+        "Backend Developer",
+        "Full Stack Developer",
         "Admin sys",
-        "cyber sécu",
-        "Chef de projet",
-        "Autre",
+        "Cyber Security",
+        "Project Manager",
+        "Other",
       ],
       content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
       snackbar: false,
       terms: false,
       conditions: false,
       defaultForm,
+      user: new User("", "", ""),
+      submitted: false,
+      successful: false,
+      message: "",
     };
   },
 
+  // computed: {
+  //   formIsValid() {
+  //     return (
+  //       this.form.username &&
+  //       this.form.email &&
+  //       this.form.password &&
+  //       this.form.job &&
+  //       this.form.terms
+  //     );
+  //   },
+
+  // },
+  // methods: {
+  //   resetForm() {
+  //     this.form = Object.assign({}, this.defaultForm);
+  //     this.$refs.form.reset();
+  //   },
+  //   submit() {
+  //     this.resetForm();
+  //     this.snackbar = true;
+  //   },
+  // },
+
   computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
     formIsValid() {
       return (
-        this.form.username &&
-        this.form.email &&
-        this.form.password &&
-        this.form.job &&
+        this.user.username &&
+        this.user.email &&
+        this.user.password &&
+        this.user.job &&
         this.form.terms
       );
     },
   },
-
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
+    }
+  },
   methods: {
+    ...mapActions([
+        'toggleRegisterForm',
+        'toggleSignInOn',
+    ]),
+    handleRegister() {
+      this.message = "";
+      this.submitted = true;
+      this.$validator.validate().then((isValid) => {
+        if (isValid) {
+          this.$store.dispatch("auth/register", this.user).then(
+            (data) => {
+              this.message = data.message;
+              this.successful = true;
+            },
+            (error) => {
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+              this.successful = false;
+            }
+          );
+        }
+      });
+    },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    submit() {
-      this.snackbar = true;
-      this.resetForm();
+    initShowForm () {
+      return this.$store.dispatch('toggleSignInOn', true), this.$store.dispatch('toggleRegisterForm', false)
     },
+    handleCancelled () {
+        return this.resetForm(), this.initShowForm()
+    }
   },
 };
 </script>

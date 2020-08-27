@@ -3,7 +3,7 @@
     <v-card class="px-3" color="colorPrimaryLight">
       <v-row align-content="space-between" justify="space-around">
         <v-col cols="12">
-          <h2 class="display-1 my-5 pa-2">Voici les résultats :</h2>
+          <h2 class="display-1 my-5 pa-2">Analysis results:</h2>
         </v-col>
         <!-- <v-col cols="12">
           <result-list />
