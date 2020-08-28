@@ -20,7 +20,7 @@ class ApiController extends Controller
         $content = curl_exec($curl);
         curl_close($curl);
 
-        return $content;
+        return json_decode($content);
     }
 
     /**
@@ -57,7 +57,7 @@ class ApiController extends Controller
                 return ['response' => 'error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
             else{
-                $this->dispatch(new ProcessSecurity($list, $baseUrl));
+                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl));
                 header('Content-Type: application/json');
                 return ['response' => 'success', 'code' => 200];
             }
