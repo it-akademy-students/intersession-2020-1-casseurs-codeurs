@@ -43,13 +43,13 @@ class ApiController extends Controller
      * @param string $repos
      * @return array|string
      */
-    public function github(string $username, string $repos)
+    public function github(string $username, string $repos, string $email, string $branch = 'master' )
     {
         try{
             //Construction de l'url a appelé:
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
             //Url API v3 Github pour lister l'architecture d'un repos:
-            $listingUrl = $baseUrl."git/trees/master?recursive=1";
+            $listingUrl = $baseUrl."git/trees/$branch?recursive=1";
             $list = $this->getGithubContent($listingUrl);
             // Cas d'erreur: retourner le message d'erreur de Github
             if (isset($list->message)){
