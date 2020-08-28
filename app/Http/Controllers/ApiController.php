@@ -20,7 +20,7 @@ class ApiController extends Controller
         $content = curl_exec($curl);
         curl_close($curl);
 
-        return $content;
+        return json_decode($content);
     }
 
     /**
@@ -54,12 +54,12 @@ class ApiController extends Controller
             // Cas d'erreur: retourner le message d'erreur de Github
             if (isset($list->message)){
                 strpos($list->message, 'API rate limit exceeded') !== false ? ($code = 403 AND $reset = $this->getRateLimitInfo()) : ($code = 404 AND $reset = null);
-                return ['type' => 'Error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
+                return ['response' => 'error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
             else{
-                $this->dispatch(new ProcessSecurity($list, $baseUrl));
+                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl, $username.'_'.$repos));
                 header('Content-Type: application/json');
-                return ['type' => 'Success', 200];
+                return ['response' => 'success', 'code' => 200];
             }
         } catch (Exeption $e){
             return $e->getMessage();

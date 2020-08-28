@@ -1,61 +1,97 @@
-import AuthService from '@/services/auth.service';
+import Vue from "vue";
 
-const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+export const auth =  {
+    namespaced: true,
 
-export const auth = {
-  namespaced: true,
-  state: initialState,
-  actions: {
-    login({ commit }, user) {
-      return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
-          return Promise.resolve(user);
+    state() {
+        return {};
+    },
+
+    actions: {
+        fetch(data) {
+            return Vue.auth.fetch(data);
         },
-        error => {
-          commit('loginFailure');
-          return Promise.reject(error);
-        }
-      );
-    },
-    logout({ commit }) {
-      AuthService.logout();
-      commit('logout');
-    },
-    register({ commit }, user) {
-      return AuthService.register(user).then(
-        response => {
-          commit('registerSuccess');
-          return Promise.resolve(response.data);
+
+        refresh(data) {
+            return Vue.auth.refresh(data);
         },
-        error => {
-          commit('registerFailure');
-          return Promise.reject(error);
+
+        login(ctx, data) {
+            data = data || {};
+
+            return new Promise((resolve, reject) => {
+                Vue.auth
+                    .login({
+                        url: "auth/login",
+                        body: data.body, // VueResource
+                        // data: data.body, // Axios
+                        remember: data.remember,
+                        staySignedIn: data.staySignedIn
+                    })
+                    .then(res => {
+                        if (data.remember) {
+                            Vue.auth.remember(
+                                JSON.stringify({
+                                    name: ctx.getters.user.first_name
+                                })
+                            );
+                        }
+
+                        Vue.router.push({
+                            name: ctx.getters.user.type + "-landing"
+                        });
+
+                        resolve(res);
+                    }, reject);
+            });
+        },
+
+        register(ctx, data) {
+            data = data || {};
+
+            return new Promise((resolve, reject) => {
+                Vue.auth
+                    .register({
+                        url: "auth/register",
+                        body: data.body, // VueResource
+                        // data: data.body, // Axios
+                        autoLogin: false
+                    })
+                    .then(res => {
+                        if (data.autoLogin) {
+                            ctx.dispatch("login", data).then(resolve, reject);
+                        }
+                    }, reject);
+            });
+        },
+
+        impersonate(ctx, data) {
+            var props = this.getters["properties/data"];
+
+            Vue.auth.impersonate({
+                url: "auth/" + data.user.id + "/impersonate",
+                redirect: "user-account"
+            });
+        },
+
+        unimpersonate(ctx) {
+            Vue.auth.unimpersonate({
+                redirect: "admin-users"
+            });
+        },
+
+        logout(ctx) {
+            return Vue.auth.logout();
         }
-      );
+    },
+
+    getters: {
+        user() {
+            return Vue.auth.user();
+        },
+
+        impersonating() {
+            return Vue.auth.impersonating();
+        }
     }
-  },
-  mutations: {
-    loginSuccess(state, user) {
-      state.status.loggedIn = true;
-      state.user = user;
-    },
-    loginFailure(state) {
-      state.status.loggedIn = false;
-      state.user = null;
-    },
-    logout(state) {
-      state.status.loggedIn = false;
-      state.user = null;
-    },
-    registerSuccess(state) {
-      state.status.loggedIn = false;
-    },
-    registerFailure(state) {
-      state.status.loggedIn = false;
-    }
-  }
 };

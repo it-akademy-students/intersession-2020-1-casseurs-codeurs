@@ -48,34 +48,34 @@ export default {
       email: "",
       firstname: "",
       lastname: "",
-      isSubmitSucced: false
+      isSubmitSucced: false,
     };
   },
   computed: {
     showContact() {
       return this.$store.getters.isShowContact;
-    }
+    },
   },
   methods: {
     closeModal: () => {
       store.commit("hideContact");
     },
-    updateMessage: e => {
+    updateMessage: (e) => {
       this.$store.commit("updateContact", e.target.value);
     },
-    submitForm () {
+    submitForm() {
       const postData = {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
-        message: this.message
+        message: this.message,
       };
       this.$http.post("contact", postData).then((res) => {
-        console.log(res)
-        this.isSubmitSucced = true
+        console.log(res);
+        this.isSubmitSucced = true;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
