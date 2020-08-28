@@ -155,7 +155,7 @@ export default {
       const repo = splittedUrl[splittedUrl.length - 1];
       const email = this.email;
       const branch = this.branch;
-      const url = `github/${username}/${repo}`;
+      const url = `github/${username}/${repo}/${branch}`;
       console.log({ url });
       this.$http.get(url).then(response => {
         this.loading = false;
