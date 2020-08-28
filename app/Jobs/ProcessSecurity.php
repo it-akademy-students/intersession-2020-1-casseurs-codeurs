@@ -7,10 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Traits\AnalyseTrait;
 
 class ProcessSecurity implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use AnalyseTrait;
     /**
      * @var string
      */
@@ -88,6 +90,8 @@ class ProcessSecurity implements ShouldQueue
             $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
             $this->addFile($path, $content, base_path().'/public/Scan/');
         }
+        //____________________Analyse PHPStan________________________////
+        $this->analyse('php7mar');
     }
 
 }

@@ -13,9 +13,7 @@ trait AnalyseTrait
             $cmd = ' analyse ';
             $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
             // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/config/configuration.neon'; // Linux path with slashes
-            $scanPath = '';
-            $reportsPath = '';
-            $exec = $prefix . $workingPath . $cmd . $option . $scanPath . $reportsPath;
+            $exec = $prefix . $workingPath . $cmd . $option;
             //dd($exec);
         }elseif ($tool == 'progpilot'){// Analyze with ProgPilot : security threats test
             $prefix='';
@@ -25,10 +23,7 @@ trait AnalyseTrait
             //$option = '';
             $option = '--configuration ' . base_path() . '\config\configuration.yml'; // Windows path with backslashes
             // $option = '--configuration ' . base_path() . '/config/configuration.yml'; // Linux path with slashes
-            $scanPath = '';
-            //$scanPath = base_path() . '\public\scan';
-            $reportsPath = '';
-            $exec = $prefix . $workingPath . $cmd . $option . $scanPath . $reportsPath;
+            $exec = $prefix . $workingPath . $cmd . $option;
             //dd($exec);
         }elseif ($tool == 'php7mar'){// Analyze with php7mar : Migration Assistant Report between PHP 5 & PHP 7
             $prefix = 'php ';
