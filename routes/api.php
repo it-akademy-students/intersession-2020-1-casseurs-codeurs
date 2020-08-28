@@ -21,7 +21,7 @@ Route::post('create-checkout-session', 'StripeController@checkout');
 
 Route::get('github/{username}/{repos}', 'ApiController@github');
 
-Route::post('contact', 'ContactController@insert');
+Route::post('contact', 'ContactController@contact');
 
 // routes authentification
 Route::prefix('v1')->group(function () {
