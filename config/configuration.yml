@@ -19,7 +19,7 @@ inputs:
 
         exclude_folders: ~
 
-    setFolder: 'Z:\laragon\www\intersession-2020-1-casseurs-codeurs\public\scan' # Windows path with backslashes
+    setFolder: 'c:\xampp\htdocs\IT-akademy\Intersession\intersession-2020-1-casseurs-codeurs\public\scan' # Windows path with backslashes
     #setFolder: 'Z:/laragon/www/intersession-2020-1-casseurs-codeurs/public/scan' # Linux path with slashes
     setFile: ~
     setCode: ~
@@ -35,9 +35,9 @@ options:
     setAnalyzeIncludes: true
     setAnalyzeFunctions: true
     setAnalyzeHardRules: true
-    setPrintFile: true
+    setPrintFile: false
     setPrintWarning: false
     setPrettyPrint: true
-    setLimitTime: 10
+    setLimitTime: 10000
     setLimitDefs: 3000
     setLimitSize: 500000

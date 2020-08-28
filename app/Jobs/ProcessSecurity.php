@@ -21,16 +21,21 @@ class ProcessSecurity implements ShouldQueue
      * @var string
      */
     private $baseUrl;
+    /**
+     * @var string
+     */
+    private $githubInfo;
 
     /**
      * ProcessSecurity constructor.
      * @param $list
      * @param string $baseUrl
      */
-    public function __construct( string $list, string $baseUrl)
+    public function __construct( string $list, string $baseUrl, string $githubInfo)
     {
         $this->list = $list;
         $this->baseUrl = $baseUrl;
+        $this->githubInfo = $githubInfo;
     }
 
     /**
@@ -91,7 +96,11 @@ class ProcessSecurity implements ShouldQueue
             $this->addFile($path, $content, base_path().'/public/Scan/');
         }
         //____________________Analyse PHPStan________________________////
-        $this->analyse('php7mar');
+        $this->analyse('phpstan', $this->githubInfo);
+        //____________________Analyse PHP7mar________________________////
+        $this->analyse('php7mar', $this->githubInfo);
+        //____________________Analyse Progpilot________________________////
+        $this->analyse('progpilot', $this->githubInfo);
     }
 
 }

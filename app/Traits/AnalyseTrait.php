@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait AnalyseTrait
 {
-    public function analyse(string $tool){
+    public function analyse(string $tool, string $baseFileName){
 
         if ($tool == 'phpstan'){// Analyze with PHPStan : errors research in the code
             $prefix='';
@@ -41,6 +41,9 @@ trait AnalyseTrait
 
         try{
             exec($exec , $output);
+            if ($tool != 'php7mar'){
+                file_put_contents(base_path().'/public/reports/'.$baseFileName.'_'.$tool.'.json', $output);
+            }
                 return ['response' => 'success' , 'value' => $output];
         } catch (\Exception $exception) {
             return['response' => 'error' , $exception->getMessage()];
