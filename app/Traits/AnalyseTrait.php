@@ -11,8 +11,8 @@ trait AnalyseTrait
             $workingPath = base_path() . '\vendor\bin\phpstan'; // Windows path with backslashes
             // $workingPath = base_path() . '/vendor/bin/phpstan'; // Linux path with slashes
             $cmd = ' analyse ';
-            $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '\public\configs\configuration.neon'; // Windows path with backslashes
-            // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/public/configs/configuration.neon'; // Linux path with slashes
+            $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
+            // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/config/configuration.neon'; // Linux path with slashes
             $scanPath = '';
             $reportsPath = '';
             $exec = $prefix . $workingPath . $cmd . $option . $scanPath . $reportsPath;
@@ -23,8 +23,8 @@ trait AnalyseTrait
             // $workingPath = base_path() . '/vendor/bin/progpilot '; // Linux path with slashes
             $cmd = '';
             //$option = '';
-            $option = '--configuration ' . base_path() . '\public\configs\configuration.yml'; // Windows path with backslashes
-            // $option = '--configuration ' . base_path() . '/public/configs/configuration.yml'; // Linux path with slashes
+            $option = '--configuration ' . base_path() . '\config\configuration.yml'; // Windows path with backslashes
+            // $option = '--configuration ' . base_path() . '/config/configuration.yml'; // Linux path with slashes
             $scanPath = '';
             //$scanPath = base_path() . '\public\scan';
             $reportsPath = '';
