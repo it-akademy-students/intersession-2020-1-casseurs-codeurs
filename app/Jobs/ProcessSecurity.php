@@ -54,7 +54,7 @@ class ProcessSecurity implements ShouldQueue
      * Permet de créer l'architecture des sous dossier si nécéssaire
      * Créer le fichier
      */
-    private function addFile($path, $content, $baseFolder = 'public/Scan/'){
+    private function addFile($path, $content, $baseFolder){
         $folders = explode("/", $path);
         $quantity = sizeof($folders)-1;
         if ($quantity != 0){
@@ -86,7 +86,7 @@ class ProcessSecurity implements ShouldQueue
         foreach ($paths as $path){
             //$baseContentUrl . path pour récupérer le contenu du fichier:
             $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
-            $this->addFile($path, $content);
+            $this->addFile($path, $content, base_path().'/public/Scan/');
         }
     }
 
