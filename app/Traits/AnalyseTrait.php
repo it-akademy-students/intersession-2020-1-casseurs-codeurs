@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Traits;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-
-class AnalyseController extends Controller
+trait AnalyseTrait
 {
-    public function analyse($tool){
+    public function analyse(string $tool){
 
         if ($tool == 'phpstan'){// Analyze with PHPStan : errors research in the code
             $prefix='';
