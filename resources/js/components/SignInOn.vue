@@ -31,7 +31,7 @@
       </v-col>
       <v-col cols="12">
         <p
-          class="mb-5 pa-4"
+          class="mb-5 pa-4 text-left"
         >The basic functions of the application are available free of charge without registration. However, connected users benefit from additional features: report by e-mail, possibility of php version upgrade, history of reports.</p>
       </v-col>
     </v-row>

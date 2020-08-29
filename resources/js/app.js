@@ -5,7 +5,6 @@ import vuetify from "@/js/plugins/vuetify"
 import VeeValidate from 'vee-validate';
 import 'es6-promise/auto'
 import axios from 'axios'
-import VueAuth from '@websanova/vue-auth'
 import auth from '@websanova/vue-auth';
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router'

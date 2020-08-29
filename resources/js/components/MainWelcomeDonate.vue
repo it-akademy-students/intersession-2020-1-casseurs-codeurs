@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-row align-content="center" no-gutters>
           <!-- welcome section -->
-          <v-container fluid class="px-5 mb-5">
+          <v-container fluid class="px-5 mb-1">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
                 <h1 class="display-3 mb-5">{{ welcome }}</h1>
@@ -18,11 +18,11 @@
                     </v-col>
                     <!-- form -->
                     <v-col cols="12">
-                      <form action="#" class="form">
-                        <v-container>
-                          <v-col>
-                            <v-row align-content="space-between" justify="space-around">
-                              <v-col cols="12" lg="8">
+                      <form class="form">
+                        <v-container class="ma-0 pa-0" fluid>
+                          <!-- <v-col> -->
+                            <v-row align-content="space-between" justify="space-around" >
+                              <v-col cols="12" lg="9">
                                 <input
                                   id="repository"
                                   type="email"
@@ -32,7 +32,7 @@
                                 />
                                 <label for="repository" class="form__label">Enter your email</label>
                               </v-col>
-                              <v-col cols="12" lg="4">
+                              <v-col cols="12" lg="3">
                                 <input
                                   id="repository"
                                   type="text"
@@ -42,8 +42,28 @@
                                 />
                                 <label for="repository" class="form__label">Branch to scan</label>
                               </v-col>
+                              <v-col cols="12" lg="9">
+                                <input
+                                  id="repository"
+                                  type="url"
+                                  pattern="https://github.com/.+"
+                                  title="The URL must start with https://github.com/"
+                                  class="form__input form__input--green"
+                                  placeholder="https://github.com/example"
+                                  v-model="repository"
+                                />
+                                <label
+                                  for="repository"
+                                  class="form__label"
+                                >Enter the URL of your repo</label>
+                              </v-col>
+                              <v-col cols="12" lg="3">
+                                <!-- <v-row justify="end" class="ma-0 pa-0"> -->
+                                <button class="btn btn--green" @click="handleClick">I scan my repo!</button>
+                                <!-- </v-row> -->
+                              </v-col>
                             </v-row>
-                            <v-row align-content="space-between" justify="space-around">
+                            <!-- <v-row align-content="space-between" justify="space-around">
                               <v-col cols="12" lg="8">
                                 <input
                                   id="repository"
@@ -60,10 +80,12 @@
                                 >Enter the URL of your repo</label>
                               </v-col>
                               <v-col cols="12" lg="4">
+                                <v-row justify="end">
                                 <button class="btn btn--green" @click="handleClick">Submit</button>
+                                </v-row>
                               </v-col>
-                            </v-row>
-                          </v-col>
+                            </v-row> -->
+                          <!-- </v-col> -->
                         </v-container>
                         <v-dialog content-class="modal" v-show="loading" v-model="loading" dark>
                           <v-img
@@ -76,7 +98,7 @@
                           ></v-img>
                           <v-skeleton-loader class="mx-auto" max-width="300" type="card"></v-skeleton-loader>
                         </v-dialog>
-                         <v-dialog content-class="modal" v-show="fetching" v-model="fetching" dark>
+                        <v-dialog content-class="modal" v-show="fetching" v-model="fetching" dark>
                           <h4>Success</h4>
                           <p>We will sent your result by email</p>
                         </v-dialog>
@@ -98,15 +120,15 @@
           </v-container>
 
           <!-- donate section -->
-          <v-container fluid class="px-5 mt-5 hidden-md-and-down">
+          <v-container fluid class="px-5 mt-0 hidden-md-and-down">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h2 class="display-2 my-5">{{ donate }}</h2>
+                <h2 class="display-2 mb-1 mt-2">{{ donate }}</h2>
                 <!-- <span class="subheading my-5">{{ lorem }}</span> -->
-                <v-container fluid class="pa-0 mt-5">
+                <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
-                      <v-container grid-list-lg>
+                      <v-container fluid>
                         <v-row align-content="center">
                           <v-col cols="12" lg="10">
                             <h3
@@ -144,10 +166,10 @@ export default {
     email: "",
     branch: "",
     loading: false,
-    fetching: false
+    fetching: false,
   }),
   methods: {
-    handleClick: function() {
+    handleClick: function () {
       this.loading = true;
       console.log("click");
       const splittedUrl = this.repository.split("/");
@@ -157,15 +179,15 @@ export default {
       const branch = this.branch;
       const url = `github/${username}/${repo}/${branch}`;
       console.log({ url });
-      this.$http.get(url).then(response => {
+      this.$http.get(url).then((response) => {
         this.loading = false;
         this.fetching = true;
         setTimeout(() => {
           this.fetching = false;
         }, 3000);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -174,16 +196,15 @@ export default {
   width: 100%;
   height: 0.5rem;
   box-sizing: border-box;
-  // background-color: #967dff;
   background-color: #62cb5c;
   transform: scale(1.02);
 }
-.email-input {
-  width: 83%;
-}
-.form {
-  position: relative;
-}
+// .email-input {
+//   width: 83%;
+// }
+// .form {
+//   position: relative;
+// }
 .modal {
   display: flex;
   flex-direction: column;
@@ -198,9 +219,10 @@ export default {
   -webkit-animation: rotation 1s infinite linear;
   position: absolute;
 }
-h4, p {
-  text-align: center;
-}
+// h4,
+// p {
+//   text-align: center;
+// }
 @-webkit-keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);
