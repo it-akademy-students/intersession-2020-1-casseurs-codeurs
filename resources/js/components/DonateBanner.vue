@@ -1,6 +1,6 @@
 <template>
   <v-banner class="hidden-lg-and-up" elevation="2" outlined sticky app>
-    <span>Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos. Participate in the maintenance of this project! Make a donation to allow us to guarantee this service.</span>
+    <span class="font-weight-black"> {{ donate }} </span> <span class="subheading"> {{ donateText }} </span> 
     <template v-slot:actions>
       <v-btn text class="btn-text btn-text--green" to="/" link>I support !</v-btn>
     </template>
@@ -10,7 +10,11 @@
 <script>
 export default {
   name: "DonateBanner",
-  data: () => ({}),
+  data: () => ({
+    donate: "Take part in the maintenance of this project: make a donation!",
+    donateText:
+      "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
+  }),
 };
 </script>
 

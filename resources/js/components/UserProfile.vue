@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">Your Profile {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+          <h2 class="pa-2 text-center">Your profile {{ this.$store.getters.getUser.name | capitalize }}:</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>

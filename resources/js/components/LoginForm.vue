@@ -14,7 +14,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">Please enter your username and password to login.</h2>
+          <h2 class="pa-2 text-center">Please enter your username and password to log in.</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>

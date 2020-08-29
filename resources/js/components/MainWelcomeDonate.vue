@@ -8,7 +8,7 @@
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
                 <h1 class="display-3 mb-5">{{ welcome }}</h1>
-                <span class="subheading my-5">{{ lorem }}</span>
+                <span class="text-h6 mt-5">{{ welcomeText }}</span>
                 <v-container fluid class="pa-0 mt-5">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
@@ -20,72 +20,45 @@
                     <v-col cols="12">
                       <form class="form">
                         <v-container class="ma-0 pa-0" fluid>
-                          <!-- <v-col> -->
-                            <v-row align-content="space-between" justify="space-around" >
-                              <v-col cols="12" lg="9">
-                                <input
-                                  id="repository"
-                                  type="email"
-                                  class="form__input form__input--green"
-                                  placeholder="dev@swapp.com"
-                                  v-model="email"
-                                />
-                                <label for="repository" class="form__label">Enter your email</label>
-                              </v-col>
-                              <v-col cols="12" lg="3">
-                                <input
-                                  id="repository"
-                                  type="text"
-                                  class="form__input form__input--green"
-                                  placeholder="master"
-                                  v-model="branch"
-                                />
-                                <label for="repository" class="form__label">Branch to scan</label>
-                              </v-col>
-                              <v-col cols="12" lg="9">
-                                <input
-                                  id="repository"
-                                  type="url"
-                                  pattern="https://github.com/.+"
-                                  title="The URL must start with https://github.com/"
-                                  class="form__input form__input--green"
-                                  placeholder="https://github.com/example"
-                                  v-model="repository"
-                                />
-                                <label
-                                  for="repository"
-                                  class="form__label"
-                                >Enter the URL of your repo</label>
-                              </v-col>
-                              <v-col cols="12" lg="3">
-                                <!-- <v-row justify="end" class="ma-0 pa-0"> -->
+                          <v-row align-content="space-between" justify="space-around">
+                            <v-col cols="12" lg="9">
+                              <input
+                                id="repository"
+                                type="url"
+                                pattern="https://github.com/.+"
+                                title="The URL must start with https://github.com/"
+                                class="form__input form__input--green"
+                                placeholder="https://github.com/example"
+                                v-model="repository"
+                              />
+                              <label for="repository" class="form__label">Enter the URL of your repo</label>
+                            </v-col>
+                            <v-col cols="12" lg="3">
+                              <input
+                                id="repository"
+                                type="text"
+                                class="form__input form__input--green"
+                                placeholder="master"
+                                v-model="branch"
+                              />
+                              <label for="repository" class="form__label">Branch to scan</label>
+                            </v-col>
+                            <v-col cols="12" lg="9">
+                              <input
+                                id="repository"
+                                type="email"
+                                class="form__input form__input--green"
+                                placeholder="dev@swapp.com"
+                                v-model="email"
+                              />
+                              <label for="repository" class="form__label">Enter your email</label>
+                            </v-col>
+                            <v-col cols="12" lg="3">
+                              <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
                                 <button class="btn btn--green" @click="handleClick">I scan my repo!</button>
-                                <!-- </v-row> -->
-                              </v-col>
-                            </v-row>
-                            <!-- <v-row align-content="space-between" justify="space-around">
-                              <v-col cols="12" lg="8">
-                                <input
-                                  id="repository"
-                                  type="url"
-                                  pattern="https://github.com/.+"
-                                  title="The URL must start with https://github.com/"
-                                  class="form__input form__input--green"
-                                  placeholder="https://github.com/example"
-                                  v-model="repository"
-                                />
-                                <label
-                                  for="repository"
-                                  class="form__label"
-                                >Enter the URL of your repo</label>
-                              </v-col>
-                              <v-col cols="12" lg="4">
-                                <v-row justify="end">
-                                <button class="btn btn--green" @click="handleClick">Submit</button>
-                                </v-row>
-                              </v-col>
-                            </v-row> -->
-                          <!-- </v-col> -->
+                              </v-row>
+                            </v-col>
+                          </v-row>
                         </v-container>
                         <v-dialog content-class="modal" v-show="loading" v-model="loading" dark>
                           <v-img
@@ -103,6 +76,7 @@
                           <p>We will sent your result by email</p>
                         </v-dialog>
                       </form>
+                      <span class="subheading mb-5">{{ welcomeAsterisk }}</span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -124,16 +98,15 @@
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
                 <h2 class="display-2 mb-1 mt-2">{{ donate }}</h2>
-                <!-- <span class="subheading my-5">{{ lorem }}</span> -->
                 <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
                       <v-container fluid>
-                        <v-row align-content="center">
+                        <v-row align="baseline" class="mr-5">
                           <v-col cols="12" lg="10">
                             <h3
-                              class="title my-5 mr-5"
-                            >Participate in the maintenance of this project! Make a donation to allow us to guarantee this service.</h3>
+                              class="title"
+                            >Take part in the maintenance of this project: make a donation!</h3>
                           </v-col>
                           <v-col cols="12" lg="2">
                             <button class="btn btn--green">I support!</button>
@@ -150,7 +123,7 @@
       </v-col>
     </v-row>
   </v-container>
-</template>        
+</template>          
 
 <script>
 export default {
@@ -158,10 +131,12 @@ export default {
   data: () => ({
     welcome: "Welcome on SWAPP!",
     donate: "Support the project",
+    welcomeText:
+      "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
+    welcomeAsterisk:
+      "*Only available for public repositories hosted on github and coded in PHP ^7.0.0.",
     donateText:
-      "SWAPP is an open source project that automates the detection of security vulnerabilities and / or code bugs.",
-    lorem:
-      "Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.",
+      "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
     repository: "",
     email: "",
     branch: "",
