@@ -34,8 +34,8 @@ Vue.use(Vuetify);
 const opts = new Vuetify({
     theme: {
         options: {
-            customProperties: true,
-          },
+            customProperties: true
+        },
         themes: {
             dark: {
                 colorPrimaryLight: "#3a3a3f",

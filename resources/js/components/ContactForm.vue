@@ -1,9 +1,5 @@
 <template>
   <v-dialog v-model="dialog" max-width="600px" v-if="showContact" adaptative @click:outside="closeModal">
-    <!-- <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
-    </template>-->
-
     <v-card color="colorPrimaryUltraLight" class="pa-3 card">
       <p class="top-right" @click="closeModal">&#215;</p>
       <v-card-title>

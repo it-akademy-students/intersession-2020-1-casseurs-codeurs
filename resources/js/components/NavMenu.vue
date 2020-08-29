@@ -11,8 +11,8 @@
           </template>
 
           <v-list-item
-            link
             v-if="$auth.check()"
+            link
             href="#user-profile"
             @click.stop="drawer = !drawer"
             @click="showProfile"
@@ -23,8 +23,8 @@
           </v-list-item>
 
           <v-list-item
-            link
             v-if="!$auth.check()"
+            link
             @click="showLoginForm"
             href="/#login-form"
             @click.stop="drawer = !drawer"
@@ -35,8 +35,8 @@
           </v-list-item>
 
           <v-list-item
-            link
             v-if="!$auth.check()"
+            link
             @click="showRegisterForm"
             href="/#register-form"
             @click.stop="drawer = !drawer"
@@ -47,10 +47,9 @@
           </v-list-item>
 
           <v-list-item
-            link
             v-if="$auth.check()"
+            link
             @click="handleLogout"
-            href="/"
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
@@ -102,14 +101,7 @@
       <v-hover>
         <v-app-bar-nav-icon
           @click.stop="drawer = !drawer"
-          slot-scope="{ hover }"
-          :class="
-            `${
-                hover
-                  ? 'colorTertiary--text hidden-md-and-up'
-                  : 'colorSecondary--text hidden-md-and-up'
-            }`
-          "
+          class="colorTertiary--text hidden-md-and-up"
         ></v-app-bar-nav-icon>
       </v-hover>
       <v-spacer class="hidden-md-and-up"></v-spacer>
@@ -131,7 +123,7 @@
       <v-spacer class="hidden-sm-and-down"></v-spacer>
 
       <v-list class="hidden-sm-and-down colorPrimary">
-        <v-list-item-group class="d-flex" v-model="navItems">
+        <v-list-item-group class="d-flex">
           <v-list-item v-on:click="showModalContact">
             <v-hover>
               <v-list-item-content
@@ -144,12 +136,16 @@
                   }`
                 "
               >
-                <v-list-item-title v-text="navItems[1].title"></v-list-item-title>
+                <v-list-item-title>Contact</v-list-item-title>
               </v-list-item-content>
             </v-hover>
           </v-list-item>
 
-          <v-list-item :href="navItems[0].link" link target="_blank">
+          <v-list-item
+            href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
+            link
+            target="_blank"
+          >
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
@@ -161,7 +157,7 @@
                   }`
                 "
               >
-                <v-list-item-title v-text="navItems[0].title"></v-list-item-title>
+                <v-list-item-title>GitHub</v-list-item-title>
               </v-list-item-content>
             </v-hover>
           </v-list-item>
@@ -242,7 +238,7 @@
                         slot-scope="{ hover }"
                         :class="
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
-                        @click="handleLogout"
+                        @click.prevent="handleLogout"
                       >
                         <v-list-item-title>Logout</v-list-item-title>
                       </v-list-item-content>
@@ -270,17 +266,6 @@ export default {
     drawer: false,
     appName: "SWAPP ",
     appSlogan: "- Security Scan for Web App",
-    navItems: [
-      {
-        title: "GitHub",
-        link:
-          "https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs",
-      },
-      {
-        title: "Contact",
-        // link: "/contact"
-      },
-    ],
   }),
   methods: {
     ...mapActions([
@@ -289,6 +274,7 @@ export default {
       "toggleSignInOn",
       "toggleUserProfile",
       "toggleLoggedIn",
+      "toggleEditProfile",
     ]),
     showModalContact: () => {
       store.commit("showContact");
@@ -299,9 +285,10 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "login" })
       );
-      // return this.$router.push('/login')
     },
     showRegisterForm() {
       return (
@@ -309,9 +296,10 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", true),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "register" })
       );
-      // return this.$router.push('/register')
     },
     showProfile() {
       return (
@@ -319,7 +307,8 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", true)
+        this.$store.dispatch("toggleUserProfile", true),
+        this.$store.dispatch("toggleEditProfile", false)
       );
     },
     showLoggedIn() {
@@ -328,7 +317,8 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", true),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false)
       );
     },
     initShowForm() {
@@ -337,12 +327,23 @@ export default {
         this.$store.dispatch("toggleSignInOn", true),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false)
       );
     },
     handleLogout() {
-      return this.initShowForm();
-      // return this.$router.push("/login");
+      this.$auth.logout().then(
+        (succ) => {
+          return (
+            this.initShowForm(),
+            this.$store.dispatch("setUser", ""),
+            this.$router.push({ name: "logout" })
+          );
+        },
+        (err) => {
+          console.log({ err });
+        }
+      );
     },
   },
 };

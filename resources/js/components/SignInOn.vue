@@ -44,20 +44,35 @@ import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   name: "SignInOn",
   methods: {
-    ...mapActions(["toggleRegisterForm", "toggleLoginForm", "toggleSignInOn"]),
+    ...mapActions([
+      "toggleRegisterForm",
+      "toggleLoginForm",
+      "toggleSignInOn",
+      "toggleUserProfile",
+      "toggleLoggedIn",
+      "toggleEditProfile",
+    ]),
     showLoginForm() {
       return (
         this.$store.dispatch("toggleLoginForm", true),
-        this.$store.dispatch("toggleSignInOn", false)
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$router.push({ name: "login" })
       );
-      // return this.$router.push('/login')
     },
     showRegisterForm() {
       return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleEditProfile", false),
         this.$store.dispatch("toggleRegisterForm", true),
-        this.$store.dispatch("toggleSignInOn", false)
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$router.push({ name: "register" })
       );
-      // return this.$router.push('/register')
     },
   },
 };

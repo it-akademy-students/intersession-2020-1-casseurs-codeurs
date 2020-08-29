@@ -1,8 +1,15 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="login-form">
-    <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary">Glad to see you again! You are now logged in!</span>
+    <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
+      <span color="colorPrimary--text">Glad to see you again! You are now logged in!</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+    </v-snackbar>
+    <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
+      <span
+        v-if="error == 'login_error'"
+        color="colorPrimary--text"
+      >Ooops! {{ error }} Error, unable to connect with these credentials.</span>
+      <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
       <v-row>
@@ -62,6 +69,7 @@ export default {
       password: "",
     });
     return {
+      // @TODO : fix snackbar
       show1: false,
       snackbar: false,
       defaultForm,
@@ -73,21 +81,20 @@ export default {
     };
   },
   computed: {
-    // loggedIn() {
-    //   return this.$store.state.auth.status.loggedIn;
-    // },
     formIsValid() {
       return this.email && this.password;
     },
   },
-  // created() {
-  //   if (this.loggedIn) {
-  //     this.showLoggedIn();
-  //     // this.$router.push("/profile");
-  //   }
-  // },
   methods: {
-    ...mapActions(["toggleLoginForm", "toggleSignInOn"]),
+    ...mapActions([
+      "toggleLoginForm",
+      "toggleSignInOn",
+      "toggleRegisterForm",
+      "toggleLoggedIn",
+      "toggleUserProfile",
+      "toggleEditProfile",
+      "setUser",
+    ]),
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
@@ -98,41 +105,57 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", true),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false)
       );
     },
     initShowForm() {
       return (
+        this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", true),
-        this.$store.dispatch("toggleLoginForm", false)
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false)
       );
     },
     login() {
       // get the redirect object
-
       var redirect = this.$auth.redirect();
       var app = this;
-      this.$auth.login({
-        data: {
-          email: app.email,
-          password: app.password,
-        },
-        success: function () {
-          // handle redirection
-          app.success = true;
-          snackbar = true;
-          this.showLoggedIn();
-          // const redirectTo = "dashboard";
-          // this.$router.push({ name: redirectTo });
-        },
-        error: function () {
-          app.has_error = true;
-          app.error = res.response.data.error;
-          this.initShowForm();
-        },
-        rememberMe: true,
-        fetchUser: true,
-      });
+      this.$auth
+        .login({
+          data: {
+            email: app.email,
+            password: app.password,
+          },
+          staySignedIn: true,
+          fetchUser: true,
+          redirect: null,
+        })
+        .then(
+          (succ) => {
+            console.log({ succ });
+            console.log(`le data de la response ${succ.data.data.name}`);
+            console.log(`user check login ${this.$auth.check()}`);
+            // handle redirection
+            return (
+              (app.success = true),
+              (app.snackbar = true),
+              this.showLoggedIn(),
+              this.resetForm(),
+              this.$store.dispatch("setUser", succ.data.data),
+              this.$router.push({ name: "user" })
+            );
+          },
+          (err) => {
+            console.log({ err });
+            app.success = false;
+            app.snackbar = true;
+            app.has_error = true;
+            app.error = succ.response.data.error;
+          }
+        );
     },
   },
 };

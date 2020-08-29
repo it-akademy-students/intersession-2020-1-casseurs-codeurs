@@ -6,9 +6,10 @@ import VeeValidate from 'vee-validate';
 import 'es6-promise/auto'
 import axios from 'axios'
 import VueAuth from '@websanova/vue-auth'
+import auth from '@websanova/vue-auth';
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router'
-import auth from '@/auth'
+import config from '@/auth'
 
 //Route information router
 import Route from "@/js/routes.js"
@@ -24,15 +25,16 @@ Vue.use(VueRouter)
 // Set Vue globally
 window.Vue = Vue
 
-// Set Vue authentication
+axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api/`
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = `${process.env.MIX_APP_URL}:8001/api/v1/`
-Vue.use(VueAuth, auth)
+
+// Set Vue authentication
+Vue.use(auth, config)
 
 // Vue.use(VueResource)
-Vue.use(VeeValidate);
-
 // Vue.http.options.root = "http://localhost:8000/api";
+
+Vue.use(VeeValidate);
 
 const app = new Vue({
     el: "#app",
@@ -40,5 +42,5 @@ const app = new Vue({
     store,
     router: Route,
     render: h => h(App)
-})
+}).$mount('#app')
 

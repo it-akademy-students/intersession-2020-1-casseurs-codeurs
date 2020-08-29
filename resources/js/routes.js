@@ -5,6 +5,7 @@ import Home from "@/js/pages/Home";
 import LoginForm from "@/js/components/LoginForm";
 import RegisterForm from "@/js/components/RegisterForm";
 import UserProfile from "@/js/components/UserProfile";
+import MainApp from "@/js/layouts/MainApp"
 import PageNotFound from "@/js/pages/PageNotFound";
 
 Vue.use(VueRouter);
@@ -23,9 +24,9 @@ const Route = new VueRouter({
             }
         },
         {
-            path: "/register/",
+            path: "/register",
             name: "register",
-            component: Home,
+            component: MainApp,
             meta: {
                 auth: false
               }
@@ -33,16 +34,24 @@ const Route = new VueRouter({
         {
             path: "/login",
             name: "login",
-            component: LoginForm,
+            component: MainApp,
             meta: {
                 auth: false
               }
         },
-        // USER ROUTES
+        // USER ROUTES (only authenticated users)
         {
-            path: "/profile",
-            name: "profile",
-            component: UserProfile,
+            path: "/user",
+            name: "user",
+            component: MainApp,
+            meta: {
+                auth: true
+            }
+        },
+        {
+            path: "/logout",
+            name: "logout",
+            component: Home,
             meta: {
                 auth: true
             }

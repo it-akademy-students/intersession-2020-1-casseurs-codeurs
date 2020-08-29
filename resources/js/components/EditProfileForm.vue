@@ -1,34 +1,39 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
     <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">Congratulations! Your account have been successfully created!</span>
+      <span color="colorPrimary--text">Congratulations! Your profile has been successfully updated!</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
     <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
       <span
         v-if="error == 'registration_validation_error'"
         color="colorPrimary--text"
-      >Ooops! Error, can not register at the moment. If the problem persists, please contact an administrator.</span>
+      >Ooops! Error, can not edit at the moment. If the problem persists, please contact an administrator.</span>
       <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
       <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
       <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
-      <v-row>
-        <v-col cols="11">
-          <h2
-            class="pa-2 text-center"
-          >Register to benefit from all the features of the SWAPP application</h2>
-        </v-col>
-        <v-col cols="1">
-          <v-icon @click="initShowForm">mdi-close</v-icon>
-        </v-col>
-      </v-row>
+      <v-col cols="12">
+        <v-row>
+          <v-col cols="11">
+            <h2
+              class="pa-2 text-center"
+            >You can edit your profile {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+          </v-col>
+          <v-col cols="1">
+            <v-icon @click="handleCancelled">mdi-close</v-icon>
+          </v-col>
+        </v-row>
+      </v-col>
     </v-col>
-    <v-form ref="form" name="form" @submit.prevent="register" method="post">
+    <v-form ref="form" name="form" @submit.prevent="updateProfil" method="post">
       <v-container fluid>
         <v-row>
+          <v-col cols="12">
+            <v-text-field v-model="id" type="text" name="id" label="id" class="d.none" required></v-text-field>
+          </v-col>
           <v-col cols="12">
             <v-text-field
               v-model="name"
@@ -78,33 +83,13 @@
           </v-col>
 
           <v-col cols="12">
-            <v-select
+            <v-text-field
               v-model="job"
-              :items="jobs"
-              label="Your Job"
+              type="text"
               name="job"
+              label="Your Job"
               color="colorTertiaryLight"
-            ></v-select>
-          </v-col>
-          <v-col cols="12">
-            <v-checkbox v-model="accept_terms" color="colorTertiaryLight">
-              <template v-slot:label>
-                <div @click.stop>
-                  Please read and accept
-                  <a
-                    href="javascript:;"
-                    @click.stop="terms = true"
-                    class="btn-text btn-text--violet"
-                  >terms</a>
-                  and
-                  <a
-                    href="javascript:;"
-                    @click.stop="conditions = true"
-                    class="btn-text btn-text--violet"
-                  >conditions.</a>
-                </div>
-              </template>
-            </v-checkbox>
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
@@ -116,29 +101,9 @@
           text
           color="colorTertiaryLight"
           type="submit"
-        >Create my account</v-btn>
+        >Edit my account</v-btn>
       </v-card-actions>
     </v-form>
-    <v-dialog v-model="terms" width="70%">
-      <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">Terms</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn text color="colorTertiaryLight" @click="terms = false">Ok</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="conditions" width="70%">
-      <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">Conditions</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn text color="colorTertiaryLight" @click="conditions = false">Ok</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
@@ -146,80 +111,65 @@
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
-  name: "RegisterForm",
+  name: "EditProfileForm",
   data() {
     const defaultForm = Object.freeze({
+      id: "",
       name: "",
       email: "",
       password: "",
       password_confirmation: "",
       job: "",
-      accept_terms: false,
     });
-
     return {
       show1: false,
-      form: Object.assign({}, defaultForm),
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-      job: "",
-      jobs: [
-        "Frontend Developer",
-        "Backend Developer",
-        "Full Stack Developer",
-        "Admin sys",
-        "Cyber Security",
-        "Project Manager",
-        "Other",
-      ],
-      accept_terms: false,
-      terms: false,
-      conditions: false,
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
+      // @TODO : fix snackbar
+    //   @TODO : fix display user datas
+      id: this.$store.getters.getUser.id,
+      name: this.$store.getters.getUser.name,
+      email: this.$store.getters.getUser.email,
+      password: this.$store.getters.getUser.password,
+      password_confirmation: this.$store.getters.getUser.password,
+      job: this.$store.getters.getUser.job,
       snackbar: false,
       defaultForm,
       has_error: false,
       error: "",
       errs: {},
       success: false,
-      // @TODO : fix snackbar
     };
   },
   computed: {
     formIsValid() {
       return (
+        this.id &&
         this.name &&
         this.email &&
         this.password &&
         this.password_confirmation &&
-        this.job &&
-        this.accept_terms
+        this.job
       );
     },
   },
   methods: {
     ...mapActions([
       "toggleRegisterForm",
-      "toggleSignInOn",
       "toggleLoginForm",
-      "toggleEditProfile",
+      "toggleSignInOn",
       "toggleUserProfile",
       "toggleLoggedIn",
+      "toggleEditProfile",
     ]),
-    register() {
+    // @TODO : handle update and delete User
+    updateProfil() {
       var app = this;
       this.$auth
-        .register({
-          data: {
-            name: app.name,
-            email: app.email,
-            password: app.password,
-            password_confirmation: app.password_confirmation,
-            job: app.job,
-          },
-          redirect: null,
+        .user({
+          name: app.name,
+          email: app.email,
+          password: app.password,
+          password_confirmation: app.password_confirmation,
+          job: app.job,
         })
         .then(
           (succ) => {
@@ -227,17 +177,9 @@ export default {
             return (
               (app.success = true),
               (app.snackbar = true),
+              this.$store.dispatch("setUser", succ.data.data),
               this.resetForm(),
-              this.$store.dispatch("toggleLoginForm", true),
-              this.$store.dispatch("toggleSignInOn", false),
-              this.$store.dispatch("toggleRegisterForm", false),
-              this.$store.dispatch("toggleLoggedIn", false),
-              this.$store.dispatch("toggleUserProfile", false),
-              this.$store.dispatch("toggleEditProfile", false),
-              this.$router.push({
-                name: "login",
-                params: { successRegistrationRedirect: true },
-              })
+              this.initShowForm()
             );
           },
           (err) => {
@@ -261,10 +203,10 @@ export default {
     initShowForm() {
       return (
         this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", true),
+        this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleUserProfile", true),
         this.$store.dispatch("toggleEditProfile", false)
       );
     },
