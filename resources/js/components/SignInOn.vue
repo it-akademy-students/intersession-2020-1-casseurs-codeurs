@@ -27,7 +27,7 @@
         </v-row>
       </v-col>
       <v-col cols="12">
-        <h3 class="mt-5 pa-4">Why you should create an account?</h3>
+        <h3 class="mt-5 pa-4">Why should you create an account?</h3>
       </v-col>
       <v-col cols="12">
         <p
