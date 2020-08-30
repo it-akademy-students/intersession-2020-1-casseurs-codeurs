@@ -16,8 +16,6 @@ import Route from "@/js/routes.js";
 import App from "@/js/views/App";
 // Store file
 import store from "./stores/store";
-// i18n
-import i18n from '@/plugins/i18n'
 
 Vue.config.productionTip = false
 // Set Vue router
@@ -49,6 +47,5 @@ const app = new Vue({
     vuetify,
     store,
     router: Route,
-    i18n,
     render: h => h(App)
 }).$mount("#app");
