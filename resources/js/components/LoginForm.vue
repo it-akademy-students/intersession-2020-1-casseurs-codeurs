@@ -1,20 +1,20 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="login-form">
     <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">Glad to see you again! You are now logged in!</span>
+      <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1)  }}</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
     <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
       <span
         v-if="error == 'login_error'"
         color="colorPrimary--text"
-      >Ooops! {{ error }} Error, unable to connect with these credentials.</span>
+      >Ooops! {{ error }} {{ $tc("loginForm.snackBar.error", 1)  }}</span>
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">Please enter your username and password to log in.</h2>
+          <h2 class="pa-2 text-center">{{ $tc("loginForm.title", 1)  }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
@@ -30,7 +30,7 @@
               required
               type="email"
               name="email"
-              label="Email"
+              :label="$tc('loginForm.form.labelEmail', 1)"
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
@@ -41,8 +41,8 @@
               required
               :type="show1 ? 'text' : 'password'"
               name="password"
-              label="Password"
-              hint="Minimum 8 characters"
+              :label="$tc('loginForm.form.labelPwd', 1)"
+              :hint="$tc('loginForm.form.hint', 1)"
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
             ></v-text-field>
@@ -50,9 +50,9 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="resetForm" class="colorTertiaryLight--text">Forgot password?</v-btn>
+        <v-btn text @click="resetForm" class="colorTertiaryLight--text">{{ $tc("loginForm.actions.forgotPwd", 1)  }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn :disabled="!formIsValid" text class="colorTertiaryLight--text" type="submit">Log In</v-btn>
+        <v-btn :disabled="!formIsValid" text class="colorTertiaryLight--text" type="submit">{{ $tc("loginForm.actions.login", 1)  }}</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>

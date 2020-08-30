@@ -1,7 +1,7 @@
 <template>
   <v-footer app style="padding: 1rem 0.8rem;" class="d-flex align-baseline justify-center">
     <span class="mostlyWhite--text text-center">
-      &copy; 2020, performed by Les Casseurs Codeurs. Source code available on
+      &copy; {{ $tc("footer.copyright", 1)  }}
       <a
         class="btn-text btn-text--green"
         href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"

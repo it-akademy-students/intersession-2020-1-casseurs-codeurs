@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">Your profile {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+          <h2 class="pa-2 text-center">{{ $tc("userProfile.title", 1)  }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
@@ -28,7 +28,7 @@
               :value="this.$store.getters.getUser.name"
               type="text"
               name="username"
-              label="Username"
+              :label="$tc('userProfile.form.labelName', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -38,7 +38,7 @@
               :value="this.$store.getters.getUser.email"
               type="email"
               name="email"
-              label="Email"
+              :label="$tc('userProfile.form.labelEmail', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -47,7 +47,7 @@
             <v-text-field
               :value="this.$store.getters.getUser.job"
               type="text"
-              label="Your Job"
+              :label="$tc('userProfile.form.labelJob', 1)"
               name="job"
               color="colorTertiaryLight"
             ></v-text-field>
@@ -58,13 +58,13 @@
         <v-container fluid>
           <v-row>
             <v-col xs="6" md="auto">
-              <v-btn text @click.prevent="handleDeleteUser" class="colorDanger--text">Delete Account</v-btn>
+              <v-btn text @click.prevent="handleDeleteUser" class="colorDanger--text">{{ $tc("userProfile.actions.delete", 1)  }}</v-btn>
             </v-col>
             <v-col xs="6" md="auto">
-              <v-btn text class="colorWarning--text" @click.prevent="handleEditProfile">Edit Profile</v-btn>
+              <v-btn text class="colorWarning--text" @click.prevent="handleEditProfile">{{ $tc("userProfile.actions.edit", 1)  }}</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
-              <v-btn text @click.prevent="handleLogout" class="colorTertiaryLight--text">Logout</v-btn>
+              <v-btn text @click.prevent="handleLogout" class="colorTertiaryLight--text">{{ $tc("userProfile.actions.logout", 1)  }}</v-btn>
             </v-col>
           </v-row>
         </v-container>

@@ -1,8 +1,8 @@
 <template>
   <v-banner class="hidden-lg-and-up" elevation="2" outlined sticky app>
-    <span class="font-weight-black"> {{ donate }} </span> <span class="subheading"> {{ donateText }} </span> 
+    <span class="font-weight-black">{{ $tc("mainWelcomeDonate.donate", 1) }} </span> <span class="subheading"> {{ $tc("mainWelcomeDonate.donateText", 1) }} </span> 
     <template v-slot:actions>
-      <v-btn text class="btn-text btn-text--green" to="/" link>I support !</v-btn>
+      <v-btn text class="btn-text btn-text--green" to="/" link>{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</v-btn>
     </template>
   </v-banner>
 </template>   
@@ -11,9 +11,6 @@
 export default {
   name: "DonateBanner",
   data: () => ({
-    donate: "Take part in the maintenance of this project: make a donation!",
-    donateText:
-      "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
   }),
 };
 </script>

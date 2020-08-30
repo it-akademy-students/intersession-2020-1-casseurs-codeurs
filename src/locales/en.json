@@ -1,0 +1,149 @@
+{
+  "navMenu": {
+    "appName": "SWAPP ",
+    "appSlogan": "- Security Scan for Web Apps",
+    "links": {
+      "account": "Account",
+      "profile": "Profile",
+      "signIn": "Sign in",
+      "signUp": "Sign up",
+      "logout": "Logout"
+    }
+  },
+  "notFound": {
+    "msg": "Ooops... Sorry, we didn't find what you were looking for...",
+    "goBack": "Go Back Home"
+
+  },
+  "footer": {
+    "copyright": "2020, performed by Les Casseurs Codeurs. Source code available on"
+  },
+  "mainWelcomeDonate": {
+    "welcome": "Welcome on SWAPP!",
+    "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
+    "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^7.0.0.",
+    "welcomeAction": "Scan your repository",
+    "welcomeBtn": "I scan my repo!",
+    "welcomeForm": {
+      "labelUrl": "Enter the URL of your repo",
+      "labelBranch": "Branch to scan",
+      "labelEmail": "Enter your email"
+    },
+    "welcomeModale": {
+      "success":  "Success",
+      "successMsg": "We will sent your result by email"
+      },
+    "donate": "Support the project ",
+    "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
+    "donateAction": "Take part in the maintenance of this project: make a donation!",
+    "donateBtn": "I support!"
+  },
+  "userProfile": {
+    "title": "Your profile ",
+    "form": {
+      "labelName": "Username",
+      "labelEmail": "Email",
+      "labelJob": "Your Job"
+    },
+    "actions": {
+      "delete": "Delete Account",
+      "edit": "Edit Profile",
+      "logout": "Logout"
+    }
+  },
+  "signInOn": {
+    "title": "Log in or Create your account to benefit from all the features of the SWAPP application.",
+    "actions": {
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
+    "whyTitle": "Why should you create an account?",
+    "whyText": "The basic functions of the application are available free of charge without registration. However, connected users benefit from additional features: report by e-mail, possibility of php version upgrade, history of reports." 
+  },
+  "register": {
+    "title": "Register to benefit from all the features of the SWAPP application",
+    "form": {
+      "labelName": "Username",
+      "labelEmail": "Email",
+      "labelPwd": "Password",
+      "hint": "Minimum 8 characters",
+      "labelPwdConfirm": "Password Confirmation",
+      "labelJob": "Your Job",
+      "jobs": ["Frontend Developer","Backend Developer","Full Stack Developer", "Admin sys", "Cyber Security", "Project Manager", "Other"],
+      "acceptTerms": "Please read and accept",
+      "termsLink": "terms",
+      "and": "and",
+      "conditionsLink": "conditions.",
+      "create": "Create my account",
+      "cancel": "Cancel"
+    },
+    "terms": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "conditions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "snackBar": {
+      "success": "Congratulations! Your account have been successfully created!",
+      "error": "Ooops! Error, can not register at the moment. If the problem persists, please contact an administrator."
+    }
+  },
+  "loginForm": {
+    "snackBar": {
+      "success": "Glad to see you again! You are now logged in!",
+      "error": "Error, unable to connect with these credentials."
+    },
+    "title": "Please enter your username and password to log in.",
+    "form": {
+      "labelEmail": "Email",
+      "labelPwd": "Password",
+      "hint": "Minimum 8 characters"
+    },
+    "actions": {
+      "forgotPwd": "Forgot password?",
+      "login": "Log In"
+    }
+  },
+  "logged": {
+    "title": {
+      "hello": "Hello",
+      "welcome": ", welcome on board!",
+      "action": "What would you like to do today?"
+    },
+    "btnActions": {
+      "analysis": "Consult the analysis history",
+      "migration": "Migration tools php5 > php7"
+    },
+    "stats": {
+      "textPart1": "The SWAPP application has already enabled you to detect ",
+      "textPart2": " bugs and security vulnerabilities in your code!"
+    }
+  },
+  "editProfile": {
+    "title": "You can edit your profile ",
+    "form": {
+      "labelName": "Username",
+      "labelEmail": "Email",
+      "labelPwd": "Password",
+      "hint": "Minimum 8 characters",
+      "labelPwdConfirm": "Password Confirmation",
+      "labelJob": "Your Job",
+      "edit": "Edit my account",
+      "cancel": "Cancel"
+    },
+    "snackBar": {
+      "success": "Congratulations! Your profile has been successfully updated!",
+      "error": "Ooops! Error, can not edit your profile at the moment. If the problem persists, please contact an administrator."
+    }
+  },
+  "contactForm": {
+    "title": "Any question? Contact us!",
+    "form": {
+      "labelLastName": "Last name *",
+      "labelFirstName": "First Name *",
+      "labelEmail": "Email *",
+      "labelMsg": "Message *",
+      "required": "*required field",
+      "actions": {
+        "cancel": "Cancel",
+        "send": "Send"
+      }
+    }
+  }
+}

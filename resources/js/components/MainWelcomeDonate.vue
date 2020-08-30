@@ -7,13 +7,13 @@
           <v-container fluid class="px-5 mb-1">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h1 class="display-3 mb-5">{{ welcome }}</h1>
-                <span class="text-h6 mt-5">{{ welcomeText }}</span>
+                <h1 class="display-3 mb-5">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
+                <span class="text-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
                 <v-container fluid class="pa-0 mt-5">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
                       <div class="my-3">
-                        <h3 class="display-1">Scan your repository</h3>
+                        <h3 class="display-1">{{ $tc("mainWelcomeDonate.welcomeAction", 1) }}</h3>
                       </div>
                     </v-col>
                     <!-- form -->
@@ -31,31 +31,31 @@
                                 placeholder="https://github.com/example"
                                 v-model="repository"
                               />
-                              <label for="repository" class="form__label">Enter the URL of your repo</label>
+                              <label for="repository" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="3">
                               <input
-                                id="repository"
+                                id="branch"
                                 type="text"
                                 class="form__input form__input--green"
                                 placeholder="master"
                                 v-model="branch"
                               />
-                              <label for="repository" class="form__label">Branch to scan</label>
+                              <label for="branch" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelBranch", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="9">
                               <input
-                                id="repository"
+                                id="mail"
                                 type="email"
                                 class="form__input form__input--green"
                                 placeholder="dev@swapp.com"
                                 v-model="email"
                               />
-                              <label for="repository" class="form__label">Enter your email</label>
+                              <label for="mail" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="3">
                               <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
-                                <button class="btn btn--green" @click="handleClick">I scan my repo!</button>
+                                <button class="btn btn--green" @click="handleClick">{{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}</button>
                               </v-row>
                             </v-col>
                           </v-row>
@@ -72,11 +72,11 @@
                           <v-skeleton-loader class="mx-auto" max-width="300" type="card"></v-skeleton-loader>
                         </v-dialog>
                         <v-dialog content-class="modal" v-show="fetching" v-model="fetching" dark>
-                          <h4>Success</h4>
-                          <p>We will sent your result by email</p>
+                          <h4>{{ $tc("mainWelcomeDonate.welcomeModale.success", 1) }}</h4>
+                          <p>{{ $tc("mainWelcomeDonate.welcomeModale.successMsg", 1) }}</p>
                         </v-dialog>
                       </form>
-                      <span class="subheading mb-5">{{ welcomeAsterisk }}</span>
+                      <span class="subheading mb-5"> {{ $tc("mainWelcomeDonate.welcomeAsterisk", 1) }} </span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -97,7 +97,7 @@
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h2 class="display-2 mb-1 mt-2">{{ donate }}</h2>
+                <h2 class="display-2 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1)  }}</h2>
                 <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
@@ -106,10 +106,10 @@
                           <v-col cols="12" lg="10">
                             <h3
                               class="title"
-                            >Take part in the maintenance of this project: make a donation!</h3>
+                            > {{ $tc("mainWelcomeDonate.donateAction", 1)  }} </h3>
                           </v-col>
                           <v-col cols="12" lg="2">
-                            <button class="btn btn--green">I support!</button>
+                            <button class="btn btn--green"> {{ $tc("mainWelcomeDonate.donateBtn", 1) }} </button>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -129,14 +129,6 @@
 export default {
   name: "MainWelcome",
   data: () => ({
-    welcome: "Welcome on SWAPP!",
-    donate: "Support the project",
-    welcomeText:
-      "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
-    welcomeAsterisk:
-      "*Only available for public repositories hosted on github and coded in PHP ^7.0.0.",
-    donateText:
-      "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
     repository: "",
     email: "",
     branch: "",
@@ -174,12 +166,6 @@ export default {
   background-color: #62cb5c;
   transform: scale(1.02);
 }
-// .email-input {
-//   width: 83%;
-// }
-// .form {
-//   position: relative;
-// }
 .modal {
   display: flex;
   flex-direction: column;
@@ -194,10 +180,7 @@ export default {
   -webkit-animation: rotation 1s infinite linear;
   position: absolute;
 }
-// h4,
-// p {
-//   text-align: center;
-// }
+
 @-webkit-keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);

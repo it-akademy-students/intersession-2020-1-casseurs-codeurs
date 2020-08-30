@@ -1,14 +1,14 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
     <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">Congratulations! Your profile has been successfully updated!</span>
+      <span color="colorPrimary--text">{{ $tc("editProfile.snackBar.success", 1) }}</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
     <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
       <span
         v-if="error == 'registration_validation_error'"
         color="colorPrimary--text"
-      >Ooops! Error, can not edit at the moment. If the problem persists, please contact an administrator.</span>
+      >{{ $tc("editProfile.snackBar.error", 1) }}</span>
       <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
       <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
       <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
@@ -20,7 +20,7 @@
           <v-col cols="11">
             <h2
               class="pa-2 text-center"
-            >You can edit your profile {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+            >{{ $tc("editProfile.title", 1) }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
           </v-col>
           <v-col cols="1">
             <v-icon @click="handleCancelled">mdi-close</v-icon>
@@ -39,7 +39,7 @@
               v-model="name"
               type="text"
               name="username"
-              label="Username"
+              :label="$tc('editProfile.form.labelName', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -49,7 +49,7 @@
               v-model="email"
               type="email"
               name="email"
-              label="Email"
+              :label="$tc('editProfile.form.labelEmail', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -60,48 +60,46 @@
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password"
-              label="Password"
-              hint="Minimum 8 characters"
+              :label="$tc('editProfile.form.labelPwd', 1)"
+              :hint="$tc('editProfile.form.hint', 1)"
               required
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
-
           <v-col cols="12">
             <v-text-field
               v-model="password_confirmation"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password_confirmation"
-              label="Password Confirmation"
-              hint="Minimum 8 characters"
+              :label="$tc('editProfile.form.labelPwdConfirm', 1)"
+              :hint="$tc('editProfile.form.hint', 1)"
               required
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
-
           <v-col cols="12">
             <v-text-field
               v-model="job"
               type="text"
               name="job"
-              label="Your Job"
+              :label="$tc('editProfile.form.labelJob', 1)"
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="handleCancelled">Cancel</v-btn>
+        <v-btn text @click="handleCancelled">{{ $tc("editProfile.form.cancel", 1) }}</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           color="colorTertiaryLight"
           type="submit"
-        >Edit my account</v-btn>
+        >{{ $tc("editProfile.form.edit", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -124,7 +122,7 @@ export default {
     return {
       show1: false,
       // @TODO : fix snackbar
-    //   @TODO : fix display user datas
+      //   @TODO : fix display user datas
       id: this.$store.getters.getUser.id,
       name: this.$store.getters.getUser.name,
       email: this.$store.getters.getUser.email,

@@ -6,7 +6,7 @@
         <v-list-group class="colorSecondary--text">
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title class="colorSecondary--text">Account</v-list-item-title>
+              <v-list-item-title class="colorSecondary--text">{{ $tc("navMenu.links.account", 1) }}</v-list-item-title>
             </v-list-item-content>
           </template>
 
@@ -18,7 +18,7 @@
             @click="showProfile"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Profile</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -30,7 +30,7 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Sign in</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -42,7 +42,7 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Sign up</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -53,7 +53,7 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -97,13 +97,11 @@
       </v-hover>
     </v-navigation-drawer>
     <!-- navbar -->
-    <v-app-bar app>
-      <v-hover>
-        <v-app-bar-nav-icon
-          @click.stop="drawer = !drawer"
-          class="colorTertiary--text hidden-md-and-up"
-        ></v-app-bar-nav-icon>
-      </v-hover>
+    <v-app-bar app height="80rem">
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        class="colorSecondary--text hidden-md-and-up"
+      ></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-img
         class="mx-1"
@@ -117,11 +115,16 @@
         class="colorSecondary--text display-1"
         style="font-family: 'Open Sans', sans-serif;"
       >
-        {{ appName }}
-        <span class="hidden-sm-and-down">{{ appSlogan }}</span>
+        {{ $tc("navMenu.appName", 1) }}
+        <span
+          class="hidden-sm-and-down text-wrap"
+        >{{ $tc("navMenu.appSlogan", 1) }}</span>
       </v-toolbar-title>
-      <v-spacer class="hidden-sm-and-down"></v-spacer>
+      <v-spacer></v-spacer>
 
+      <!-- language switcher -->
+      <lang-switcher />
+      
       <v-list class="hidden-sm-and-down colorPrimary">
         <v-list-item-group class="d-flex">
           <v-list-item v-on:click="showModalContact">
@@ -198,7 +201,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showProfile"
                       >
-                        <v-list-item-title>Profile</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -212,7 +215,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showLoginForm"
                       >
-                        <v-list-item-title>Sign in</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -226,7 +229,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showRegisterForm"
                       >
-                        <v-list-item-title>Sign up</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -240,7 +243,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click.prevent="handleLogout"
                       >
-                        <v-list-item-title>Logout</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -255,17 +258,16 @@
 </template>
 
 <script>
-import NavMenu from "@/js/components/NavMenu";
+import LangSwitcher from "@/js/components/LangSwitcher";
 import store from "../stores/store";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "NavMenu",
   store: store,
+  components: { LangSwitcher },
   data: () => ({
     drawer: false,
-    appName: "SWAPP ",
-    appSlogan: "- Security Scan for Web App",
   }),
   methods: {
     ...mapActions([

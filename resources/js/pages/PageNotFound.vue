@@ -3,13 +3,13 @@
     <v-row justify="center" align="center" class="pa-5 mb-5 mt-16">
       <h2
         class="display-1 text-center pa-md-4 ma-auto"
-      >Ooops... Sorry, we didn't find what you were looking for...</h2>
+      >{{ $tc("notFound.msg", 1)  }}</h2>
     </v-row>
     <v-spacer></v-spacer>
     <v-row justify="center" align="center" class="pa-5 my-5">
       <v-btn x-large class="px-10 ml-2 font-weight-black animated" color="colorSecondary" to="/">
         <v-icon left class="mr-5">mdi-home</v-icon>
-        <div>Go Back Home</div>
+        <div>{{ $tc("notFound.goBack", 1)  }}</div>
       </v-btn>
     </v-row>
   </v-container>
