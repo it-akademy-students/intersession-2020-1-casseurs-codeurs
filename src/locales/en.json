@@ -12,11 +12,13 @@
   },
   "notFound": {
     "msg": "Ooops... Sorry, we didn't find what you were looking for...",
-    "goBack": "Go Back Home"
+    "goBack": "Go Back"
 
   },
   "footer": {
-    "copyright": "2020, performed by Les Casseurs Codeurs. Source code available on"
+    "copyright": "2020, performed by ",
+    "brand": "Les Casseurs Codeurs",
+    "link": ". Source code available on "
   },
   "mainWelcomeDonate": {
     "welcome": "Welcome on SWAPP!",

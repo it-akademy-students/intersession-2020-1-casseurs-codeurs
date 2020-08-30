@@ -2,11 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Home from "@/js/pages/Home";
-import MainApp from "@/js/layouts/MainApp"
 import PageNotFound from "@/js/pages/PageNotFound";
+import UserProfile from "@/js/components/UserProfile";
+import RegisterForm from "@/js/components/RegisterForm";
+import LoginForm from "@/js/components/LoginForm";
+import Logged from "@/js/components/Logged";
+import EditProfileForm from "@/js/components/EditProfileForm";
+import ContactForm from "@/js/components/ContactForm";
 
 Vue.use(VueRouter);
-
 
 const Route = new VueRouter({
     history: true,
@@ -18,39 +22,57 @@ const Route = new VueRouter({
             component: Home,
             meta: {
                 auth: undefined
-            }
+            },
+            children: [
+                {
+                    path: "register",
+                    name: "home-register",
+                    component: RegisterForm,
+                    meta: {
+                        auth: false
+                    }
+                },
+                {
+                    path: "login",
+                    name: "home-login",
+                    component: LoginForm,
+                    meta: {
+                        auth: false
+                    }
+                },
+                
+
+                // USER ROUTES (only authenticated users)
+                {
+                    path: "user",
+                    name: "user",
+                    component: Logged,
+                    meta: {
+                        auth: true
+                    },
+                    children: [
+                        {
+                            path: "account",
+                            name: "user-account",
+                            component: UserProfile,
+                            children: [
+                                {
+                                    path: "edit",
+                                    name: "user-account-edit",
+                                    component: EditProfileForm
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
-            path: "/register",
-            name: "register",
-            component: MainApp,
+            path: "contact",
+            name: "contact",
+            component: ContactForm,
             meta: {
-                auth: false
-              }
-        },
-        {
-            path: "/login",
-            name: "login",
-            component: MainApp,
-            meta: {
-                auth: false
-              }
-        },
-        // USER ROUTES (only authenticated users)
-        {
-            path: "/user",
-            name: "user",
-            component: MainApp,
-            meta: {
-                auth: true
-            }
-        },
-        {
-            path: "/logout",
-            name: "logout",
-            component: Home,
-            meta: {
-                auth: true
+                auth: undefined
             }
         },
         // 404 ROUTE
@@ -62,8 +84,15 @@ const Route = new VueRouter({
                 auth: undefined
             }
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if (to.hash) {
+          return {
+            selector: to.hash
+            , offset: { x: 0, y: 10 }
+          }
+        }
+      }
 });
-
 
 export default Route;

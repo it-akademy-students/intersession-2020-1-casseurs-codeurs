@@ -15,12 +15,12 @@
         </v-col>
         <v-col cols="12" lg="4">
           <v-card color="colorPrimaryUltraLight" class="pa-5 mt-5">
-            <sign-in-on v-show="this.$store.getters.isShowSignInOn && !$auth.check()" />
-            <login-form v-show="this.$store.getters.isShowLoginForm && !$auth.check()" />
-            <register-form v-show="this.$store.getters.isShowRegisterForm && !$auth.check()" />
-            <user-profile v-show="this.$store.getters.isShowUserProfile && $auth.check()" />
-            <logged v-show="this.$store.getters.isShowLoggedIn && $auth.check()" />
-            <edit-profile-form v-show="this.$store.getters.isShowEditProfile && $auth.check()" />
+            <sign-in-on v-show="this.$store.getters.isShowSignInOn" />
+            <login-form v-show="this.$store.getters.isShowLoginForm" />
+            <register-form v-show="this.$store.getters.isShowRegisterForm" />
+            <user-profile v-show="this.$store.getters.isShowUserProfile" />
+            <logged v-show="this.$store.getters.isShowLoggedIn" />
+            <edit-profile-form v-show="this.$store.getters.isShowEditProfile" />
           </v-card>
         </v-col>
       </v-row>

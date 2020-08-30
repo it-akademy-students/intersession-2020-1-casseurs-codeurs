@@ -1,20 +1,34 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="login-form">
-    <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1)  }}</span>
+    <v-snackbar
+      v-if="snackbar && success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="colorSecondaryLight"
+    >
+      <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1) }}</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
-    <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
+    <v-snackbar
+      v-if="snackbar && has_error && !success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="error"
+    >
       <span
-        v-if="error == 'login_error'"
+        v-if="this.error == 'login_error'"
         color="colorPrimary--text"
-      >Ooops! {{ error }} {{ $tc("loginForm.snackBar.error", 1)  }}</span>
+      >Ooops! {{ this.error }} {{ $tc("loginForm.snackBar.error", 1) }}</span>
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">{{ $tc("loginForm.title", 1)  }}</h2>
+          <h2 class="pa-2 text-center">{{ $tc("loginForm.title", 1) }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
@@ -50,9 +64,18 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="resetForm" class="colorTertiaryLight--text">{{ $tc("loginForm.actions.forgotPwd", 1)  }}</v-btn>
+        <v-btn
+          text
+          @click="resetForm"
+          class="colorTertiaryLight--text"
+        >{{ $tc("loginForm.actions.forgotPwd", 1) }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn :disabled="!formIsValid" text class="colorTertiaryLight--text" type="submit">{{ $tc("loginForm.actions.login", 1)  }}</v-btn>
+        <v-btn
+          :disabled="!formIsValid"
+          text
+          class="colorTertiaryLight--text"
+          type="submit"
+        >{{ $tc("loginForm.actions.login", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -106,7 +129,8 @@ export default {
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", true),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user" })
       );
     },
     initShowForm() {
@@ -116,7 +140,8 @@ export default {
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
       );
     },
     login() {
@@ -153,7 +178,7 @@ export default {
             app.success = false;
             app.snackbar = true;
             app.has_error = true;
-            app.error = succ.response.data.error;
+            app.error = err.response.data.error;
           }
         );
     },

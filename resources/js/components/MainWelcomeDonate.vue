@@ -7,7 +7,7 @@
           <v-container fluid class="px-5 mb-1">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h1 class="display-3 mb-5">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
+                <h1 class="display-2 mb-5">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
                 <span class="text-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
                 <v-container fluid class="pa-0 mt-5">
                   <v-row align-content="center" no-gutters>
@@ -31,7 +31,10 @@
                                 placeholder="https://github.com/example"
                                 v-model="repository"
                               />
-                              <label for="repository" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1) }}</label>
+                              <label
+                                for="repository"
+                                class="form__label"
+                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="3">
                               <input
@@ -41,7 +44,10 @@
                                 placeholder="master"
                                 v-model="branch"
                               />
-                              <label for="branch" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelBranch", 1) }}</label>
+                              <label
+                                for="branch"
+                                class="form__label"
+                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelBranch", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="9">
                               <input
@@ -51,11 +57,17 @@
                                 placeholder="dev@swapp.com"
                                 v-model="email"
                               />
-                              <label for="mail" class="form__label">{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
+                              <label
+                                for="mail"
+                                class="form__label"
+                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="3">
                               <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
-                                <button class="btn btn--green" @click="handleClick">{{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}</button>
+                                <button
+                                  class="btn btn--green"
+                                  @click="handleClick"
+                                >{{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}</button>
                               </v-row>
                             </v-col>
                           </v-row>
@@ -76,7 +88,9 @@
                           <p>{{ $tc("mainWelcomeDonate.welcomeModale.successMsg", 1) }}</p>
                         </v-dialog>
                       </form>
-                      <span class="subheading mb-5"> {{ $tc("mainWelcomeDonate.welcomeAsterisk", 1) }} </span>
+                      <span
+                        class="subheading mb-5"
+                      >{{ $tc("mainWelcomeDonate.welcomeAsterisk", 1) }}</span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -97,19 +111,19 @@
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h2 class="display-2 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1)  }}</h2>
+                <h2 class="display-2 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
                 <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
                       <v-container fluid>
                         <v-row align="baseline" class="mr-5">
                           <v-col cols="12" lg="10">
-                            <h3
-                              class="title"
-                            > {{ $tc("mainWelcomeDonate.donateAction", 1)  }} </h3>
+                            <h3 class="title">{{ $tc("mainWelcomeDonate.donateAction", 1) }}</h3>
                           </v-col>
                           <v-col cols="12" lg="2">
-                            <button class="btn btn--green"> {{ $tc("mainWelcomeDonate.donateBtn", 1) }} </button>
+                            <button
+                              class="btn btn--green"
+                            >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</button>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -177,16 +191,16 @@ export default {
 }
 
 .loader {
-  -webkit-animation: rotation 1s infinite linear;
+  animation: rotation 1s infinite linear;
   position: absolute;
 }
 
-@-webkit-keyframes rotation {
+@keyframes rotation {
   from {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 // .v-btn {

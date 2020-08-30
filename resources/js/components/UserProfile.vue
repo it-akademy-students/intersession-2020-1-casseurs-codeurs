@@ -3,7 +3,9 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">{{ $tc("userProfile.title", 1)  }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+          <h2
+            class="pa-2 text-center"
+          >{{ $tc("userProfile.title", 1) }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
@@ -58,13 +60,25 @@
         <v-container fluid>
           <v-row>
             <v-col xs="6" md="auto">
-              <v-btn text @click.prevent="handleDeleteUser" class="colorDanger--text">{{ $tc("userProfile.actions.delete", 1)  }}</v-btn>
+              <v-btn
+                text
+                @click.prevent="handleDeleteUser"
+                class="colorDanger--text"
+              >{{ $tc("userProfile.actions.delete", 1) }}</v-btn>
             </v-col>
             <v-col xs="6" md="auto">
-              <v-btn text class="colorWarning--text" @click.prevent="handleEditProfile">{{ $tc("userProfile.actions.edit", 1)  }}</v-btn>
+              <v-btn
+                text
+                class="colorWarning--text"
+                @click.prevent="handleEditProfile"
+              >{{ $tc("userProfile.actions.edit", 1) }}</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
-              <v-btn text @click.prevent="handleLogout" class="colorTertiaryLight--text">{{ $tc("userProfile.actions.logout", 1)  }}</v-btn>
+              <v-btn
+                text
+                @click.prevent="handleLogout"
+                class="colorTertiaryLight--text"
+              >{{ $tc("userProfile.actions.logout", 1) }}</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -102,10 +116,6 @@ export default {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    submit() {
-      this.snackbar = true;
-      this.resetForm();
-    },
     initShowForm() {
       return (
         this.$store.dispatch("toggleLoginForm", false),
@@ -113,7 +123,8 @@ export default {
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
       );
     },
     toggleShowLoggedInForms() {
@@ -123,7 +134,8 @@ export default {
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", true),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user" })
       );
     },
     handleLogout() {
@@ -134,7 +146,7 @@ export default {
             this.resetForm(),
             this.initShowForm(),
             this.$store.dispatch("setUser", ""),
-            this.$router.push({ name: "logout" })
+            this.$router.push({ name: "home" })
           );
         },
         (err) => {
@@ -148,8 +160,7 @@ export default {
       this.resetForm();
       this.initShowForm();
       this.$store.dispatch("setUser", "");
-      const redirectTo = "logout";
-      return this.$router.push({ name: redirectTo });
+      return this.$router.push({ name: "home" });
     },
     handleEditProfile() {
       // handle edit redirect to edit profile form
@@ -159,6 +170,7 @@ export default {
       this.$store.dispatch("toggleLoggedIn", false);
       this.$store.dispatch("toggleUserProfile", false);
       this.$store.dispatch("toggleEditProfile", true);
+      this.$router.push({ name: "user-account-edit" });
     },
   },
 };

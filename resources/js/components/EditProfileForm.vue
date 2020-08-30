@@ -177,7 +177,8 @@ export default {
               (app.snackbar = true),
               this.$store.dispatch("setUser", succ.data.data),
               this.resetForm(),
-              this.initShowForm()
+              this.toggleShowUserProfile(),
+              this.$router.push({ name: "user-account" })
             );
           },
           (err) => {
@@ -198,18 +199,19 @@ export default {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
     },
-    initShowForm() {
+    toggleShowUserProfile() {
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", true),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user-account" })
       );
     },
     handleCancelled() {
-      return this.resetForm(), this.initShowForm();
+      return this.resetForm(), this.toggleShowUserProfile();
     },
   },
 };

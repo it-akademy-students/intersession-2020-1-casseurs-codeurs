@@ -1,14 +1,28 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
-    <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">{{ $tc("register.snackBar.success", 1)  }}</span>
+    <v-snackbar
+      v-if="snackbar && success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="colorSecondaryLight"
+    >
+      <span color="colorPrimary--text">{{ $tc("register.snackBar.success", 1) }}</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
     </v-snackbar>
-    <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
+    <v-snackbar
+      v-if="snackbar && has_error && !success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="error"
+    >
       <span
         v-if="error == 'registration_validation_error'"
         color="colorPrimary--text"
-      >{{ $tc("register.snackBar.error", 1)  }}</span>
+      >{{ $tc("register.snackBar.error", 1) }}</span>
       <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
       <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
       <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
@@ -17,9 +31,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2
-            class="pa-2 text-center"
-          >{{ $tc("register.title", 1)  }}</h2>
+          <h2 class="pa-2 text-center">{{ $tc("register.title", 1) }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
@@ -90,18 +102,18 @@
             <v-checkbox v-model="accept_terms" color="colorTertiaryLight">
               <template v-slot:label>
                 <div @click.stop>
-                  {{ $tc("register.form.acceptTerms", 1)  }}
+                  {{ $tc("register.form.acceptTerms", 1) }}
                   <a
                     href="javascript:;"
                     @click.stop="terms = true"
                     class="btn-text btn-text--violet"
-                  >{{ $tc("register.form.termsLink", 1)  }}</a>
-                  {{ $tc("register.form.and", 1)  }}
+                  >{{ $tc("register.form.termsLink", 1) }}</a>
+                  {{ $tc("register.form.and", 1) }}
                   <a
                     href="javascript:;"
                     @click.stop="conditions = true"
                     class="btn-text btn-text--violet"
-                  >{{ $tc("register.form.conditionsLink", 1)  }}</a>
+                  >{{ $tc("register.form.conditionsLink", 1) }}</a>
                 </div>
               </template>
             </v-checkbox>
@@ -109,19 +121,19 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="handleCancelled">{{ $tc("register.form.cancel", 1)  }}</v-btn>
+        <v-btn text @click="handleCancelled">{{ $tc("register.form.cancel", 1) }}</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           color="colorTertiaryLight"
           type="submit"
-        >{{ $tc("register.form.create", 1)  }}</v-btn>
+        >{{ $tc("register.form.create", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.terms", 1)  }}</v-card-title>
+        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.terms", 1) }}</v-card-title>
         <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -131,7 +143,7 @@
     </v-dialog>
     <v-dialog v-model="conditions" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.conditions", 1)  }}</v-card-title>
+        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.conditions", 1) }}</v-card-title>
         <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -235,7 +247,7 @@ export default {
               this.$store.dispatch("toggleUserProfile", false),
               this.$store.dispatch("toggleEditProfile", false),
               this.$router.push({
-                name: "login",
+                name: "home-login",
                 params: { successRegistrationRedirect: true },
               })
             );
@@ -265,7 +277,8 @@ export default {
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false)
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
       );
     },
     handleCancelled() {

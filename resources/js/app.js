@@ -17,9 +17,9 @@ import App from "@/js/views/App";
 // Store file
 import store from "./stores/store";
 // i18n
-import i18n from '../../src/i18n'
+import i18n from "../../src/i18n";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 // Set Vue router
 Vue.router = Route;
 Vue.use(VueRouter);
@@ -35,6 +35,7 @@ Vue.use(auth, config);
 
 // Vue.use(VueResource)
 // Vue.http.options.root = "http://localhost:8000/api";
+
 
 Vue.use(VeeValidate);
 
