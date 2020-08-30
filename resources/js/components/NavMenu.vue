@@ -286,7 +286,8 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home-login" })
+        this.$router.push({ name: "home-login" }),
+        this.$vuetify.goTo('#login-form', {duration: 300, offset: 0, easing: 'easeInOutCubic',})
       );
     },
     showRegisterForm() {

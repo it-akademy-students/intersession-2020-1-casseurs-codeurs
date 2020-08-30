@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import goTo from "vuetify/es5/services/goto";
 
 import Home from "@/js/pages/Home";
 import PageNotFound from "@/js/pages/PageNotFound";
@@ -15,6 +16,17 @@ Vue.use(VueRouter);
 const Route = new VueRouter({
     history: true,
     mode: "history",
+    scrollBehavior: (to, from, savedPosition) => {
+        let scrollTo = 0;
+
+        if (to.hash) {
+            scrollTo = to.hash;
+        } else if (savedPosition) {
+            scrollTo = savedPosition.y;
+        }
+
+        return goTo(scrollTo);
+    },
     routes: [
         {
             path: "/",
@@ -40,7 +52,6 @@ const Route = new VueRouter({
                         auth: false
                     }
                 },
-                
 
                 // USER ROUTES (only authenticated users)
                 {
@@ -84,15 +95,7 @@ const Route = new VueRouter({
                 auth: undefined
             }
         }
-    ],
-    scrollBehavior (to, from, savedPosition) {
-        if (to.hash) {
-          return {
-            selector: to.hash
-            , offset: { x: 0, y: 10 }
-          }
-        }
-      }
+    ]
 });
 
 export default Route;
