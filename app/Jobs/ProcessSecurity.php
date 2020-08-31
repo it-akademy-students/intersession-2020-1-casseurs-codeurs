@@ -7,10 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Traits\AnalyseTrait;
 
 class ProcessSecurity implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use AnalyseTrait;
     /**
      * @var string
      */
@@ -19,16 +21,21 @@ class ProcessSecurity implements ShouldQueue
      * @var string
      */
     private $baseUrl;
+    /**
+     * @var string
+     */
+    private $githubInfo;
 
     /**
      * ProcessSecurity constructor.
      * @param $list
      * @param string $baseUrl
      */
-    public function __construct( string $list, string $baseUrl)
+    public function __construct( string $list, string $baseUrl, string $githubInfo)
     {
         $this->list = $list;
         $this->baseUrl = $baseUrl;
+        $this->githubInfo = $githubInfo;
     }
 
     /**
@@ -54,7 +61,7 @@ class ProcessSecurity implements ShouldQueue
      * Permet de créer l'architecture des sous dossier si nécéssaire
      * Créer le fichier
      */
-    private function addFile($path, $content, $baseFolder = 'public/Scan/'){
+    private function addFile($path, $content, $baseFolder){
         $folders = explode("/", $path);
         $quantity = sizeof($folders)-1;
         if ($quantity != 0){
@@ -86,8 +93,14 @@ class ProcessSecurity implements ShouldQueue
         foreach ($paths as $path){
             //$baseContentUrl . path pour récupérer le contenu du fichier:
             $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
-            $this->addFile($path, $content);
+            $this->addFile($path, $content, base_path().'/public/Scan/');
         }
+        //____________________Analyse PHPStan________________________////
+        $this->analyse('phpstan', $this->githubInfo);
+        //____________________Analyse PHP7mar________________________////
+        $this->analyse('php7mar', $this->githubInfo);
+        //____________________Analyse Progpilot________________________////
+        $this->analyse('progpilot', $this->githubInfo);
     }
 
 }

@@ -24,7 +24,7 @@
     },
     "dependencies": {
         "@stripe/stripe-js": "^1.9.0",
-        "@websanova/vue-auth": "^3.3.0",
+        "@websanova/vue-auth": "^3.3.1",
         "es6-promise": "^4.2.8",
         "stripe": "^8.89.0",
         "vee-validate": "^2.2.15",

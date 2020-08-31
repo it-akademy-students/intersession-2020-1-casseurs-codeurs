@@ -10,26 +10,50 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" href="#user-profile" @click.stop="drawer = !drawer" @click="showProfile">
-            <v-list-item-content class="colorTertiaryLight--text" >
+          <v-list-item
+            link
+            v-if="$auth.check()"
+            href="#user-profile"
+            @click.stop="drawer = !drawer"
+            @click="showProfile"
+          >
+            <v-list-item-content class="colorTertiaryLight--text">
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showLoginForm" href="/#login-form" @click.stop="drawer = !drawer">
-            <v-list-item-content class="colorTertiaryLight--text" >
+          <v-list-item
+            link
+            v-if="!$auth.check()"
+            @click="showLoginForm"
+            href="/#login-form"
+            @click.stop="drawer = !drawer"
+          >
+            <v-list-item-content class="colorTertiaryLight--text">
               <v-list-item-title>Sign in</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="!this.$store.state.auth.status.loggedIn" @click="showRegisterForm" href="/#register-form" @click.stop="drawer = !drawer">
-            <v-list-item-content class="colorTertiaryLight--text" >
+          <v-list-item
+            link
+            v-if="!$auth.check()"
+            @click="showRegisterForm"
+            href="/#register-form"
+            @click.stop="drawer = !drawer"
+          >
+            <v-list-item-content class="colorTertiaryLight--text">
               <v-list-item-title>Sign up</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item link v-if="this.$store.state.auth.status.loggedIn" @click="handleLogout" href="/" @click.stop="drawer = !drawer">
-            <v-list-item-content class="colorTertiaryLight--text" >
+          <v-list-item
+            link
+            v-if="$auth.check()"
+            @click="handleLogout"
+            href="/"
+            @click.stop="drawer = !drawer"
+          >
+            <v-list-item-content class="colorTertiaryLight--text">
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -68,7 +92,7 @@
           <a
             target="_blank"
             href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
-             :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'} mt-4`"
+            :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'} mt-4`"
           >Github</a>
         </div>
       </v-hover>
@@ -169,7 +193,7 @@
                   </v-btn>
                 </template>
                 <v-list class="py-0 colorPrimary">
-                  <v-list-item link v-if="this.$store.state.auth.status.loggedIn">
+                  <v-list-item link v-if="$auth.check()">
                     <v-hover>
                       <v-list-item-content
                         class="pr-3 colorPrimary"
@@ -183,7 +207,7 @@
                     </v-hover>
                   </v-list-item>
 
-                  <v-list-item link v-if="!this.$store.state.auth.status.loggedIn">
+                  <v-list-item link v-if="!$auth.check()">
                     <v-hover>
                       <v-list-item-content
                         class="pr-3 colorPrimary"
@@ -197,7 +221,7 @@
                     </v-hover>
                   </v-list-item>
 
-                  <v-list-item link v-if="!this.$store.state.auth.status.loggedIn">
+                  <v-list-item link v-if="!$auth.check()">
                     <v-hover>
                       <v-list-item-content
                         class="pr-3 colorPrimary"
@@ -211,7 +235,7 @@
                     </v-hover>
                   </v-list-item>
 
-                  <v-list-item link v-if="this.$store.state.auth.status.loggedIn">
+                  <v-list-item link v-if="$auth.check()">
                     <v-hover>
                       <v-list-item-content
                         class="pr-3 colorPrimary"
