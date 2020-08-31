@@ -2,9 +2,7 @@
   <div>
     <!-- Provides the application the proper gutter -->
     <v-container fluid class="py-0">
-      <!-- vue-router -->
-      <router-view></router-view>
-      <!-- main/welcome section -->
+      <!-- main section -->
       <main-app />
     </v-container>
   </div>

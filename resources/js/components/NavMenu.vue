@@ -6,55 +6,50 @@
         <v-list-group class="colorSecondary--text">
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title class="colorSecondary--text">Account</v-list-item-title>
+              <v-list-item-title class="colorSecondary--text">{{ $tc("navMenu.links.account", 1) }}</v-list-item-title>
             </v-list-item-content>
           </template>
-
           <v-list-item
-            link
             v-if="$auth.check()"
-            href="#user-profile"
+            link
             @click.stop="drawer = !drawer"
             @click="showProfile"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Profile</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item
-            link
             v-if="!$auth.check()"
+            link
             @click="showLoginForm"
-            href="/#login-form"
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Sign in</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item
-            link
             v-if="!$auth.check()"
+            link
             @click="showRegisterForm"
-            href="/#register-form"
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Sign up</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item
-            link
             v-if="$auth.check()"
+            link
             @click="handleLogout"
-            href="/"
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -98,20 +93,11 @@
       </v-hover>
     </v-navigation-drawer>
     <!-- navbar -->
-    <v-app-bar app>
-      <v-hover>
-        <v-app-bar-nav-icon
-          @click.stop="drawer = !drawer"
-          slot-scope="{ hover }"
-          :class="
-            `${
-                hover
-                  ? 'colorTertiary--text hidden-md-and-up'
-                  : 'colorSecondary--text hidden-md-and-up'
-            }`
-          "
-        ></v-app-bar-nav-icon>
-      </v-hover>
+    <v-app-bar app height="80rem">
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        class="colorSecondary--text hidden-md-and-up"
+      ></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-img
         class="mx-1"
@@ -125,13 +111,18 @@
         class="colorSecondary--text display-1"
         style="font-family: 'Open Sans', sans-serif;"
       >
-        {{ appName }}
-        <span class="hidden-sm-and-down">{{ appSlogan }}</span>
+        {{ $tc("navMenu.appName", 1) }}
+        <span
+          class="hidden-sm-and-down text-wrap"
+        >{{ $tc("navMenu.appSlogan", 1) }}</span>
       </v-toolbar-title>
-      <v-spacer class="hidden-sm-and-down"></v-spacer>
+      <v-spacer></v-spacer>
+
+      <!-- language switcher -->
+      <lang-switcher />
 
       <v-list class="hidden-sm-and-down colorPrimary">
-        <v-list-item-group class="d-flex" v-model="navItems">
+        <v-list-item-group class="d-flex">
           <v-list-item v-on:click="showModalContact">
             <v-hover>
               <v-list-item-content
@@ -144,12 +135,16 @@
                   }`
                 "
               >
-                <v-list-item-title v-text="navItems[1].title"></v-list-item-title>
+                <v-list-item-title>Contact</v-list-item-title>
               </v-list-item-content>
             </v-hover>
           </v-list-item>
 
-          <v-list-item :href="navItems[0].link" link target="_blank">
+          <v-list-item
+            href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
+            link
+            target="_blank"
+          >
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
@@ -161,7 +156,7 @@
                   }`
                 "
               >
-                <v-list-item-title v-text="navItems[0].title"></v-list-item-title>
+                <v-list-item-title>GitHub</v-list-item-title>
               </v-list-item-content>
             </v-hover>
           </v-list-item>
@@ -202,7 +197,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showProfile"
                       >
-                        <v-list-item-title>Profile</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -216,7 +211,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showLoginForm"
                       >
-                        <v-list-item-title>Sign in</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -230,7 +225,7 @@
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
                         @click="showRegisterForm"
                       >
-                        <v-list-item-title>Sign up</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -242,9 +237,9 @@
                         slot-scope="{ hover }"
                         :class="
                           `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
-                        @click="handleLogout"
+                        @click.prevent="handleLogout"
                       >
-                        <v-list-item-title>Logout</v-list-item-title>
+                        <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -259,28 +254,16 @@
 </template>
 
 <script>
-import NavMenu from "@/js/components/NavMenu";
+import LangSwitcher from "@/js/components/LangSwitcher";
 import store from "../stores/store";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "NavMenu",
   store: store,
+  components: { LangSwitcher },
   data: () => ({
     drawer: false,
-    appName: "SWAPP ",
-    appSlogan: "- Security Scan for Web App",
-    navItems: [
-      {
-        title: "GitHub",
-        link:
-          "https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs",
-      },
-      {
-        title: "Contact",
-        // link: "/contact"
-      },
-    ],
   }),
   methods: {
     ...mapActions([
@@ -289,7 +272,9 @@ export default {
       "toggleSignInOn",
       "toggleUserProfile",
       "toggleLoggedIn",
+      "toggleEditProfile",
     ]),
+
     showModalContact: () => {
       store.commit("showContact");
     },
@@ -299,9 +284,10 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home-login" })
       );
-      // return this.$router.push('/login')
     },
     showRegisterForm() {
       return (
@@ -309,9 +295,10 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", true),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home-register" })
       );
-      // return this.$router.push('/register')
     },
     showProfile() {
       return (
@@ -319,7 +306,9 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", true)
+        this.$store.dispatch("toggleUserProfile", true),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user-account" })
       );
     },
     showLoggedIn() {
@@ -328,7 +317,9 @@ export default {
         this.$store.dispatch("toggleSignInOn", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", true),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user" })
       );
     },
     initShowForm() {
@@ -337,12 +328,20 @@ export default {
         this.$store.dispatch("toggleSignInOn", true),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
       );
     },
     handleLogout() {
-      return this.initShowForm();
-      // return this.$router.push("/login");
+      this.$auth.logout().then(
+        (succ) => {
+          return this.initShowForm(), this.$store.dispatch("setUser", "");
+        },
+        (err) => {
+          console.log({ err });
+        }
+      );
     },
   },
 };
