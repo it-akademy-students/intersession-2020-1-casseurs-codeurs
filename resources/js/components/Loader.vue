@@ -14,8 +14,8 @@
 
 <script>
 export default {
-    name: "Loader"
-}
+  name: "Loader",
+};
 </script>
 
 <style lang="scss">
@@ -29,15 +29,15 @@ export default {
 }
 
 .loader {
-  -webkit-animation: rotation 1s infinite linear;
+  animation: rotation 1s infinite linear;
   position: absolute;
 }
-@-webkit-keyframes rotation {
+@keyframes rotation {
   from {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 // .v-btn {
