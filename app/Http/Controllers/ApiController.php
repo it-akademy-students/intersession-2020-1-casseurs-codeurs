@@ -57,7 +57,7 @@ class ApiController extends Controller
                 return ['response' => 'error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
             else{
-                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl, $username.'_'.$repos));
+                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl, $username.'_'.$repos, $email));
                 header('Content-Type: application/json');
                 return ['response' => 'success', 'code' => 200];
             }
