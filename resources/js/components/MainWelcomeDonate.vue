@@ -123,6 +123,8 @@
                           <v-col cols="12" lg="2">
                             <button
                               class="btn btn--green"
+                              role="link"
+                              @click="handleClick"
                             >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</button>
                           </v-col>
                         </v-row>
@@ -140,17 +142,45 @@
 </template>          
 
 <script>
+import { loadStripe } from "@stripe/stripe-js";
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(
+  "pk_test_51HKQ6eEDdpH3cWNoddQJ31BBxp3uWCFyFVuj7Ge0ObIwOBj59a4wfqmjPT1NDg09UeYPHeYeDW7JOgFnuiDO7HNu00jDCMt69v"
+);
 export default {
   name: "MainWelcome",
   data: () => ({
     repository: "",
+    error: false,
+    loading: false,
     email: "",
     branch: "",
-    loading: false,
-    fetching: false,
+    fetching: false
   }),
   methods: {
-    handleClick: function () {
+    handleClick: async function (event) {
+      console.log("click")
+      // Get Stripe.js instance
+      const stripe = await stripePromise;
+
+      // Call your backend to create the Checkout Session
+      const response = await this.$http.post("create-checkout-session");
+
+      const session = await response.json();
+
+      // When the customer clicks on the button, redirect them to Checkout.
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id
+      });
+
+      if (result.error) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `result.error.message`.
+      }
+    },
+    handleGithubUrl: function () {
       this.loading = true;
       console.log("click");
       const splittedUrl = this.repository.split("/");
