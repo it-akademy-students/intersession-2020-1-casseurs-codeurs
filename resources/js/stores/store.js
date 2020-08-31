@@ -1,7 +1,9 @@
 import Vue from "vue"
 import Vuex from "vuex"
 
-import { auth } from './auth.module';
+import {
+    auth
+} from './auth.module';
 
 Vue.use(Vuex)
 
@@ -17,7 +19,7 @@ const store = new Vuex.Store({
         showLogged: false,
         showProfile: false,
     },
-    
+
     getters: {
         isShowContact: state => {
             return state.showModalContact
@@ -53,7 +55,7 @@ const store = new Vuex.Store({
         SHOW_REGISTER_FORM: (state, val) => {
             state.showRegister = val
         },
-        SHOW_SIGNIN_SIGNON:  (state, val) => {
+        SHOW_SIGNIN_SIGNON: (state, val) => {
             state.showSign = val
         },
         SHOW_LOGGEDIN: (state, val) => {

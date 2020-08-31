@@ -1065,7 +1065,7 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@websanova/vue-auth@^3.3.0":
+"@websanova/vue-auth@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@websanova/vue-auth/-/vue-auth-3.3.1.tgz#69de455ff6f4922745e4eb1c5763d15872e3cb38"
   integrity sha512-Yt5Yi7NQ9UOD2MdlPtu5FzVZ8oJOFnMIEgYnvnqLETEjxLcw9BUROdFBehkZQas91beAwLkKumshqSYP2xePcg==

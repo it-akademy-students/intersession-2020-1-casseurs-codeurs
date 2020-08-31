@@ -34,6 +34,11 @@ Vue.use(VeeValidate);
 
 // Vue.http.options.root = "http://localhost:8000/api";
 
+
+/**
+ * Represents a book.
+ * @constructor
+ */
 const app = new Vue({
     el: "#app",
     vuetify,
@@ -41,4 +46,3 @@ const app = new Vue({
     router: Route,
     render: h => h(App)
 })
-

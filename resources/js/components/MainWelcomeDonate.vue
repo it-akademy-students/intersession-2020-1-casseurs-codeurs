@@ -133,6 +133,7 @@ export default {
         .finally(() => (this.loading = false));
     },
     handleClick: async function (event) {
+      console.log("click")
       // Get Stripe.js instance
       const stripe = await stripePromise;
 
