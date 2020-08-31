@@ -22,7 +22,7 @@
       },
     "mainWelcomeDonate": {
       "welcome": "Bienvenue sur SWAPP !",
-      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'Analyser !' et attendez le résultat de l'analyse pour voir si votre code comporte des erreurs ou des failles de sécurité.",
+      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs ou des failles de sécurité.",
       "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^7.0.0.",
       "welcomeAction": "Scannez votre projet GitHub",
       "welcomeBtn": "Analyser !",

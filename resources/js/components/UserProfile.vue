@@ -70,7 +70,7 @@
               <v-btn
                 text
                 class="colorWarning--text"
-                @click.prevent="handleEditProfile"
+                @click.prevent="updateProfil"
               >{{ $tc("userProfile.actions.edit", 1) }}</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
@@ -171,6 +171,45 @@ export default {
       this.$store.dispatch("toggleUserProfile", false);
       this.$store.dispatch("toggleEditProfile", true);
       this.$router.push({ name: "user-account-edit" });
+    },
+    updateProfil() {
+      var app = this;
+      console.log(this.$auth.user())
+      this.$auth
+        .user({
+          id: this.$store.getters.getUser.id,
+          name: app.name,
+          email: app.email,
+          // password: app.password,
+          // password_confirmation: app.password_confirmation,
+          job: app.job,
+        })
+      console.log(this.$auth.user().name)
+        // .then(
+        //   (succ) => {
+        //     console.log(succ.data.status);
+        //     return (
+        //       (app.success = true),
+        //       (app.snackbar = true),
+        //       this.$store.dispatch("setUser", succ.data.data),
+        //       this.resetForm(),
+        //       this.toggleShowUserProfile(),
+        //       this.$router.push({ name: "user-account" })
+        //     );
+        //   },
+        //   (err) => {
+        //     console.log({ err });
+        //     return (
+        //       (app.snackbar = true),
+        //       (app.success = false),
+        //       console.log(err.response.data.status),
+        //       console.log(err.response.data.errors),
+        //       (app.has_error = true),
+        //       (app.error = err.response.data.error),
+        //       (app.errs = err.response.data.errors || {})
+        //     );
+        //   }
+        // );
     },
   },
 };
