@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 .idea/
 docker-compose.yaml
+docker-compose.yml
 /docker/*
 cmd.md
 .vscode/*

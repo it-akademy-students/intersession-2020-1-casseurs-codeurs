@@ -63,6 +63,13 @@
                               >{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
                             </v-col>
                             <v-col cols="12" lg="3">
+                              <v-radio-group column>
+                                <v-radio label="Option 1" value="radio-1" color="secondary"></v-radio>
+                                <v-radio label="Option 2" value="radio-2" color="secondary"></v-radio>
+                                <v-radio label="Option 3" value="radio-3" color="secondary"></v-radio>
+                              </v-radio-group>
+                            </v-col>
+                            <v-col cols="12" lg="3">
                               <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
                                 <button
                                   class="btn btn--green"
@@ -156,11 +163,11 @@ export default {
     loading: false,
     email: "",
     branch: "",
-    fetching: false
+    fetching: false,
   }),
   methods: {
     handleClick: async function (event) {
-      console.log("click")
+      console.log("click");
       // Get Stripe.js instance
       const stripe = await stripePromise;
 
@@ -171,7 +178,7 @@ export default {
 
       // When the customer clicks on the button, redirect them to Checkout.
       const result = await stripe.redirectToCheckout({
-        sessionId: session.id
+        sessionId: session.id,
       });
 
       if (result.error) {
