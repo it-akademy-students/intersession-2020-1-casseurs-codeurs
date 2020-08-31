@@ -11,11 +11,10 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/
-docker-compose.yml
-Dockerfile
-/php/*
-/nginx/*
-/mysql/*
+docker-compose.yaml
+/docker/*
 cmd.md
 .vscode/*
 public/mix-manifest.json
+composer.lock
+storage-db/*

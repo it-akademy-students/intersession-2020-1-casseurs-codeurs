@@ -1,34 +1,31 @@
 <template>
-    <v-container fluid class="py-0">
-        <v-card flat class="pa-3" color="colorPrimaryLight">
-            <v-row align-content="space-around" justify="center">
-                <v-col cols="12" lg="7">
-                    <v-card flat color="colorPrimaryLight pa-3">
-                        <main-welcome-donate />
-                        <contact />
-                    </v-card>
-                </v-col>
-                <v-col cols="12" lg="1">
-                    <v-layout justify-center>
-                        <v-divider
-                            class="ma-3 mt-5 divider-y hidden-md-and-down"
-                            inset
-                            vertical
-                        ></v-divider>
-                    </v-layout>
-                </v-col>
-                <v-col cols="12" lg="4">
-                    <v-card color="colorPrimaryUltraLight" class="pa-5 mt-5">
-                        <sign-in-on v-show="this.$store.getters.isShowSignInOn" />
-                        <login-form v-show="this.$store.getters.isShowLoginForm" />
-                        <register-form  v-show="this.$store.getters.isShowRegisterForm" />
-                        <user-profile v-show="this.$store.getters.isShowUserProfile" />
-                        <logged v-show="this.$store.getters.isShowLoggedIn" />
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-card>
-    </v-container>
+  <v-container fluid class="py-0">
+    <v-card flat class="pa-3" color="colorPrimaryLight">
+      <v-row align-content="space-around" justify="center">
+        <v-col cols="12" lg="7">
+          <v-card flat color="colorPrimaryLight pa-3">
+            <main-welcome-donate />
+            <contact />
+          </v-card>
+        </v-col>
+        <v-col cols="12" lg="1">
+          <v-layout justify-center>
+            <v-divider class="ma-3 mt-5 divider-y hidden-md-and-down" inset vertical></v-divider>
+          </v-layout>
+        </v-col>
+        <v-col cols="12" lg="4">
+          <v-card color="colorPrimaryUltraLight" class="pa-5 mt-5">
+            <sign-in-on v-show="this.$store.getters.isShowSignInOn" />
+            <login-form v-show="this.$store.getters.isShowLoginForm" />
+            <register-form v-show="this.$store.getters.isShowRegisterForm" />
+            <user-profile v-show="this.$store.getters.isShowUserProfile" />
+            <logged v-show="this.$store.getters.isShowLoggedIn" />
+            <edit-profile-form v-show="this.$store.getters.isShowEditProfile" />
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -38,30 +35,31 @@ import LoginForm from "@/js/components/LoginForm";
 import RegisterForm from "@/js/components/RegisterForm";
 import UserProfile from "@/js/components/UserProfile";
 import Logged from "@/js/components/Logged";
+import EditProfileForm from "@/js/components/EditProfileForm";
 import Contact from "@/js/pages/Contact";
 
 export default {
-    name: "MainApp",
-    components: {
-        MainWelcomeDonate,
-        SignInOn,
-        LoginForm,
-        RegisterForm,
-        UserProfile,
-        Logged,
-        Contact
-    }
+  name: "MainApp",
+  components: {
+    MainWelcomeDonate,
+    SignInOn,
+    LoginForm,
+    RegisterForm,
+    UserProfile,
+    Logged,
+    EditProfileForm,
+    Contact,
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .divider-y {
-    min-height: 70vh;
-    width: 0.2rem;
-    height: calc(100% - 2rem);
-    box-sizing: border-box;
-    // background-color: #967dff;
-    background-color: #62cb5c;
-    transform: scale(1.02);
+  min-height: 70vh;
+  width: 0.2rem;
+  height: calc(100% - 2rem);
+  box-sizing: border-box;
+  background-color: #62cb5c;
+  transform: scale(1.02);
 }
 </style>

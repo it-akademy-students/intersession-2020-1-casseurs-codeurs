@@ -1,19 +1,20 @@
 <template>
   <v-app>
     <nav-menu />
+
     <v-main
       transition="slide-x-transition"
       class="colorPrimaryLight mostlyWhite--text font-weight-regular"
       style="font-family: 'Lato', sans-serif;"
     >
-      <router-view></router-view>
+      <router-view />
 
       <!-- banner donate for mobile and tab-port -->
       <donate-banner />
     </v-main>
 
     <scroll-top-btn />
-    
+
     <footer-app />
   </v-app>
 </template>

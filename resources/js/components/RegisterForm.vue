@@ -1,15 +1,37 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
-    <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary">Congratulations! Your account have been successfully created !</span>
+    <v-snackbar
+      v-if="snackbar && success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="colorSecondaryLight"
+    >
+      <span color="colorPrimary--text">{{ $tc("register.snackBar.success", 1) }}</span>
       <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+    </v-snackbar>
+    <v-snackbar
+      v-if="snackbar && has_error && !success"
+      v-model="snackbar"
+      absolute
+      top
+      right
+      color="error"
+    >
+      <span
+        v-if="error == 'registration_validation_error'"
+        color="colorPrimary--text"
+      >{{ $tc("register.snackBar.error", 1) }}</span>
+      <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
+      <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
+      <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
+      <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2
-            class="pa-2 text-center"
-          >Register to benefit from all the features of the SWAPP application</h2>
+          <h2 class="pa-2 text-center">{{ $tc("register.title", 1) }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
@@ -24,7 +46,7 @@
               v-model="name"
               type="text"
               name="username"
-              label="Username"
+              :label="$tc('register.form.labelName', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -34,7 +56,7 @@
               v-model="email"
               type="email"
               name="email"
-              label="Email"
+              :label="$tc('register.form.labelEmail', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
@@ -45,8 +67,8 @@
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password"
-              label="Password"
-              hint="Minimum 8 characters"
+              :label="$tc('register.form.labelPwd', 1)"
+              :hint="$tc('register.form.hint')"
               required
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
@@ -59,8 +81,8 @@
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password_confirmation"
-              label="Password Confirmation"
-              hint="Minimum 8 characters"
+              :label="$tc('register.form.labelPwdConfirm', 1)"
+              :hint="$tc('register.form.hint')"
               required
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
@@ -70,10 +92,9 @@
           <v-col cols="12">
             <v-select
               v-model="job"
-              :items="jobs"
-              label="Your Job"
+              :items="$t('register.form.jobs')"
+              :label="$tc('register.form.labelJob', 1)"
               name="job"
-              required
               color="colorTertiaryLight"
             ></v-select>
           </v-col>
@@ -81,18 +102,18 @@
             <v-checkbox v-model="accept_terms" color="colorTertiaryLight">
               <template v-slot:label>
                 <div @click.stop>
-                  Please read and accept
+                  {{ $tc("register.form.acceptTerms", 1) }}
                   <a
                     href="javascript:;"
                     @click.stop="terms = true"
                     class="btn-text btn-text--violet"
-                  >terms</a>
-                  and
+                  >{{ $tc("register.form.termsLink", 1) }}</a>
+                  {{ $tc("register.form.and", 1) }}
                   <a
                     href="javascript:;"
                     @click.stop="conditions = true"
                     class="btn-text btn-text--violet"
-                  >conditions.</a>
+                  >{{ $tc("register.form.conditionsLink", 1) }}</a>
                 </div>
               </template>
             </v-checkbox>
@@ -100,19 +121,19 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="handleCancelled">Cancel</v-btn>
+        <v-btn text @click="handleCancelled">{{ $tc("register.form.cancel", 1) }}</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           color="colorTertiaryLight"
           type="submit"
-        >Create my account</v-btn>
+        >{{ $tc("register.form.create", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">Terms</v-card-title>
+        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.terms", 1) }}</v-card-title>
         <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -122,7 +143,7 @@
     </v-dialog>
     <v-dialog v-model="conditions" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">Conditions</v-card-title>
+        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.conditions", 1) }}</v-card-title>
         <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -173,15 +194,12 @@ export default {
       defaultForm,
       has_error: false,
       error: "",
-      // errors: {},
+      errs: {},
       success: false,
+      // @TODO : fix snackbar
     };
   },
-
   computed: {
-    // loggedIn() {
-    //   return this.$store.state.auth.status.loggedIn;
-    // },
     formIsValid() {
       return (
         this.name &&
@@ -193,42 +211,60 @@ export default {
       );
     },
   },
-  // mounted() {
-  //   if (this.loggedIn) {
-  //     this.$router.push("/profile");
-  //   }
-  // },
   methods: {
-    ...mapActions(["toggleRegisterForm", "toggleSignInOn"]),
+    ...mapActions([
+      "toggleRegisterForm",
+      "toggleSignInOn",
+      "toggleLoginForm",
+      "toggleEditProfile",
+      "toggleUserProfile",
+      "toggleLoggedIn",
+    ]),
     register() {
       var app = this;
-      this.$auth.register({
-        data: {
-          name: app.name,
-          email: app.email,
-          password: app.password,
-          password_confirmation: app.password_confirmation,
-          job: app.job,
-        },
-        success: function () {
-          app.success = true;
-
-          // this.$router.push({
-          //   name: "login",
-          //   params: { successRegistrationRedirect: true },
-          // });
-          return (
-            this.$store.dispatch("toggleLoginForm", true),
-            this.$store.dispatch("toggleSignInOn", false)
-          );
-        },
-        error: function (res) {
-          console.log(res.response.data.errors);
-          app.has_error = true;
-          app.error = res.response.data.error;
-          // app.errors = res.response.data.errors || {};
-        },
-      });
+      this.$auth
+        .register({
+          data: {
+            name: app.name,
+            email: app.email,
+            password: app.password,
+            password_confirmation: app.password_confirmation,
+            job: app.job,
+          },
+          redirect: null,
+        })
+        .then(
+          (succ) => {
+            console.log(succ.data.status);
+            return (
+              (app.success = true),
+              (app.snackbar = true),
+              this.resetForm(),
+              this.$store.dispatch("toggleLoginForm", true),
+              this.$store.dispatch("toggleSignInOn", false),
+              this.$store.dispatch("toggleRegisterForm", false),
+              this.$store.dispatch("toggleLoggedIn", false),
+              this.$store.dispatch("toggleUserProfile", false),
+              this.$store.dispatch("toggleEditProfile", false),
+              this.$router.push({
+                name: "home-login",
+                params: { successRegistrationRedirect: true },
+              })
+            );
+          },
+          (err) => {
+            console.log({ err });
+            return (
+              (app.snackbar = true),
+              (app.success = false),
+              console.log(err.response.data.status),
+              console.log(err.response.data.errors),
+              (app.has_error = true),
+              (app.error = err.response.data.error),
+              (app.errs = err.response.data.errors || {})
+            );
+          }
+        );
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
@@ -236,8 +272,13 @@ export default {
     },
     initShowForm() {
       return (
+        this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", true),
-        this.$store.dispatch("toggleRegisterForm", false)
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
       );
     },
     handleCancelled() {
