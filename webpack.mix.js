@@ -1,13 +1,14 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 mix.webpackConfig({
     resolve: {
-        extensions: [',js', 'vue'],
+        extensions: [",js", "vue"],
         alias: {
-            '@': `${__dirname}/resources`
+            "@": `${__dirname}/resources`
         }
     }
-})
+});
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -19,9 +20,7 @@ mix.webpackConfig({
  |
  */
 
-mix
-    .disableNotifications()
-    .js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .copyDirectory('resources/img', 'public/img')
-
+mix.disableNotifications()
+    .js("resources/js/app.js", "public/js")
+    .sass("resources/sass/app.scss", "public/css")
+    .copyDirectory("resources/img", "public/img");

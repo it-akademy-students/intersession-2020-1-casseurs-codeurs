@@ -28,15 +28,12 @@
         </v-row>
       </v-col>
     </v-col>
-    <v-form ref="form" name="form" @submit.prevent="updateProfil" method="post">
+    <v-form ref="form" name="form">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
-            <v-text-field v-model="id" type="text" name="id" label="id" class="d.none" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
             <v-text-field
-              v-model="name"
+              :value="this.$store.getters.getUser.name"
               type="text"
               name="username"
               :label="$tc('editProfile.form.labelName', 1)"
@@ -46,7 +43,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="email"
+              :value="this.$store.getters.getUser.email"
               type="email"
               name="email"
               :label="$tc('editProfile.form.labelEmail', 1)"
@@ -54,9 +51,9 @@
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <!-- <v-col cols="12">
             <v-text-field
-              v-model="password"
+              :value="this.$store.getters.getUser.password"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password"
@@ -69,7 +66,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="password_confirmation"
+              :value="this.$store.getters.getUser.password_confirmation"
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show1 ? 'text' : 'password'"
               name="password_confirmation"
@@ -79,10 +76,10 @@
               color="colorTertiaryLight"
               @click:append="show1 = !show1"
             ></v-text-field>
-          </v-col>
+          </v-col> -->
           <v-col cols="12">
             <v-text-field
-              v-model="job"
+              :value="this.$store.getters.getUser.job"
               type="text"
               name="job"
               :label="$tc('editProfile.form.labelJob', 1)"
@@ -97,8 +94,8 @@
         <v-btn
           :disabled="!formIsValid"
           text
-          color="colorTertiaryLight"
-          type="submit"
+          class="colorTertiaryLight--text"
+          @click.prevent="updateProfil" 
         >{{ $tc("editProfile.form.edit", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
@@ -112,22 +109,20 @@ export default {
   name: "EditProfileForm",
   data() {
     const defaultForm = Object.freeze({
-      id: "",
       name: "",
       email: "",
-      password: "",
-      password_confirmation: "",
+      // password: "",
+      // password_confirmation: "",
       job: "",
     });
     return {
       show1: false,
       // @TODO : fix snackbar
       //   @TODO : fix display user datas
-      id: this.$store.getters.getUser.id,
       name: this.$store.getters.getUser.name,
       email: this.$store.getters.getUser.email,
-      password: this.$store.getters.getUser.password,
-      password_confirmation: this.$store.getters.getUser.password,
+      password: "",
+      password_confirmation: "",
       job: this.$store.getters.getUser.job,
       snackbar: false,
       defaultForm,
@@ -140,11 +135,10 @@ export default {
   computed: {
     formIsValid() {
       return (
-        this.id &&
         this.name &&
         this.email &&
-        this.password &&
-        this.password_confirmation &&
+        // this.password &&
+        // this.password_confirmation &&
         this.job
       );
     },
@@ -163,10 +157,11 @@ export default {
       var app = this;
       this.$auth
         .user({
+          id: this.$store.getters.getUser.id,
           name: app.name,
           email: app.email,
-          password: app.password,
-          password_confirmation: app.password_confirmation,
+          // password: app.password,
+          // password_confirmation: app.password_confirmation,
           job: app.job,
         })
         .then(
