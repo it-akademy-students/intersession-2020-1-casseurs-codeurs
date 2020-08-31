@@ -66,7 +66,7 @@
                               <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
                                 <button
                                   class="btn btn--green"
-                                  @click="handleClick"
+                                  @click="handleGithubUrl"
                                 >{{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}</button>
                               </v-row>
                             </v-col>
@@ -124,7 +124,7 @@
                             <button
                               class="btn btn--green"
                               role="link"
-                              @click="handleClick"
+                              @click="showStripeForm"
                             >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</button>
                           </v-col>
                         </v-row>
@@ -135,6 +135,7 @@
               </v-col>
             </v-row>
           </v-container>
+           <stripe-element v-show="isStripeOpen" v-model="isStripeOpen" isStripeOpen=this.isStripeOpen />
         </v-row>
       </v-col>
     </v-row>
@@ -142,43 +143,27 @@
 </template>          
 
 <script>
-import { loadStripe } from "@stripe/stripe-js";
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-  "pk_test_51HKQ6eEDdpH3cWNoddQJ31BBxp3uWCFyFVuj7Ge0ObIwOBj59a4wfqmjPT1NDg09UeYPHeYeDW7JOgFnuiDO7HNu00jDCMt69v"
-);
+import StripeElement from './StripeForm'
 export default {
   name: "MainWelcome",
+  components: {
+    StripeElement
+  },
   data: () => ({
     repository: "",
     error: false,
     loading: false,
     email: "",
     branch: "",
-    fetching: false
+    fetching: false,
+    isStripeOpen: false
   }),
   methods: {
-    handleClick: async function (event) {
-      console.log("click")
-      // Get Stripe.js instance
-      const stripe = await stripePromise;
-
-      // Call your backend to create the Checkout Session
-      const response = await this.$http.post("create-checkout-session");
-
-      const session = await response.json();
-
-      // When the customer clicks on the button, redirect them to Checkout.
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id
-      });
-
-      if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer
-        // using `result.error.message`.
-      }
+    showStripeForm: function() {
+      this.isStripeOpen = true
+    },
+    hideStripeForm: function() {
+      this.isStripeOpen = false
     },
     handleGithubUrl: function () {
       this.loading = true;
@@ -243,4 +228,5 @@ export default {
 //     color: #967dff;
 //   }
 // }
+
 </style>
