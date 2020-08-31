@@ -39,41 +39,6 @@ class ProcessSecurity implements ShouldQueue
     }
 
     /**
-     * @param $url
-     * @return mixed
-     * Permet de récupérer le contenu de l'appel vers l'API Github
-     */
-    private function getGithubContent($url){
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT,'User-Agent: PHP');
-        $content = curl_exec($curl);
-        curl_close($curl);
-
-        return json_decode($content);
-    }
-
-    /**
-     * @param $path
-     * @param $content
-     * @param string $baseFolder
-     * Permet de créer l'architecture des sous dossier si nécéssaire
-     * Créer le fichier
-     */
-    private function addFile($path, $content, $baseFolder){
-        $folders = explode("/", $path);
-        $quantity = sizeof($folders)-1;
-        if ($quantity != 0){
-            $folderPath = str_replace(end($folders),"", $path);
-            if (!file_exists($baseFolder.$folderPath)){
-                mkdir($baseFolder.$folderPath, 0644, true);
-            }
-        }
-        file_put_contents($baseFolder.$path, $content);
-    }
-
-    /**
      * Execute the job.
      *
      * @return void
