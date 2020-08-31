@@ -23,13 +23,16 @@
     "mainWelcomeDonate": {
       "welcome": "Bienvenue sur SWAPP !",
       "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs ou des failles de sécurité.",
-      "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^7.0.0.",
+      "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^5.4",
       "welcomeAction": "Scannez votre projet GitHub",
       "welcomeBtn": "Analyser !",
       "welcomeForm": {
         "labelUrl": "Saisissez l'URL de votre dépôt",
         "labelBranch": "Saisissez la Branch",
-        "labelEmail": "Entrez votre email"
+        "labelEmail": "Entrez votre email",
+        "labelOption0": "Sans les outils de migration",
+        "labelOption1": "Avec les outils de migration",
+        "labelOption2": "Uniquement les outils de migration"
       },
       "welcomeModale": {
         "success":  "Succès",

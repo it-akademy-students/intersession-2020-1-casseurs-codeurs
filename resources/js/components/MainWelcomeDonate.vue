@@ -4,16 +4,16 @@
       <v-col cols="12">
         <v-row align-content="center" no-gutters>
           <!-- welcome section -->
-          <v-container fluid class="px-5 mb-1">
-            <v-row align-content="space-between" justify="space-around" no-gutters>
+          <v-container fluid class="px-5 mb-1 mt-0 pt-0">
+            <v-row align-content="space-between" justify="space-around" no-gutters class="mt-0 pt-0">
               <v-col cols="12">
                 <h1 class="display-2 mb-5">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
                 <span class="text-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
-                <v-container fluid class="pa-0 mt-5">
-                  <v-row align-content="center" no-gutters>
+                <v-container fluid class="pa-0 mt-0">
+                  <v-row align-content="center" no-gutters class="mt-0 pt-0">
                     <v-col cols="12">
                       <div class="my-3">
-                        <h3 class="display-1">{{ $tc("mainWelcomeDonate.welcomeAction", 1) }}</h3>
+                        <h2 class="display-1">{{ $tc("mainWelcomeDonate.welcomeAction", 1) }}</h2>
                       </div>
                     </v-col>
                     <!-- form -->
@@ -21,7 +21,7 @@
                       <form class="form">
                         <v-container class="ma-0 pa-0" fluid>
                           <v-row align-content="space-between" justify="space-around">
-                            <v-col cols="12" lg="9">
+                            <v-col cols="12" lg="9" class="pb-0">
                               <input
                                 id="repository"
                                 type="url"
@@ -36,7 +36,7 @@
                                 class="form__label"
                               >{{ $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1) }}</label>
                             </v-col>
-                            <v-col cols="12" lg="3">
+                            <v-col cols="12" lg="3" class="pb-0">
                               <input
                                 id="branch"
                                 type="text"
@@ -49,7 +49,45 @@
                                 class="form__label"
                               >{{ $tc("mainWelcomeDonate.welcomeForm.labelBranch", 1) }}</label>
                             </v-col>
-                            <v-col cols="12" lg="9">
+                            <v-col cols="12" class="ma-0 pa-0" v-if="$auth.check()">
+                              <v-radio-group row class="ma-0 pa-0">
+                                <v-row
+                                  justify="space-around"
+                                  align="center"
+                                  align-content="baseline"
+                                  class="ma-0"
+                                >
+                                  <v-col cols="12" md="4">
+                                    <v-radio
+                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption1', 1)"
+                                      value="1"
+                                      name="migration"
+                                      color="secondary"
+                                      class="my-md-1"
+                                    ></v-radio>
+                                  </v-col>
+                                  <v-col cols="12" md="4">
+                                    <v-radio
+                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption2', 1)"
+                                      value="2"
+                                      name="migration"
+                                      color="secondary"
+                                      class="my-md-1"
+                                    ></v-radio>
+                                  </v-col>
+                                  <v-col cols="12" md="4">
+                                    <v-radio
+                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption0', 1)"
+                                      value="0"
+                                      name="migration"
+                                      color="secondary"
+                                      class="my-md-1"
+                                    ></v-radio>
+                                  </v-col>
+                                </v-row>
+                              </v-radio-group>
+                            </v-col>
+                            <v-col cols="12" lg="9" class="pt-0">
                               <input
                                 id="mail"
                                 type="email"
@@ -62,14 +100,7 @@
                                 class="form__label"
                               >{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
                             </v-col>
-                            <v-col cols="12" lg="3">
-                              <v-radio-group column>
-                                <v-radio label="Option 1" value="radio-1" color="secondary"></v-radio>
-                                <v-radio label="Option 2" value="radio-2" color="secondary"></v-radio>
-                                <v-radio label="Option 3" value="radio-3" color="secondary"></v-radio>
-                              </v-radio-group>
-                            </v-col>
-                            <v-col cols="12" lg="3">
+                            <v-col cols="12" lg="3" class="pt-0">
                               <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
                                 <button
                                   class="btn btn--green"
@@ -118,7 +149,7 @@
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
             <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h2 class="display-2 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
+                <h2 class="display-1 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
                 <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
                     <v-col cols="12">
@@ -163,6 +194,7 @@ export default {
     loading: false,
     email: "",
     branch: "",
+    migration: 0,
     fetching: false,
   }),
   methods: {
@@ -194,6 +226,7 @@ export default {
       const username = splittedUrl[splittedUrl.length - 2];
       const repo = splittedUrl[splittedUrl.length - 1];
       const email = this.email;
+      const migration = this.migration;
       const branch = this.branch;
       const url = `github/${username}/${repo}/${branch}`;
       console.log({ url });
@@ -239,6 +272,9 @@ export default {
   to {
     transform: rotate(359deg);
   }
+}
+.v-radio > label {
+  color: #62cb5c !important;
 }
 // .v-btn {
 //   &:hover {
