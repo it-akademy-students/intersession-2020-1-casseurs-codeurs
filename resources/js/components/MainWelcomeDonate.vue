@@ -180,12 +180,7 @@ export default {
         // using `result.error.message`.
       }
     },
-    handleGithubUrl: function() {
-    loading: false,
-    fetching: false,
-  }),
-  methods: {
-    handleClick: function () {
+    handleGithubUrl: function () {
       this.loading = true;
       console.log("click");
       const splittedUrl = this.repository.split("/");
