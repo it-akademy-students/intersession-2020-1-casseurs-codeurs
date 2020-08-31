@@ -174,7 +174,7 @@ export default {
     },
     updateProfil() {
       var app = this;
-      console.log(this.$auth.user())
+      console.log(this.$auth.user().name)
       this.$auth
         .user({
           id: this.$store.getters.getUser.id,
