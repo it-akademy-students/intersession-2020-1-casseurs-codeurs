@@ -1,8 +1,8 @@
 <template>
-  <v-container id="dropdown-languages" style="max-width: 15ch;" class="ma-0 py-0">
-    <v-row align-content="center" justify="center" style="max-width: 15ch;" class="ma-0 py-0">
+  <v-container id="dropdown-languages" style="max-width: 15ch;" class="ma-0 pa-0">
+    <v-row align-content="center" justify="center" style="max-width: 15ch;" class="ma-0 pa-0">
       <v-col cols="12" class="ma-0 py-0">
-        <v-row justify="end" class="ma-0 py-0">
+        <v-row justify="end" class="ma-0 pa-0">
           <v-overflow-btn
             v-model="$i18n.locale"
             :items="langs"
