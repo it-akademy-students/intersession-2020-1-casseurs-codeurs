@@ -1,5 +1,5 @@
-<a href="https://www.swapp.fr/">
-    <img src="https://www.swapp.fr/img/logo.png" alt="SWAPP logo" title="SWAPP" align="right" height="60" />
+<a href="#">
+    <img src="public/img/swapp_image_logo.png" alt="SWAPP logo" title="SWAPP" align="right" height="60" />
 </a>
 
 ## "SWAPP : Open Source Security Scanner for web apps"
