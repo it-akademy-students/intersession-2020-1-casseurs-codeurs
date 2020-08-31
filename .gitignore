@@ -13,6 +13,7 @@ yarn-error.log
 .idea/
 docker-compose.yaml
 docker-compose.yml
+Dockerfile
 /docker/*
 cmd.md
 .vscode/*
