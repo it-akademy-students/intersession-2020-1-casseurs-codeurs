@@ -3,6 +3,7 @@
     <v-btn
       class="mr-3 elevation-21"
       fab
+      small
       button
       color="colorTertiary"
       fixed

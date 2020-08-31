@@ -1,65 +1,58 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="user-profile">
-    <v-snackbar v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary">Congratulations! Your profile has been successfully upgraded !</span>
-      <v-icon dark>mdi-checkbox-marked-circle</v-icon>
-    </v-snackbar>
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
           <h2
             class="pa-2 text-center"
-          >Your Profile:</h2>
+          >{{ $tc("userProfile.title", 1) }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
         </v-col>
         <v-col cols="1">
-          <v-icon @click="initShowForm">mdi-close</v-icon>
+          <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
         </v-col>
       </v-row>
     </v-col>
 
-    <v-form ref="form" @submit.prevent="submit">
+    <v-form ref="form" name="form">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
             <v-text-field
-              v-model="form.username"
-              :rules="rules.username"
-              color="colorTertiaryLight"
-              label="Username"
-              required
+              :value="this.$store.getters.getUser.id"
+              type="text"
+              name="id"
+              label="id"
+              class="d-none"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="form.email"
-              :rules="rules.email"
-              color="colorTertiaryLight"
-              label="Email"
+              :value="this.$store.getters.getUser.name"
+              type="text"
+              name="username"
+              :label="$tc('userProfile.form.labelName', 1)"
               required
+              color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              v-model="form.password"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="rules.password"
-              :type="show1 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Password"
-              hint="Minimum 8 characters"
+              :value="this.$store.getters.getUser.email"
+              type="email"
+              name="email"
+              :label="$tc('userProfile.form.labelEmail', 1)"
+              required
               color="colorTertiaryLight"
-              @click:append="show1 = !show1"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-select
-              v-model="form.job"
-              :items="jobs"
-              :rules="rules.job"
+            <v-text-field
+              :value="this.$store.getters.getUser.job"
+              type="text"
+              :label="$tc('userProfile.form.labelJob', 1)"
+              name="job"
               color="colorTertiaryLight"
-              label="Your Job"
-              required
-            ></v-select>
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
@@ -67,18 +60,25 @@
         <v-container fluid>
           <v-row>
             <v-col xs="6" md="auto">
-              <v-btn text @click="resetForm" class="colorDanger--text">Delete Account</v-btn>
+              <v-btn
+                text
+                @click.prevent="handleDeleteUser"
+                class="colorDanger--text"
+              >{{ $tc("userProfile.actions.delete", 1) }}</v-btn>
             </v-col>
             <v-col xs="6" md="auto">
               <v-btn
-                :disabled="!formIsValid"
                 text
                 class="colorWarning--text"
-                type="submit"
-              >Edit Profile</v-btn>
+                @click.prevent="updateProfil"
+              >{{ $tc("userProfile.actions.edit", 1) }}</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
-              <v-btn text @click="handleLogout" class="colorTertiaryLight--text">Logout</v-btn>
+              <v-btn
+                text
+                @click.prevent="handleLogout"
+                class="colorTertiaryLight--text"
+              >{{ $tc("userProfile.actions.logout", 1) }}</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -88,56 +88,21 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "UserProfile",
   data() {
     const defaultForm = Object.freeze({
-      username: "Isa",
-      email: "i@i.dev",
-      password: "22222222",
-      job: "Full Stack",
+      id: "",
+      name: "",
+      email: "",
+      job: "",
     });
-
     return {
-      show1: false,
-      form: Object.assign({}, defaultForm),
-      rules: {
-        password: [
-          (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-        ],
-        username: [
-          (val) => (val || "").length > 0 || "Ce champ est obligatoire",
-        ],
-        email: [(val) => (val || "").length > 0 || "Ce champ est obligatoire"],
-      },
-      jobs: [
-        "Full Stack",
-        "Frontend",
-        "Backend",
-        "Admin sys",
-        "cyber sécu",
-        "Chef de projet",
-        "Autre",
-      ],
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
-      snackbar: false,
       defaultForm,
     };
   },
-
-  computed: {
-    formIsValid() {
-      return (
-        this.form.username &&
-        this.form.email &&
-        this.form.password &&
-        this.form.job
-      );
-    },
-  },
-
   methods: {
     ...mapActions([
       "toggleRegisterForm",
@@ -145,14 +110,11 @@ export default {
       "toggleSignInOn",
       "toggleUserProfile",
       "toggleLoggedIn",
+      "toggleEditProfile",
     ]),
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
       this.$refs.form.reset();
-    },
-    submit() {
-      this.snackbar = true;
-      this.resetForm();
     },
     initShowForm() {
       return (
@@ -160,12 +122,94 @@ export default {
         this.$store.dispatch("toggleSignInOn", true),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false)
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "home" })
+      );
+    },
+    toggleShowLoggedInForms() {
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", true),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", false),
+        this.$router.push({ name: "user" })
       );
     },
     handleLogout() {
+      this.$auth.logout().then(
+        (succ) => {
+          console.log(`user check logout ${this.$auth.check()}`);
+          return (
+            this.resetForm(),
+            this.initShowForm(),
+            this.$store.dispatch("setUser", ""),
+            this.$router.push({ name: "home" })
+          );
+        },
+        (err) => {
+          console.log({ err });
+        }
+      );
+    },
+    handleDeleteUser() {
+      // handle delete with $auth
+      this.$auth.logout();
+      this.resetForm();
       this.initShowForm();
-      return this.$router.push('/')
+      this.$store.dispatch("setUser", "");
+      return this.$router.push({ name: "home" });
+    },
+    handleEditProfile() {
+      // handle edit redirect to edit profile form
+      this.$store.dispatch("toggleLoginForm", false);
+      this.$store.dispatch("toggleSignInOn", false);
+      this.$store.dispatch("toggleRegisterForm", false);
+      this.$store.dispatch("toggleLoggedIn", false);
+      this.$store.dispatch("toggleUserProfile", false);
+      this.$store.dispatch("toggleEditProfile", true);
+      this.$router.push({ name: "user-account-edit" });
+    },
+    updateProfil() {
+      var app = this;
+      console.log(this.$auth.user())
+      this.$auth
+        .user({
+          id: this.$store.getters.getUser.id,
+          name: app.name,
+          email: app.email,
+          // password: app.password,
+          // password_confirmation: app.password_confirmation,
+          job: app.job,
+        })
+      console.log(this.$auth.user().name)
+        // .then(
+        //   (succ) => {
+        //     console.log(succ.data.status);
+        //     return (
+        //       (app.success = true),
+        //       (app.snackbar = true),
+        //       this.$store.dispatch("setUser", succ.data.data),
+        //       this.resetForm(),
+        //       this.toggleShowUserProfile(),
+        //       this.$router.push({ name: "user-account" })
+        //     );
+        //   },
+        //   (err) => {
+        //     console.log({ err });
+        //     return (
+        //       (app.snackbar = true),
+        //       (app.success = false),
+        //       console.log(err.response.data.status),
+        //       console.log(err.response.data.errors),
+        //       (app.has_error = true),
+        //       (app.error = err.response.data.error),
+        //       (app.errs = err.response.data.errors || {})
+        //     );
+        //   }
+        // );
     },
   },
 };
