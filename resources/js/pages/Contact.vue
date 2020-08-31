@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid >
+  <v-container fluid>
     <contact-form />
   </v-container>
 </template>

@@ -1,37 +1,67 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600px" v-if="showContact" adaptative @click:outside="closeModal">
-    <!-- <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
-    </template>-->
-
+  <v-dialog
+    v-model="dialog"
+    max-width="600px"
+    v-if="showContact"
+    adaptative
+    @click:outside="closeModal"
+  >
     <v-card color="colorPrimaryUltraLight" class="pa-3 card">
-      <p class="top-right" @click="closeModal">&#215;</p>
+      <v-icon class="top-right" @click="closeModal">mdi-close</v-icon>
       <v-card-title>
-        <v-card-text class="headline text-center colorSecondary--text">Any question? Contact us!</v-card-text>
+        <v-card-text
+          class="headline text-center colorSecondary--text"
+        >{{ $tc("contactForm.title", 1) }}</v-card-text>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="Last name *" required color="secondary" v-model="lastname"></v-text-field>
+              <v-text-field
+                :label="$tc('contactForm.form.labelLastName', 1)"
+                required
+                color="secondary"
+                v-model="lastname"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="First Name *" color="secondary" v-model="firstname"></v-text-field>
+              <v-text-field
+                :label="$tc('contactForm.form.labelFirstName', 1)"
+                color="secondary"
+                v-model="firstname"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Email *" required color="secondary" v-model="email"></v-text-field>
+              <v-text-field
+                :label="$tc('contactForm.form.labelEmail', 1)"
+                required
+                color="secondary"
+                v-model="email"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-textarea color="secondary" label="Message *" v-model="message"></v-textarea>
+              <v-textarea
+                color="secondary"
+                :label="$tc('contactForm.form.labelMsg', 1)"
+                v-model="message"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-container>
-        <small>*required field</small>
+        <small>{{ $tc("contactForm.form.required", 2) }}</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="warning" text @click="closeModal">Cancel</v-btn>
-        <v-btn color="success" text @click.prevent="submitForm">Submit</v-btn>
+        <v-btn
+          color="warning"
+          text
+          @click="closeModal"
+        >{{ $tc("contactForm.form.actions.cancel", 1) }}</v-btn>
+        <v-btn
+          color="success"
+          text
+          @click.prevent="submitForm"
+        >{{ $tc("contactForm.form.actions.send", 1) }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -48,19 +78,23 @@ export default {
       email: "",
       firstname: "",
       lastname: "",
-      isSubmitSucced: false,
+      isSubmitSucced: false
     };
   },
   computed: {
+    /**
+     * Represents a book.
+     * @constructor
+     */
     showContact() {
       return this.$store.getters.isShowContact;
-    },
+    }
   },
   methods: {
     closeModal: () => {
       store.commit("hideContact");
     },
-    updateMessage: (e) => {
+    updateMessage: e => {
       this.$store.commit("updateContact", e.target.value);
     },
     submitForm() {
@@ -68,14 +102,14 @@ export default {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
-        message: this.message,
+        message: this.message
       };
-      this.$http.post("contact", postData).then((res) => {
+      this.$http.post("contact", postData).then(res => {
         console.log(res);
         this.isSubmitSucced = true;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

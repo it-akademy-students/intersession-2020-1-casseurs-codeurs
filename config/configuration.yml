@@ -19,7 +19,7 @@ inputs:
 
         exclude_folders: ~
 
-    setFolder: 'c:\xampp\htdocs\IT-akademy\Intersession\intersession-2020-1-casseurs-codeurs\public\scan' # Windows path with backslashes
+    setFolder: '.\..\public\scan' # Windows path with backslashes
     #setFolder: 'Z:/laragon/www/intersession-2020-1-casseurs-codeurs/public/scan' # Linux path with slashes
     setFile: ~
     setCode: ~

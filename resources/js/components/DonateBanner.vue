@@ -1,8 +1,14 @@
 <template>
   <v-banner class="hidden-lg-and-up" elevation="2" outlined sticky app>
-    <span>Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos. Participate in the maintenance of this project! Make a donation to allow us to guarantee this service.</span>
+    <span class="font-weight-black">{{ $tc("mainWelcomeDonate.donate", 1) }}</span>
+    <span class="subheading">{{ $tc("mainWelcomeDonate.donateText", 1) }}</span>
     <template v-slot:actions>
-      <v-btn text class="btn-text btn-text--green" to="/" link>I support !</v-btn>
+      <v-btn
+        text
+        class="btn-text btn-text--green"
+        to="/"
+        link
+      >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</v-btn>
     </template>
   </v-banner>
 </template>   

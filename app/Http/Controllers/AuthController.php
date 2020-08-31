@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Models\User;
+use JWTAuth;
+
 class AuthController extends Controller
 {
     /**
@@ -17,8 +21,7 @@ class AuthController extends Controller
             'password'  => 'required|min:3|confirmed',
             'job',
         ]);
-        if ($v->fails())
-        {
+        if ($v->fails()) {
             return response()->json([
                 'status' => 'error',
                 'errors' => $v->errors()
@@ -30,7 +33,8 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->job = $request->job;
         $user->save();
-        return response()->json(['status' => 'success'], 200);
+
+        return response()->json(['status' => 'success'], 201);
     }
     /**
      * Login user and return a token
@@ -39,7 +43,9 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+            return response()->json([
+                'status' => 'success'
+            ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'login_error'], 401);
     }
@@ -71,9 +77,9 @@ class AuthController extends Controller
     public function refresh()
     {
         if ($token = $this->guard()->refresh()) {
-            return response()
-                ->json(['status' => 'successs'], 200)
-                ->header('Authorization', $token);
+            return response()->json([
+                    'status' => 'success',
+                ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'refresh_token_error'], 401);
     }
