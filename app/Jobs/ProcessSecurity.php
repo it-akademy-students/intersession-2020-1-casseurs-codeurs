@@ -85,27 +85,33 @@ class ProcessSecurity implements ShouldQueue
         $files = [];
         if ($this->migration == 0){
             //____________________Analyse PHPStan________________________////
-            $this->analyse('phpstan');
-            $files[] = base_path().'/public/reports/'.$this->githubInfo.'_phpstan.json';
+            $result = $this->analyse('phpstan');
+            $files[] = $result['file'];
+            $errorFound = $result['errorQuantity'];
             //____________________Analyse Progpilot________________________////
-            $this->analyse('progpilot');
-            $files[] = base_path().'/public/reports/'.$this->githubInfo.'_progpilot.json';
+            $result = $this->analyse('progpilot');
+            $files[] = $result['file'];
+            $securityFails = $result['errorQuantity'];
         }
         elseif ($this->migration == 1 && $this->userConnected){
             //____________________Analyse PHPStan________________________////
-            $this->analyse('phpstan');
-            $files[] = base_path().'/public/reports/'.$this->githubInfo.'_phpstan.json';
+            $result = $this->analyse('phpstan');
+            $files[] = $result['file'];
+            $errorFound = $result['errorQuantity'];
             //____________________Analyse PHP7mar________________________////
-            $this->analyse('php7mar');
-            $files[] = base_path().'/public/reports/php7mar.md';
+            $result = $this->analyse('php7mar');
+            $files[] = $result['file'];
             //____________________Analyse Progpilot________________________////
-            $this->analyse('progpilot');
-            $files[] = base_path().'/public/reports/'.$this->githubInfo.'_progpilot.json';
+            $result = $this->analyse('progpilot');
+            $files[] = $result['file'];
+            $securityFails = $result['errorQuantity'];
         }
         elseif ($this->migration == 2 && $this->userConnected){
             //____________________Analyse PHP7mar________________________////
-            $this->analyse('php7mar');
-            $files[] = base_path().'/public/reports/php7mar.md';
+            $result = $this->analyse('php7mar');
+            $files[] = $result['file'];
+            $errorFound = 0;
+            $securityFails = 0;
         }
 
         //Envoie du resultat par mail:
@@ -117,7 +123,7 @@ class ProcessSecurity implements ShouldQueue
             // Conserver les fichiers pour les utilisateur connectés:
             $newFiles = [];
             foreach ($files as $file){
-                $newFilename = str_replace('reports/', 'user/'.$user->name.'_', $file);
+                $newFilename = str_replace('reports/', 'users/'.$user->name.'_'.$this->githubInfo, $file);
                 rename($file, $newFilename);
                 $newFiles[] = $newFilename;
             }
@@ -133,7 +139,14 @@ class ProcessSecurity implements ShouldQueue
             $analyse = \App\Analyse::where('repository', '=', str_replace("_","/","$this->githubInfo")->first());
             // Si le repos à déjà été scanné:
             if ($analyse != null){
-                $analyse->errorsFound = 0;
+                $analyse->errorsFound = $errorFound;
+                if ($analyse->maxErrorsFound < $errorFound){
+                    $analyse->maxErrorsFound = $errorFound;
+                }
+                $analyse->securityFails = $securityFails;
+                if ($analyse->maxSecurityFails < $securityFails){
+                    $analyse->maxSecurityFails = $securityFails;
+                }
                 $analyse->scannedFiles = $scannedFiles;
                 $analyse->numberOfScans += 1;
                 $analyse->files = json_encode($newFiles);
@@ -142,7 +155,10 @@ class ProcessSecurity implements ShouldQueue
             else{
                 $analyse = new \App\Analyse();
                 $analyse->repository = str_replace("_","/","$this->githubInfo");
-                $analyse->errorsFound = 0;
+                $analyse->errorsFound = $errorFound;
+                $analyse->maxErrorsFound = $errorFound;
+                $analyse->securityFails = $securityFails;
+                $analyse->maxSecurityFails = $securityFails;
                 $analyse->scannedFiles = $scannedFiles;
                 $analyse->numberOfScans = 1;
                 $analyse->files = json_encode($newFiles);
