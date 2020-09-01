@@ -50,18 +50,23 @@ Route::prefix('auth')->group(function () {
     Route::post('register', 'AuthController@register');
     // Login User
     Route::post('login', 'AuthController@login');
-    
-    // Refresh the JWT Token
-    Route::get('refresh', 'AuthController@refresh');
+    // Send reset password mail
+    Route::post('reset-password', 'AuthController@sendPasswordResetLink');
+    // handle reset password form process
+    Route::post('reset/password', 'AuthController@callResetPassword');
     
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
     // Get user info
         Route::get('user', 'AuthController@user');
+        // Refresh the JWT Token
+        Route::get('refresh', 'AuthController@refresh');
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
-        Route::post('update', 'AuthController@update');
-        Route::delete('delete', 'AuthController@destroy');
+        // Update user profile
+        Route::patch('update/{id}', 'AuthController@update');
+        // Delete user
+        Route::delete('delete/{id}', 'AuthController@destroy');
     
     });
 });
