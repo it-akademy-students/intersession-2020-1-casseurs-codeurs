@@ -6,7 +6,7 @@
           <v-col cols="12">
             <h2
               class="my-5 pa-4 text-center"
-            >{{ $tc("logged.title.hello", 1) }} {{ this.$store.getters.getUser.name | capitalize }} {{ $tc("logged.title.welcome", 1) }}</h2>
+            >{{ $tc("logged.title.hello", 1) }} {{ this.$auth.user().name | capitalize }} {{ $tc("logged.title.welcome", 1) }}</h2>
           </v-col>
           <v-col cols="12">
             <h3 class="mb-5 pa-4 text-center">{{ $tc("logged.title.action", 1) }}</h3>

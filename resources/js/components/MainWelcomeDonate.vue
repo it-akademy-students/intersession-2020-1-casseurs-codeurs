@@ -199,7 +199,6 @@ export default {
   }),
   methods: {
     handleClick: async function (event) {
-      console.log("click");
       // Get Stripe.js instance
       const stripe = await stripePromise;
 
@@ -221,16 +220,15 @@ export default {
     },
     handleGithubUrl: function () {
       this.loading = true;
-      console.log("click");
       const splittedUrl = this.repository.split("/");
       const username = splittedUrl[splittedUrl.length - 2];
       const repo = splittedUrl[splittedUrl.length - 1];
       const email = this.email;
       const migration = this.migration;
       const branch = this.branch;
-      const url = `github/${username}/${repo}/${branch}`;
+      const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
       console.log({ url });
-      this.$http.get(url).then((response) => {
+      this.axios.get(url).then((response) => {
         this.loading = false;
         this.fetching = true;
         setTimeout(() => {

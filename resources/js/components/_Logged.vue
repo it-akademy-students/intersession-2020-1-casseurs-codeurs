@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row align-content="center" justify="space-around" no-gutters>
+    <v-row align="center" justify="space-around" no-gutters>
       <v-col xs="12">
-        <v-row justify="center" align-content="center">
+        <v-row justify="center" align="center">
           <v-col cols="12">
             <h2
               class="my-5 pa-4 text-center"

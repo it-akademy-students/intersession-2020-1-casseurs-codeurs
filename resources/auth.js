@@ -35,18 +35,6 @@ const config = {
     method: 'GET', 
     enabled: true
   },
-  // fetchData: {
-  //   url: 'auth/update', 
-  //   method: 'POST', 
-  //   enabled: true,
-  //   makeRequest: true
-  // },
-  // fetchData: {
-  //   url: 'auth/delete', 
-  //   method: 'DELETE', 
-  //   enabled: true,
-  //   makeRequest: true
-  // },
   refreshData: {
     url: 'auth/refresh', 
     method: 'GET', 

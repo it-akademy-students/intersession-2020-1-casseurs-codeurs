@@ -78,8 +78,8 @@ class AuthController extends Controller
     {
         if ($token = $this->guard()->refresh()) {
             return response()->json([
-                    'status' => 'success',
-                ], 200)->header('Authorization', $token);
+                'status' => 'success',
+            ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'refresh_token_error'], 401);
     }
@@ -98,15 +98,14 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        USER::where('id', $request->id)->update($request->all());
+        
+        USER::where('id', $id)->update($request->all());
         $user = User::find(Auth::user()->id);
-        $user->update($request->all());
-        $user->save();
-   
+        
         return response()->json([
-            'status' => 'your informations have been updated correctly', 'data' => $user,
+            'status' => 'your informations have been updated correctly, 203', 'data' => $user,
         ]);
     }
 
@@ -115,10 +114,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $user = User::find(Auth::user()->id);
-        $user->delete();
+        
+        USER::where('id', $id)->delete();
         return response()->json([
             'status' => 'account deleted with success',
         ]);
