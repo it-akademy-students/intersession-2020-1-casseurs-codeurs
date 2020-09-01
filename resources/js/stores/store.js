@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
@@ -48,7 +48,6 @@ const store = new Vuex.Store({
 
     mutations: {
         showContact: state => {
-            console.log("showContact");
             state.showModalContact = true;
         },
         hideContact: state => {
@@ -61,7 +60,7 @@ const store = new Vuex.Store({
             state.showRegister = val;
         },
         SHOW_SIGNIN_SIGNON: (state, val) => {
-            state.showSign = val
+            state.showSign = val;
         },
         SHOW_LOGGEDIN: (state, val) => {
             state.showLogged = val;

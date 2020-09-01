@@ -133,8 +133,8 @@
     </v-form>
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.terms", 1) }}</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
+        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.termsTitle", 1) }}</v-card-title>
+        <v-card-text v-for="n in 5" :key="n">{{ $tc("register.termsText", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="colorTertiaryLight" @click="terms = false">Ok</v-btn>
@@ -143,8 +143,10 @@
     </v-dialog>
     <v-dialog v-model="conditions" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.conditions", 1) }}</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ content }}</v-card-text>
+        <v-card-title
+          class="title colorTertiaryLight--text"
+        >{{ $tc("register.conditionsTitle", 1) }}</v-card-title>
+        <v-card-text v-for="n in 5" :key="n">{{ $tc("register.conditionsText", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="colorTertiaryLight" @click="conditions = false">Ok</v-btn>
@@ -196,7 +198,6 @@ export default {
       error: "",
       errs: {},
       success: false,
-      // @TODO : fix snackbar
     };
   },
   computed: {
@@ -235,7 +236,6 @@ export default {
         })
         .then(
           (succ) => {
-            console.log(succ.data.status);
             return (
               (app.success = true),
               (app.snackbar = true),
@@ -253,12 +253,9 @@ export default {
             );
           },
           (err) => {
-            console.log({ err });
             return (
               (app.snackbar = true),
               (app.success = false),
-              console.log(err.response.data.status),
-              console.log(err.response.data.errors),
               (app.has_error = true),
               (app.error = err.response.data.error),
               (app.errs = err.response.data.errors || {})

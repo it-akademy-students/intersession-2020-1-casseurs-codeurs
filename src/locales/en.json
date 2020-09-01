@@ -23,13 +23,16 @@
   "mainWelcomeDonate": {
     "welcome": "Welcome on SWAPP!",
     "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
-    "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^7.0.0.",
+    "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^5.4.",
     "welcomeAction": "Scan your repository",
     "welcomeBtn": "I scan my repo!",
     "welcomeForm": {
       "labelUrl": "Enter the URL of your repo",
       "labelBranch": "Branch to scan",
-      "labelEmail": "Enter your email"
+      "labelEmail": "Enter your email",
+      "labelOption0": "Without the migration reporting tools",
+      "labelOption1": "With migration reporting tools",
+      "labelOption2": "Only migration reporting tools"
     },
     "welcomeModale": {
       "success":  "Success",
@@ -79,8 +82,10 @@
       "create": "Create my account",
       "cancel": "Cancel"
     },
-    "terms": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-    "conditions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "termsTitle": "Terms",
+    "termsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "conditionsTitle": "Conditions",
+    "conditionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
     "snackBar": {
       "success": "Congratulations! Your account have been successfully created!",
       "error": "Ooops! Error, can not register at the moment. If the problem persists, please contact an administrator."

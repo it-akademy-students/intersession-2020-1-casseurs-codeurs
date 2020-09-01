@@ -92,7 +92,6 @@ export default {
       password: "",
     });
     return {
-      // @TODO : fix snackbar
       show1: false,
       snackbar: false,
       defaultForm,
@@ -160,10 +159,6 @@ export default {
         })
         .then(
           (succ) => {
-            console.log({ succ });
-            console.log(`le data de la response ${succ.data.data.name}`);
-            console.log(`user check login ${this.$auth.check()}`);
-            // handle redirection
             return (
               (app.success = true),
               (app.snackbar = true),
@@ -174,7 +169,6 @@ export default {
             );
           },
           (err) => {
-            console.log({ err });
             app.success = false;
             app.snackbar = true;
             app.has_error = true;
