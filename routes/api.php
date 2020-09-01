@@ -23,7 +23,7 @@ Route::get('github/{username}/{repos}/{email}/{migration}/{branch?}', 'ApiContro
 
 Route::post('contact', 'ContactController@contact');
 
-// routes authentification
+// authentication
 // Route::prefix('v1')->group(function () {
     // Route::prefix('auth')->group(function () {
     //     // Below mention routes are public, user can access those without any restriction.
@@ -51,13 +51,17 @@ Route::prefix('auth')->group(function () {
     // Login User
     Route::post('login', 'AuthController@login');
     
+    // Refresh the JWT Token
+    Route::get('refresh', 'AuthController@refresh');
+    
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
-        // Get user info
+    // Get user info
         Route::get('user', 'AuthController@user');
         // Logout user from application
         Route::post('logout', 'AuthController@logout');
-        // Refresh the JWT Token
-        Route::get('refresh', 'AuthController@refresh');
+        Route::post('update', 'AuthController@update');
+        Route::delete('delete', 'AuthController@destroy');
+    
     });
 });
