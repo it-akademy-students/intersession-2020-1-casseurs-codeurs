@@ -47,4 +47,13 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Recupérer les analyses d'un utilisateur
+     */
+    public function analyses(){
+        return $this->hasMany('App\Analyse');
+    }
 }

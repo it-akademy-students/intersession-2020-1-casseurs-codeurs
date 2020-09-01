@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Analyse;
 use App\Jobs\ProcessSecurity;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -43,9 +47,10 @@ class ApiController extends Controller
      * @param string $repos
      * @return array|string
      */
-    public function github(string $username, string $repos, string $email, string $branch = 'master' )
+    public function github(string $username, string $repos, string $email, string $migration, string $branch = 'master' )
     {
         try{
+            Auth::check() ? $userConnected = Auth::user()->id : $userConnected = 0;
             //Construction de l'url a appelé:
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
             //Url API v3 Github pour lister l'architecture d'un repos:
@@ -57,12 +62,12 @@ class ApiController extends Controller
                 return ['response' => 'error', 'code' => $code, 'message' => $list->message, 'url' => $baseUrl, 'reset' => $reset];
             }
             else{
-                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl, $username.'_'.$repos, $email));
+                $this->dispatch(new ProcessSecurity(json_encode($list), $baseUrl, $username.'_'.$repos, $email, $migration, $userConnected));
                 header('Content-Type: application/json');
                 return ['response' => 'success', 'code' => 200];
             }
         } catch (Exeption $e){
-            return $e->getMessage();
+            return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
         }
 
     }
