@@ -77,12 +77,87 @@ trait AnalyseTrait
         try{
             exec($exec , $output);
             if ($tool != 'php7mar'){
-                file_put_contents(base_path().'/public/reports/'.$baseFileName.'_'.$tool.'.json', $output);
-            }
-                return ['response' => 'success' , 'value' => $output];
+                $this->convertOutput($tool, $output);
+                }
+            return ['response' => 'success' , 'value' => $output];
         } catch (\Exception $exception) {
             return['response' => 'error' , $exception->getMessage()];
         }
 
     }
+
+    private function convertOutput(string $tool, $output){
+        if ($tool == 'phpstan'){
+            $output = json_decode($output[0]);
+            $errorsQuantity = $output->totals->errors;
+            $phpstanResult = [];
+            $outFile = base_path().'\public\reports\errorsCode.md';
+            if($errorsQuantity){
+                foreach($convertedDatas->files as $key => $file){
+                    if($file->errors){
+                        $messages = $file->messages;
+                        $i = 0;
+                        foreach($messages as $message){
+                            if(!$message->ignorable){
+                                $i++;
+                                $filename = str_replace(base_path().'\public\scan\\', '', $key);
+                                $phpstanResult[$filename][$i] = [
+                                    'message' => $message->message,
+                                    'line' => $message->line,
+                                ];
+                            }
+                        }
+                    }
+                }
+                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n");
+                foreach($phpstanResult as $key => $errors){
+                    file_put_contents($outFile, "##".$key."\n\n", FILE_APPEND);
+                    foreach($errors as $errorKey => $error){
+                        $message = $error['message'];
+                        $line = $error['line'];
+                        file_put_contents($outFile, "**Error $errorKey**<br>\n&nbsp;&nbsp;&nbsp;__message:__  $message\n<br>&nbsp;&nbsp;&nbsp;__line:__$line\n<br>", FILE_APPEND);
+                    }
+                    file_put_contents($outFile, "\n", FILE_APPEND);
+                }
+                return ['errorQuantity' => $errorsQuantity, 'file' => $outFile];
+            }
+        elseif ($tool == 'progpilot'){
+            $json = '';
+            foreach($output as $value){
+                $json .= $value;
+            }
+            $output = json_decode($json);
+            $errorQuantity = sizeof($output);
+            $progpilotResult = [];
+            $outFile = base_path().'\public\reports\securityFails.md';
+            if($errorQuantity){
+                foreach($output as $error){
+                    $filename = str_replace(base_path().'\public\scan\\', '', $error->sink_file);
+                    array_key_exists($filename,$progpilotResult) ? $i = sizeof($progpilotResult[$filename]) : $i = 0;
+                    $progpilotResult[$filename][$i] = [
+                        'source_name' => $error->source_name[0],
+                        'source_line' => $error->source_line[0],
+                        'sink_name' => $error->sink_name,
+                        'vuln_name' => $error->vuln_name,
+                        'vuln_cwe' => $error->vuln_cwe,
+                        'vuln_type' => $error->vuln_type
+                    ];
+                }
+                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n");
+                foreach($progpilotResult as $key => $errors){
+                    file_put_contents($outFile, "##$key<br>", FILE_APPEND);
+                    foreach($errors as $errorKey => $error){
+                        $vulnName = $error['vuln_name'];
+                        $vulnCwe = $error['vuln_cwe'];
+                        $vulnType = $error['vuln_type'];
+                        $sourceName = $error['source_name'];
+                        $sourceLine = $error['source_line'];
+                        $sinkName = $error['sink_name'];
+                        file_put_contents($outFile, "**Error $errorKey**<br>&nbsp;&nbsp;&nbsp;*vuln_name:*$vulnName<br>&nbsp;&nbsp;&nbsp;*vuln_cwe:*$vulnCwe<br>&nbsp;&nbsp;&nbsp;*vuln_type:*$vulnType<br>&nbsp;&nbsp;&nbsp;*entry_point:*$sourceName<br>&nbsp;&nbsp;&nbsp;*line:*$sourceLine<br>&nbsp;&nbsp;&nbsp;*sink_name:*$sinkName<br>\n", FILE_APPEND);
+                    }
+                }
+                return ['errorQuantity' => $errorQuantity, 'file' => $outFile];
+            }
+        }
+}
 }
