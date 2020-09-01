@@ -6,7 +6,7 @@
         @click:outside="closeModal"
     >
         <div class="stripe-form">
-            <form method="post" id="payment-form">
+            <form method="POST" id="payment-form">
                 <div class="email">
                     <label for="email">
                         Email
@@ -43,7 +43,10 @@
                     </div>
                 </div>
 
-                <button class="my-5 btn btn--violet button">
+                <button
+                    @click="handleSubmit"
+                    class="my-5 btn btn--violet button"
+                >
                     Submit Payment
                 </button>
             </form>
@@ -57,6 +60,7 @@ let stripe;
 const stripeObj = loadStripe(
     "pk_test_51HKQ6eEDdpH3cWNoddQJ31BBxp3uWCFyFVuj7Ge0ObIwOBj59a4wfqmjPT1NDg09UeYPHeYeDW7JOgFnuiDO7HNu00jDCMt69v"
 ).then(res => (stripe = res));
+const axios = require("axios").default;
 
 export default {
     name: "StripeElement",
@@ -113,7 +117,7 @@ export default {
             });
 
             const cardExpiry = elements.create("cardExpiry", {
-                style: style,
+                style: style
             });
 
             // Add an instance of the card Element into the `card-element` <div>.
@@ -121,7 +125,9 @@ export default {
 
             // // Handle real-time validation errors from the card Element.
             cardExpiry.on("change", function(event) {
-                const displayError = document.getElementById("card-date-errors");
+                const displayError = document.getElementById(
+                    "card-date-errors"
+                );
                 if (event.error) {
                     displayError.textContent = event.error.message;
                 } else {
@@ -130,7 +136,7 @@ export default {
             });
 
             const cardCvc = elements.create("cardCvc", {
-                style: style,
+                style: style
             });
             cardCvc.mount("#card-cvc");
 
@@ -174,7 +180,21 @@ export default {
                 form.appendChild(hiddenInput);
 
                 // Submit the form
-                form.submit();
+                // form.submit();
+                handleSubmit(token);
+            }
+
+            function handleSubmit(token) {
+                axios
+                    .post("/create-checkout-session", {
+                        data: {
+                            stripeToken: token
+                        }
+                    })
+                    .then(function(response) {
+                        // handle success
+                        console.log(response);
+                    });
             }
         }
     },
@@ -238,18 +258,21 @@ export default {
 .input {
     background: "#aab7c4";
 }
-#card-number-errors, #card-cvc-erros, #card-cvc-errors {
+#card-number-errors,
+#card-cvc-erros,
+#card-cvc-errors {
     color: #ea4141;
 }
-#card-date, #card-cvc {
+#card-date,
+#card-cvc {
     width: 100px;
 }
- #card-cvc {
-     margin-left: 20px;
- }
- .form-card-row {
-     display: flex;
-     flex-direction: row;
-     margin-top: 20px;
- }
+#card-cvc {
+    margin-left: 20px;
+}
+.form-card-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
 </style>
