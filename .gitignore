@@ -12,7 +12,14 @@ npm-debug.log
 yarn-error.log
 .idea/
 docker-compose.yaml
+docker-compose.yml
+Dockerfile
+/php/*
+/nginx/*
+/mysql/*
 /docker/*
+/php/*
+/mysql/*
 cmd.md
 .vscode/*
 public/mix-manifest.json
