@@ -30,6 +30,10 @@ Route::prefix('auth')->group(function () {
     Route::post('register', 'AuthController@register');
     // Login User
     Route::post('login', 'AuthController@login');
+    // Send reset password mail
+    Route::post('reset-password', 'AuthController@sendPasswordResetLink');
+    // handle reset password form process
+    Route::post('reset/password', 'AuthController@callResetPassword');
     
     // Below mention routes are available only for the authenticated users.
     Route::middleware('auth:api')->group(function () {
