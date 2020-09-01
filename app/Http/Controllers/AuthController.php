@@ -7,9 +7,17 @@ use Auth;
 use Validator;
 use App\Models\User;
 use JWTAuth;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Hash;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 class AuthController extends Controller
-{
+{ use SendsPasswordResetEmails, ResetsPasswords {
+    SendsPasswordResetEmails::broker insteadof ResetsPasswords;
+    ResetsPasswords::credentials insteadof SendsPasswordResetEmails;
+    }
     /**
      * Register a new user
      */
@@ -78,8 +86,8 @@ class AuthController extends Controller
     {
         if ($token = $this->guard()->refresh()) {
             return response()->json([
-                    'status' => 'success',
-                ], 200)->header('Authorization', $token);
+                'status' => 'success',
+            ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'refresh_token_error'], 401);
     }
@@ -98,15 +106,14 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        USER::where('id', $request->id)->update($request->all());
+        
+        USER::where('id', $id)->update($request->all());
         $user = User::find(Auth::user()->id);
-        $user->update($request->all());
-        $user->save();
-   
+        
         return response()->json([
-            'status' => 'your informations have been updated correctly', 'data' => $user,
+            'status' => 'your informations have been updated correctly, 203', 'data' => $user,
         ]);
     }
 
@@ -115,12 +122,92 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $user = User::find(Auth::user()->id);
-        $user->delete();
+        
+        USER::where('id', $id)->delete();
         return response()->json([
             'status' => 'account deleted with success',
         ]);
     }
+
+    /**
+     * Send password reset link. 
+     */
+    public function sendPasswordResetLink(Request $request)
+    {
+        return $this->sendResetLinkEmail($request);
+    }
+
+    /**
+     * Get the response for a successful password reset link.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetLinkResponse(Request $request, $response)
+    {
+        return response()->json([
+            'message' => 'Password reset email sent.',
+            'data' => $response
+    ]);
+    }
+    /**
+     * Get the response for a failed password reset link.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        return response()->json(['message' => 'Email could not be sent to this email address.']);
+    }
+
+    /**
+     * Handle reset password 
+     */
+    public function callResetPassword(Request $request)
+    {
+        return $this->reset($request);
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = Hash::make($password);
+        $user->save();
+        event(new PasswordReset($user));
+    }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return response()->json(['message' => 'Password reset successfully.']);
+    }
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return response()->json(['message' => 'Failed, Invalid Token.']);
+    }
+
 }

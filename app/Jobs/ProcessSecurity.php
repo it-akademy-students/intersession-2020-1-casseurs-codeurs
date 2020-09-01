@@ -85,26 +85,26 @@ class ProcessSecurity implements ShouldQueue
         $files = [];
         if ($this->migration == 0){
             //____________________Analyse PHPStan________________________////
-            $this->analyse('phpstan', $this->githubInfo);
+            $this->analyse('phpstan');
             $files[] = base_path().'/public/reports/'.$this->githubInfo.'_phpstan.json';
             //____________________Analyse Progpilot________________________////
-            $this->analyse('progpilot', $this->githubInfo);
+            $this->analyse('progpilot');
             $files[] = base_path().'/public/reports/'.$this->githubInfo.'_progpilot.json';
         }
         elseif ($this->migration == 1 && $this->userConnected){
             //____________________Analyse PHPStan________________________////
-            $this->analyse('phpstan', $this->githubInfo);
+            $this->analyse('phpstan');
             $files[] = base_path().'/public/reports/'.$this->githubInfo.'_phpstan.json';
             //____________________Analyse PHP7mar________________________////
-            $this->analyse('php7mar', $this->githubInfo);
+            $this->analyse('php7mar');
             $files[] = base_path().'/public/reports/php7mar.md';
             //____________________Analyse Progpilot________________________////
-            $this->analyse('progpilot', $this->githubInfo);
+            $this->analyse('progpilot');
             $files[] = base_path().'/public/reports/'.$this->githubInfo.'_progpilot.json';
         }
         elseif ($this->migration == 2 && $this->userConnected){
             //____________________Analyse PHP7mar________________________////
-            $this->analyse('php7mar', $this->githubInfo);
+            $this->analyse('php7mar');
             $files[] = base_path().'/public/reports/php7mar.md';
         }
 
@@ -135,7 +135,7 @@ class ProcessSecurity implements ShouldQueue
             if ($analyse != null){
                 $analyse->errorsFound = 0;
                 $analyse->scannedFiles = $scannedFiles;
-                $analyse->numberOfScans = $analyse->numberOfScans+1;
+                $analyse->numberOfScans += 1;
                 $analyse->files = json_encode($newFiles);
                 $analyse->save();
             }

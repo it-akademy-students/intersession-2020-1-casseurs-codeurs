@@ -78,7 +78,7 @@ export default {
       email: "",
       firstname: "",
       lastname: "",
-      isSubmitSucced: false
+      isSubmitSucced: false,
     };
   },
   computed: {
@@ -88,13 +88,13 @@ export default {
      */
     showContact() {
       return this.$store.getters.isShowContact;
-    }
+    },
   },
   methods: {
     closeModal: () => {
       store.commit("hideContact");
     },
-    updateMessage: e => {
+    updateMessage: (e) => {
       this.$store.commit("updateContact", e.target.value);
     },
     submitForm() {
@@ -102,14 +102,13 @@ export default {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
-        message: this.message
+        message: this.message,
       };
-      this.$http.post("contact", postData).then(res => {
-        console.log(res);
+      this.axios.post("contact", postData).then((res) => {
         this.isSubmitSucced = true;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
