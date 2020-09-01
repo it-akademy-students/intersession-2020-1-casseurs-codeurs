@@ -71,9 +71,9 @@ trait AnalyseTrait
             exec($exec , $output);
             // php7mar renvoie un format md, pour les autres il faut les convertir:
             if ($tool != 'php7mar'){
-                $this->convertOutput($tool, $output);
+                return $this->convertOutput($tool, $output);
             }
-            return ['response' => 'success' , 'value' => $output];
+            return ['response' => 'success' , 'file' => base_path() . '\public\reports\migration.md'];
         } catch (\Exception $exception) {
             return['response' => 'error' , $exception->getMessage()];
         }
