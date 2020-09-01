@@ -1,17 +1,7 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
-    <v-snackbar v-if="success" v-model="snackbar" absolute top right color="colorSecondaryLight">
-      <span color="colorPrimary--text">{{ $tc("editProfile.snackBar.success", 1) }}</span>
-      <v-icon dark>mdi-checkbox-marked-circle</v-icon>
-    </v-snackbar>
     <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
-      <span
-        v-if="error == 'registration_validation_error'"
-        color="colorPrimary--text"
-      >{{ $tc("editProfile.snackBar.error", 1) }}</span>
-      <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
-      <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
-      <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
+      <span color="colorPrimary--text">{{ $tc("editProfile.snackBar.error", 1) }}</span>
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
@@ -20,7 +10,7 @@
           <v-col cols="11">
             <h2
               class="pa-2 text-center"
-            >{{ $tc("editProfile.title", 1) }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+            >{{ $tc("editProfile.title", 1) }} {{ this.$auth.user().name | capitalize }}:</h2>
           </v-col>
           <v-col cols="1">
             <v-icon @click="handleCancelled">mdi-close</v-icon>
@@ -28,14 +18,13 @@
         </v-row>
       </v-col>
     </v-col>
-    <v-form ref="form" name="form">
+    <v-form ref="form" name="form" @submit.prevent="handleUpdateProfil" method="POST">
       <v-container fluid>
         <v-row>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.name"
+              v-model="name"
               type="text"
-              name="username"
               :label="$tc('editProfile.form.labelName', 1)"
               required
               color="colorTertiaryLight"
@@ -43,45 +32,17 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.email"
+              v-model="email"
               type="email"
-              name="email"
               :label="$tc('editProfile.form.labelEmail', 1)"
               required
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
-          <!-- <v-col cols="12">
-            <v-text-field
-              :value="this.$store.getters.getUser.password"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show1 ? 'text' : 'password'"
-              name="password"
-              :label="$tc('editProfile.form.labelPwd', 1)"
-              :hint="$tc('editProfile.form.hint', 1)"
-              required
-              color="colorTertiaryLight"
-              @click:append="show1 = !show1"
-            ></v-text-field>
-          </v-col>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.password_confirmation"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show1 ? 'text' : 'password'"
-              name="password_confirmation"
-              :label="$tc('editProfile.form.labelPwdConfirm', 1)"
-              :hint="$tc('editProfile.form.hint', 1)"
-              required
-              color="colorTertiaryLight"
-              @click:append="show1 = !show1"
-            ></v-text-field>
-          </v-col> -->
-          <v-col cols="12">
-            <v-text-field
-              :value="this.$store.getters.getUser.job"
+              v-model="job"
               type="text"
-              name="job"
               :label="$tc('editProfile.form.labelJob', 1)"
               color="colorTertiaryLight"
             ></v-text-field>
@@ -92,10 +53,9 @@
         <v-btn text @click="handleCancelled">{{ $tc("editProfile.form.cancel", 1) }}</v-btn>
         <v-spacer></v-spacer>
         <v-btn
-          :disabled="!formIsValid"
           text
           class="colorTertiaryLight--text"
-          @click.prevent="updateProfil" 
+          type="submit"
         >{{ $tc("editProfile.form.edit", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
@@ -111,37 +71,17 @@ export default {
     const defaultForm = Object.freeze({
       name: "",
       email: "",
-      // password: "",
-      // password_confirmation: "",
       job: "",
     });
     return {
-      show1: false,
-      // @TODO : fix snackbar
-      //   @TODO : fix display user datas
-      name: this.$store.getters.getUser.name,
-      email: this.$store.getters.getUser.email,
-      password: "",
-      password_confirmation: "",
-      job: this.$store.getters.getUser.job,
-      snackbar: false,
+      name: "",
+      email: "",
+      job: "",
       defaultForm,
+      snackbar: false,
       has_error: false,
-      error: "",
-      errs: {},
       success: false,
     };
-  },
-  computed: {
-    formIsValid() {
-      return (
-        this.name &&
-        this.email &&
-        // this.password &&
-        // this.password_confirmation &&
-        this.job
-      );
-    },
   },
   methods: {
     ...mapActions([
@@ -152,43 +92,47 @@ export default {
       "toggleLoggedIn",
       "toggleEditProfile",
     ]),
-    // @TODO : handle update and delete User
-    updateProfil() {
-      var app = this;
-      this.$auth
-        .user({
-          id: this.$store.getters.getUser.id,
-          name: app.name,
-          email: app.email,
-          // password: app.password,
-          // password_confirmation: app.password_confirmation,
-          job: app.job,
-        })
-        .then(
-          (succ) => {
-            console.log(succ.data.status);
-            return (
-              (app.success = true),
-              (app.snackbar = true),
-              this.$store.dispatch("setUser", succ.data.data),
+    handleUpdateProfil() {
+      const app = this;
+
+      let url = `/auth/user/${this.$auth.user().id}`;
+      let data = new FormData();
+      if (app.name) {
+        data.append("name", app.name);
+      }
+      if (app.email) {
+        data.append("email", app.email);
+      }
+      if (app.job) {
+        data.append("email", app.email);
+      }
+      let header = {
+        headers: {
+          Authorization: `bearer ${this.$auth.token()}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      this.axios
+        .post(url, data, header)
+        .then((res) => {
+          this.$auth.user({
+            name: res.data.data.name,
+            email: res.data.data.email,
+            job: res.data.data.job,
+          });
+          this.$auth
+            .fetch()
+            .then(
+              this.$store.dispatch("setUser", this.$auth.user()),
               this.resetForm(),
-              this.toggleShowUserProfile(),
-              this.$router.push({ name: "user-account" })
+              this.toggleShowUserProfile()
             );
-          },
-          (err) => {
-            console.log({ err });
-            return (
-              (app.snackbar = true),
-              (app.success = false),
-              console.log(err.response.data.status),
-              console.log(err.response.data.errors),
-              (app.has_error = true),
-              (app.error = err.response.data.error),
-              (app.errs = err.response.data.errors || {})
-            );
-          }
-        );
+        })
+        .catch((err) => {
+          app.success = false;
+          app.has_error = true;
+          app.snackbar = true;
+        });
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);

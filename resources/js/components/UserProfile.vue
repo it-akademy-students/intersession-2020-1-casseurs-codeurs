@@ -5,7 +5,7 @@
         <v-col cols="11">
           <h2
             class="pa-2 text-center"
-          >{{ $tc("userProfile.title", 1) }} {{ this.$store.getters.getUser.name | capitalize }}:</h2>
+          >{{ $tc("userProfile.title", 1) }} {{ this.$auth.user().name | capitalize }}:</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
@@ -18,16 +18,7 @@
         <v-row>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.id"
-              type="text"
-              name="id"
-              label="id"
-              class="d-none"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              :value="this.$store.getters.getUser.name"
+              :value="this.$auth.user().name"
               type="text"
               name="username"
               :label="$tc('userProfile.form.labelName', 1)"
@@ -37,7 +28,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.email"
+              :value="this.$auth.user().email"
               type="email"
               name="email"
               :label="$tc('userProfile.form.labelEmail', 1)"
@@ -47,7 +38,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              :value="this.$store.getters.getUser.job"
+              :value="this.$auth.user().job"
               type="text"
               :label="$tc('userProfile.form.labelJob', 1)"
               name="job"
@@ -70,7 +61,7 @@
               <v-btn
                 text
                 class="colorWarning--text"
-                @click.prevent="updateProfil"
+                @click.prevent="handleEditProfile"
               >{{ $tc("userProfile.actions.edit", 1) }}</v-btn>
             </v-col>
             <v-col xs="12" md="auto">
@@ -138,10 +129,27 @@ export default {
         this.$router.push({ name: "user" })
       );
     },
+    handleDeleteUser() {
+      let url = `/auth/user/${this.$auth.user().id}`;
+      this.$auth.logout();
+      this.axios.delete(url)
+      this.resetForm();
+      this.initShowForm();
+      this.$store.dispatch("setUser", "");
+      return this.$router.push({ name: "home" });
+    },
+    handleEditProfile() {
+      this.$store.dispatch("toggleLoginForm", false);
+      this.$store.dispatch("toggleSignInOn", false);
+      this.$store.dispatch("toggleRegisterForm", false);
+      this.$store.dispatch("toggleLoggedIn", false);
+      this.$store.dispatch("toggleUserProfile", false);
+      this.$store.dispatch("toggleEditProfile", true);
+      this.$router.push({ name: "user-account-edit" });
+    },
     handleLogout() {
       this.$auth.logout().then(
         (succ) => {
-          console.log(`user check logout ${this.$auth.check()}`);
           return (
             this.resetForm(),
             this.initShowForm(),
@@ -154,67 +162,9 @@ export default {
         }
       );
     },
-    handleDeleteUser() {
-      // handle delete with $auth
-      this.$auth.logout();
-      this.resetForm();
-      this.initShowForm();
-      this.$store.dispatch("setUser", "");
-      return this.$router.push({ name: "home" });
-    },
-    handleEditProfile() {
-      // handle edit redirect to edit profile form
-      this.$store.dispatch("toggleLoginForm", false);
-      this.$store.dispatch("toggleSignInOn", false);
-      this.$store.dispatch("toggleRegisterForm", false);
-      this.$store.dispatch("toggleLoggedIn", false);
-      this.$store.dispatch("toggleUserProfile", false);
-      this.$store.dispatch("toggleEditProfile", true);
-      this.$router.push({ name: "user-account-edit" });
-    },
-    updateProfil() {
-      var app = this;
-      console.log(this.$auth.user())
-      this.$auth
-        .user({
-          id: this.$store.getters.getUser.id,
-          name: app.name,
-          email: app.email,
-          // password: app.password,
-          // password_confirmation: app.password_confirmation,
-          job: app.job,
-        })
-      console.log(this.$auth.user().name)
-        // .then(
-        //   (succ) => {
-        //     console.log(succ.data.status);
-        //     return (
-        //       (app.success = true),
-        //       (app.snackbar = true),
-        //       this.$store.dispatch("setUser", succ.data.data),
-        //       this.resetForm(),
-        //       this.toggleShowUserProfile(),
-        //       this.$router.push({ name: "user-account" })
-        //     );
-        //   },
-        //   (err) => {
-        //     console.log({ err });
-        //     return (
-        //       (app.snackbar = true),
-        //       (app.success = false),
-        //       console.log(err.response.data.status),
-        //       console.log(err.response.data.errors),
-        //       (app.has_error = true),
-        //       (app.error = err.response.data.error),
-        //       (app.errs = err.response.data.errors || {})
-        //     );
-        //   }
-        // );
-    },
   },
 };
 </script>
-
 <style scoped lang="scss">
 .theme--dark.v-list {
   background-color: #696975;

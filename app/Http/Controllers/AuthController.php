@@ -86,8 +86,8 @@ class AuthController extends Controller
     {
         if ($token = $this->guard()->refresh()) {
             return response()->json([
-                    'status' => 'success',
-                ], 200)->header('Authorization', $token);
+                'status' => 'success',
+            ], 200)->header('Authorization', $token);
         }
         return response()->json(['error' => 'refresh_token_error'], 401);
     }
@@ -108,11 +108,12 @@ class AuthController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         USER::where('id', $id)->update($request->all());
         $user = User::find(Auth::user()->id);
         
         return response()->json([
-            'status' => 'your informations have been correctly updated, 203', 'data' => $user,
+            'status' => 'your informations have been updated correctly, 203', 'data' => $user,
         ]);
     }
 
@@ -123,6 +124,7 @@ class AuthController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        
         USER::where('id', $id)->delete();
         return response()->json([
             'status' => 'account deleted with success',
