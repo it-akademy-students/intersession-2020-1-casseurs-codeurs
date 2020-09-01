@@ -1,22 +1,61 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row align-content="center" justify="space-around" no-gutters>
       <v-col xs="12">
         <v-row justify="center" align-content="center">
-          <h2 class="my-5 pa-4 text-center">Hello {{ user.username }}, glad to see you again!</h2>
-          <h3 class="mb-5 pa-4 text-center">What would you like to do today?</h3>
-          <button
-            class="my-5 btn btn--violet"
-            style="min-width:35ch;"
-          >Consult the analysis history</button>
-          <button
-            class="my-5 btn btn--violet"
-            style="min-width:35ch;"
-          >Migration tools php5 > php7</button>
-          <p class="my-5 pa-4 text-center">
-            The SWAPP application has already enabled you to detect
-            <span class="colorTertiaryLight--text text-h6">{{ user.stats }}</span> bugs and security vulnerabilities in your code!
-          </p>
+          <v-col cols="12">
+            <h2
+              class="my-5 pa-4 text-center"
+            >{{ $tc("logged.title.hello", 1) }} {{ this.$auth.user().name | capitalize }} {{ $tc("logged.title.welcome", 1) }}</h2>
+          </v-col>
+          <v-col cols="12">
+            <h3 class="mb-5 pa-4 text-center">{{ $tc("logged.title.action", 1) }}</h3>
+          </v-col>
+
+
+          <!-- stats -->
+          <v-col cols="12">
+            <v-row justify="center">
+              <v-card class="mx-auto text-center" color="green" dark >
+                <v-card-text>
+                  <v-sheet color="rgba(0, 0, 0, .12)">
+                    <v-sparkline
+                      :value="value"
+                      color="rgba(255, 255, 255, .7)"
+                      height="100"
+                      padding="24"
+                      stroke-linecap="round"
+                      smooth
+                    >
+                      <template v-slot:label="item">${{ item.value }}</template>
+                    </v-sparkline>
+                  </v-sheet>
+                </v-card-text>
+
+                <v-card-text>
+                  <div class="display-1 font-weight-thin">Sales Last 24h</div>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions class="justify-center">
+                  <v-btn block text>Go to Report</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-row>
+          </v-col>
+          <v-col cols="12">
+            <v-row justify="center"></v-row>
+          </v-col>
+          <v-col cols="12">
+            <p class="my-5 pa-4 text-center">
+              {{ $tc("logged.stats.textPart1", 1) }}
+              <span
+                class="colorTertiaryLight--text text-h6"
+              >{{ user.stats }}</span>
+              {{ $tc("logged.stats.textPart2", 1) }}
+            </p>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -27,23 +66,11 @@
 export default {
   name: "Logged",
   data: () => ({
+    // @TODO: users stats
     user: {
-      username: "Isa",
-      email: "i@i.dev",
-      password: "********",
-      job: "Développeuse",
       stats: "1200",
     },
+    value: [423, 446, 675, 510, 590, 610, 760],
   }),
-  // computed: {
-  //   currentUser() {
-  //     return this.$store.state.auth.user;
-  //   }
-  // },
-  // mounted() {
-  //   if (!this.currentUser) {
-  //     this.$router.push('/login');
-  //   }
-  // }
 };
 </script>

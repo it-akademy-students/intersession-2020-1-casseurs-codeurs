@@ -1,0 +1,22 @@
+parameters:
+    phpVersion: null
+    level: 4
+    paths:
+        - .\..\public\scan # Windows path with backslashes
+        #- Z:/laragon/www/intersession-2020-1-casseurs-codeurs/public/scan # Linux path with slashes
+    excludes_analyse:
+        - vendor/*
+    parallel:
+        jobSize: 20
+        processTimeout: 60.0
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 2
+        buffer: 134217728 # 128 MB
+    cache:
+        nodesByFileCountMax: 1024
+        nodesByStringCountMax: 1024
+    fileExtensions:
+        - php
+    #memoryLimit: 8G
+    #errorFormat: prettyJson
+    #quiet: true

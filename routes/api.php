@@ -13,34 +13,36 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('create-checkout-session', 'StripeController@checkout');
 
-Route::get('github/{username}/{repos}', 'ApiController@github');
+Route::get('github/{username}/{repos}/{email}/{branch?}', 'ApiController@github');
 
-Route::post('contact', 'ContactController@insert');
+Route::post('contact', 'ContactController@contact');
 
-// routes authentification
-Route::prefix('v1')->group(function () {
-    Route::prefix('auth')->group(function () {
-        // Below mention routes are public, user can access those without any restriction.
-        // Create New User
-        Route::post('register', 'AuthController@register');
-        // Login User
-        Route::post('login', 'AuthController@login');
-        
+// authentication
+Route::prefix('auth')->group(function () {
+    // Below mention routes are public, user can access those without any restriction.
+    // Create New User
+    Route::post('register', 'AuthController@register');
+    // Login User
+    Route::post('login', 'AuthController@login');
+    
+    // Below mention routes are available only for the authenticated users.
+    Route::middleware('auth:api')->group(function () {
+        // Get user info
+        Route::get('user', 'AuthController@user');
         // Refresh the JWT Token
         Route::get('refresh', 'AuthController@refresh');
-        
-        // Below mention routes are available only for the authenticated users.
-        Route::middleware('auth:api')->group(function () {
-            // Get user info
-            Route::get('user', 'AuthController@user');
-            // Logout user from application
-            Route::post('logout', 'AuthController@logout');
-        });
+        // Logout user from application
+        Route::post('logout', 'AuthController@logout');
+        // update user datas
+        Route::post('user/{id}', 'AuthController@update');
+        // delete user
+        Route::delete('user/{id}', 'AuthController@destroy');
+    
     });
 });
