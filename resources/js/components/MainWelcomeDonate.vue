@@ -318,7 +318,9 @@
                                                         <button
                                                             class="btn btn--green"
                                                             role="link"
-                                                            @click="showStripeForm"
+                                                            @click="
+                                                                showStripeForm
+                                                            "
                                                         >
                                                             {{
                                                                 $tc(
@@ -331,13 +333,13 @@
                                                 </v-row>
                                             </v-container>
                                         </v-col>
+                                        <stripe-element
+                                            v-if="isStripeOpen"
+                                            v-model="isStripeOpen"
+                                            :method="hideStripeForm"
+                                        />
                                     </v-row>
                                 </v-container>
-                                <stripe-element
-                                    v-if="isStripeOpen"
-                                    v-model="isStripeOpen"
-                                    :method="hideStripeForm"
-                                />
                             </v-col>
                         </v-row>
                     </v-container>
@@ -442,6 +444,9 @@ export default {
     to {
         transform: rotate(359deg);
     }
+}
+.v-radio > label {
+    color: #62cb5c !important;
 }
 .v-radio > label {
     color: #62cb5c !important;

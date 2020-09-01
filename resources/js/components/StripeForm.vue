@@ -251,19 +251,19 @@ export default {
                     .post("/create-checkout-session", {
                         data: {
                             stripeToken: token,
-                            email: this.email,
-                            amount: this.amount,
-                            id: this.$auth.user().id
+                            // email: this.email,
+                            // amount: this.amount,
+                            // id: this.$auth.user().id
                         }
                     })
                     .then(
                         function(response) {
                             // handle success
-                            console.log(response);
+                            console.log({response});
                             this.stripeResponse = "success";
                         },
                         err => {
-                            console.log(err);
+                            console.log({err});
                             this.stripeResponse = "error";
                         }
                     );

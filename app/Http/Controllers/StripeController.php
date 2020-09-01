@@ -11,7 +11,7 @@ class StripeController extends Controller
         
         $token = $request->data['stripeToken']['id'];
         $stripe = new Stripe();
-        $stripe = Stripe::make(config('stripe.api_key'));
+        $stripe = Stripe::make('sk_test_51HKQ6eEDdpH3cWNor0L1dwlEVt4rD0eOMEvLwo5BdNEaqjh3zFJ3XBWhD3shatgBsTkbeoYzPtMwWInLTDau9ixo00GyM3qQDY');
 
        try {
         $charge = $stripe->charges()->create([
