@@ -3,29 +3,46 @@
         content-class="modalStripe"
         v-model="dialog"
         dark
-        @click:outside="closeModal"
+        @click:outside="method"
     >
+        <div id="message-success"></div>
         <div class="stripe-form">
             <form method="POST" id="payment-form">
-                <div class="email">
+                <div class="email top-form">
                     <label for="email">
                         Email
                     </label>
-                    <input type="email" class="StripeElement" />
+                    <input type="email" class="StripeElement" v-model=email />
                 </div>
-                <div class="form-row">
+                <div class="form-row top-form">
                     <label for="card-number">
-                        Credit card
+                        Name on card
                     </label>
-                    <div id="card-number">
-                        <!-- A Stripe Element will be inserted here. -->
+                    <div>
+                        <input
+                            type="text"
+                            class="StripeElement"
+                            id="name_on_card"
+                            name="name_on_card"
+                        />
                     </div>
+                    <div class="top-form">
+                        <label for="card-number">
+                            Credit card
+                        </label>
+                        <div id="card-number">
+                            <!-- A Stripe Element will be inserted here. -->
+                        </div>
 
-                    <!-- Used to display form errors. -->
-                    <div id="card-number-errors" role="alert"></div>
+                        <!-- Used to display form errors. -->
+                        <div id="card-number-errors" role="alert"></div>
+                    </div>
                 </div>
                 <div class="form-card-row">
                     <div>
+                        <label for="card-date">
+                            Expiration date
+                        </label>
                         <div id="card-date">
                             <!-- A Stripe Element will be inserted here. -->
                         </div>
@@ -34,6 +51,9 @@
                         <div id="card-date-errors" role="alert"></div>
                     </div>
                     <div>
+                        <label for="card-cvc">
+                            Cvc
+                        </label>
                         <div id="card-cvc">
                             <!-- A Stripe Element will be inserted here. -->
                         </div>
@@ -42,7 +62,26 @@
                         <div id="card-cvc-errors" role="alert"></div>
                     </div>
                 </div>
-
+                <div id="amount">
+                    <label for="amount">
+                        Amount
+                    </label>
+                    <div>
+                        <select
+                            v-model="amount"
+                            class="StripeElement"
+                            id="input-amount"
+                        >
+                            <option
+                                v-bind:key="option.value"
+                                v-for="option in options"
+                                v-bind:value="option.value"
+                            >
+                                {{ option.text }} €
+                            </option>
+                        </select>
+                    </div>
+                </div>
                 <button
                     @click="handleSubmit"
                     class="my-5 btn btn--violet button"
@@ -64,10 +103,32 @@ const axios = require("axios").default;
 
 export default {
     name: "StripeElement",
-
+    props: {
+        method: { type: Function }
+    },
     data: () => ({
         isStripeOpen: false,
-        dialog: true
+        dialog: true,
+        stripeResponse: "",
+        email: "",
+        amount: "1",
+        options: [
+            { text: "1", value: "1" },
+            { text: "2", value: "2" },
+            { text: "3", value: "3" },
+            { text: "4", value: "4" },
+            { text: "5", value: "5" },
+            { text: "6", value: "6" },
+            { text: "7", value: "7" },
+            { text: "8", value: "8" },
+            { text: "9", value: "9" },
+            { text: "10", value: "10" },
+            { text: "11", value: "11" },
+            { text: "12", value: "12" },
+            { text: "13", value: "13" },
+            { text: "14", value: "14" },
+            { text: "15", value: "15" }
+        ]
     }),
     methods: {
         closeModal: () => {
@@ -75,7 +136,6 @@ export default {
         },
         initializeStripe: event => {
             // Create an instance of Elements.
-            console.log(stripe);
             const elements = stripe.elements();
             // Custom styling can be passed to options when creating an Element.
             // (Note that this demo uses a wider set of styles than the guide below.)
@@ -154,8 +214,10 @@ export default {
             const form = document.getElementById("payment-form");
             form.addEventListener("submit", function(event) {
                 event.preventDefault();
-
-                stripe.createToken(cardNumber).then(function(result) {
+                const options = {
+                    name: document.getElementById("name_on_card").value
+                };
+                stripe.createToken(cardNumber, options).then(function(result) {
                     if (result.error) {
                         // Inform the user if there was an error.
                         var errorElement = document.getElementById(
@@ -188,20 +250,30 @@ export default {
                 axios
                     .post("/create-checkout-session", {
                         data: {
-                            stripeToken: token
+                            stripeToken: token,
+                            email: this.email,
+                            amount: this.amount,
+                            id: this.$auth.user().id
                         }
                     })
-                    .then(function(response) {
-                        // handle success
-                        console.log(response);
-                    });
+                    .then(
+                        function(response) {
+                            // handle success
+                            console.log(response);
+                            this.stripeResponse = "success";
+                        },
+                        err => {
+                            console.log(err);
+                            this.stripeResponse = "error";
+                        }
+                    );
             }
         }
     },
     mounted() {
         setTimeout(() => {
             this.initializeStripe();
-        }, 1500);
+        }, 300);
     }
 };
 </script>
@@ -223,6 +295,7 @@ export default {
     transition: box-shadow 150ms ease;
     width: 400px;
     max-width: 70vw;
+    color: #32325d;
 }
 
 .StripeElement--focus {
@@ -259,20 +332,33 @@ export default {
     background: "#aab7c4";
 }
 #card-number-errors,
-#card-cvc-erros,
+#card-date-errors,
 #card-cvc-errors {
-    color: #ea4141;
+    color: red;
 }
 #card-date,
-#card-cvc {
+#card-cvc,
+#amount {
     width: 100px;
 }
-#card-cvc {
-    margin-left: 20px;
+// #card-cvc,
+// #amount {
+//     margin-left: 20px;
+// }
+#input-amount {
+    width: 100px;
 }
 .form-card-row {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     margin-top: 20px;
+}
+.cvc {
+    margin-left: 20px;
+}
+.top-form,
+#amount {
+    margin-top: 15px;
 }
 </style>
