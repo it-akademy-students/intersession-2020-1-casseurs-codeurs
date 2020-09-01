@@ -90,4 +90,37 @@ class AuthController extends Controller
     {
         return Auth::guard();
     }
+
+    //UPDATE
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        USER::where('id', $request->id)->update($request->all());
+        $user = User::find(Auth::user()->id);
+        $user->update($request->all());
+        $user->save();
+   
+        return response()->json([
+            'status' => 'your informations have been updated correctly', 'data' => $user,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->delete();
+        return response()->json([
+            'status' => 'account deleted with success',
+        ]);
+    }
 }
