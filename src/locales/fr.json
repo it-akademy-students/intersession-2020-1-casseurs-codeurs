@@ -93,7 +93,7 @@
     },
     "loginForm": {
       "snackBar": {
-        "success": "Heureux de vous revoir ! Vous êtes maintenant connecté !",
+        "success": "Un e-mail a été envoyé avec un lien pour réinitialiser votre mot de passe",
         "error": "Erreur, impossible de se connecter avec ces informations d'identification."
       },
       "title": "Merci d'entrer votre nom d'utilisateur et votre mot de passe pour vous connecter.",

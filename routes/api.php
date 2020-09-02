@@ -31,7 +31,7 @@ Route::prefix('auth')->group(function () {
     // Login User
     Route::post('login', 'AuthController@login');
     // Send reset password mail
-    Route::post('reset-password', 'AuthController@sendPasswordResetLink');
+    Route::post('reset-password/', 'AuthController@sendPasswordResetLink');
     // handle reset password form process
     Route::post('reset/password', 'AuthController@callResetPassword');
     
