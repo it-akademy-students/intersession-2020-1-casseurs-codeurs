@@ -93,8 +93,8 @@
   },
   "loginForm": {
     "snackBar": {
-      "success": "Glad to see you again! You are now logged in!",
-      "error": "Error, unable to connect with these credentials."
+      "success": "An email has been sent with a link to reset your password",
+      "error": "This email doesn't exist, please retry."
     },
     "title": "Please enter your username and password to log in.",
     "form": {

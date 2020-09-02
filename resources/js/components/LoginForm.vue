@@ -1,17 +1,6 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="login-form">
     <v-snackbar
-      v-if="snackbar && success"
-      v-model="snackbar"
-      absolute
-      top
-      right
-      color="colorSecondaryLight"
-    >
-      <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1) }}</span>
-      <v-icon dark>mdi-checkbox-marked-circle</v-icon>
-    </v-snackbar>
-    <v-snackbar
       v-if="snackbar && has_error && !success"
       v-model="snackbar"
       absolute
@@ -66,7 +55,7 @@
       <v-card-actions>
         <v-btn
           text
-          @click="resetForm"
+          @click="forgotPwd= true"
           class="colorTertiaryLight--text"
         >{{ $tc("loginForm.actions.forgotPwd", 1) }}</v-btn>
         <v-spacer></v-spacer>
@@ -78,6 +67,61 @@
         >{{ $tc("loginForm.actions.login", 1) }}</v-btn>
       </v-card-actions>
     </v-form>
+
+    <!--Reset password form -->
+    <v-dialog v-model="forgotPwd" width="70%">
+      <v-card class="colorPrimaryUltraLight">
+        <v-snackbar
+          v-if="snackbar && success"
+          v-model="snackbar"
+          absolute
+          top
+          right
+          color="colorSecondaryLight"
+        >
+          <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1) }}</span>
+          <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+        </v-snackbar>
+          <v-col cols="12">
+            <v-row>
+              <v-col cols="11">
+                <v-card-title class="title colorTertiaryLight--text">Mot de passe oublié</v-card-title>
+              </v-col>
+              <v-col cols="1">
+                <v-icon @click="initShowForm">mdi-close</v-icon>
+              </v-col>
+            </v-row>
+          </v-col>
+            <v-card-text>Veuillez renseigner l'adresse e-mail de votre compte</v-card-text>
+
+          <v-form name="reset-form" @submit.prevent="resetPwd" method="post">
+            <v-container fluid>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="email"
+                    required
+                    type="email"
+                    name="email"
+                    :label="$tc('loginForm.form.labelEmail', 1)"
+                    color="colorTertiaryLight"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+              text
+              class="colorTertiaryLight--text"
+              type="submit"
+              >Modifier mon mot de passe</v-btn>                
+            </v-card-actions>
+          </v-form>
+      </v-card>
+    </v-dialog>
+
   </v-card>
 </template>
 
@@ -100,6 +144,7 @@ export default {
       error: "",
       email: "",
       password: "",
+      forgotPwd: false,
     };
   },
   computed: {
@@ -177,6 +222,31 @@ export default {
           }
         );
     },
+    
+    // Reset user password
+    resetPwd(){
+      let app = this;
+      let url = `/auth/reset-password/`;
+      let data = new FormData();
+      data.append("email", this.email);
+
+      let header = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+
+      this.axios.post(url, data, header)
+      .then((response) => {
+        return(
+          console.log(response),
+          (app.success = true),
+          (app.snackbar = true)
+
+        )
+      })
+      .catch((error) => {console.log(error)})
+    }
   },
 };
 </script>
