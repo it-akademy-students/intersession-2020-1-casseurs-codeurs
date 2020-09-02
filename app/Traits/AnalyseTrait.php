@@ -158,7 +158,7 @@ trait AnalyseTrait
                     ];
                 }
                 //On crée le fichier de rapport .md:
-                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n");
+                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n***vuln_cwe:***  correspondence to the CWE list.<br>***entry_point:***  point of entry of fail.<br>");
                 foreach($progpilotResult as $key => $errors){
                     // Ajouter une ligne avec le nom du fichier:
                     file_put_contents($outFile, "##$key<br>", FILE_APPEND);
