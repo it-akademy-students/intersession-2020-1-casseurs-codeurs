@@ -8,19 +8,34 @@
               class="my-5 pa-4 text-center"
             >{{ $tc("logged.title.hello", 1) }} {{ this.$auth.user().name | capitalize }} {{ $tc("logged.title.welcome", 1) }}</h2>
           </v-col>
-          <v-col cols="12">
+          <!-- <v-col cols="12">
             <h3 class="mb-5 pa-4 text-center">{{ $tc("logged.title.action", 1) }}</h3>
-          </v-col>
-
+          </v-col> -->
 
           <!-- stats -->
           <v-col cols="12">
+            <v-row justify="center" align="center">
+              <div class="text-center ma-12">
+                <v-progress-circular
+                  
+                  rotate="184"
+                  size="85"
+                  value="24"
+                  width="7"
+                  color="light-blue"
+                >{{ value }}</v-progress-circular>
+              </div>
+            </v-row>
+          </v-col>
+
+
+          <v-col cols="12">
             <v-row justify="center">
-              <v-card class="mx-auto text-center" color="green" dark >
+              <v-card class="mx-auto text-center" color="green" dark>
                 <v-card-text>
                   <v-sheet color="rgba(0, 0, 0, .12)">
                     <v-sparkline
-                      :value="value"
+                      :value="values"
                       color="rgba(255, 255, 255, .7)"
                       height="100"
                       padding="24"
@@ -68,9 +83,14 @@ export default {
   data: () => ({
     // @TODO: users stats
     user: {
-      stats: "1200",
+      repository: "1200",
+      errorsFound: "",
+      scannedFiles: "",
+      numberOfScans: "",
+      files: "",
+      created_at: "",
     },
-    value: [423, 446, 675, 510, 590, 610, 760],
+    values: [423, 446, 675, 510, 590, 610, 760],
   }),
 };
 </script>
