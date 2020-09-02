@@ -81,7 +81,7 @@ class reporter {
 		register_shutdown_function([$this, 'onShutdown']);
 
 		$this->add(date('c', $this->startTime), 0, 1);
-		$this->add("Scanning {$this->projectPath}", 0, 1);
+		$this->add("Scanning your Github project", 0, 1);
 	}
 
 	/**

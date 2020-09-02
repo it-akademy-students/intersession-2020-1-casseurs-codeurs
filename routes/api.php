@@ -50,3 +50,7 @@ Route::prefix('auth')->group(function () {
     
     });
 });
+
+Route::get('users/{id}/analyzes', 'StatisticsController@totalPerUser');
+
+Route::get('users/{id}/repository', 'StatisticsController@perRepository');
