@@ -50,8 +50,16 @@
                                                         <v-col
                                                             cols="12"
                                                             lg="9"
-                                                            class="pb-0"
+                                                            class="pb-0 input"
                                                         >
+                                                            <div
+                                                                class="errorAlertRepo"
+                                                                v-show="
+                                                                    errorRepo
+                                                                "
+                                                            >
+                                                                Required
+                                                            </div>
                                                             <input
                                                                 id="repository"
                                                                 type="url"
@@ -62,6 +70,7 @@
                                                                 v-model="
                                                                     repository
                                                                 "
+                                                                 v-on:keyup="cancelErrorRepo"
                                                             />
                                                             <label
                                                                 for="repository"
@@ -169,14 +178,23 @@
                                                         <v-col
                                                             cols="12"
                                                             lg="9"
-                                                            class="pt-0"
+                                                            class="pt-0 input"
                                                         >
+                                                            <div
+                                                                class="errorAlertEmail"
+                                                                v-show="
+                                                                    errorEmail
+                                                                "
+                                                            >
+                                                                Required
+                                                            </div>
                                                             <input
                                                                 id="mail"
                                                                 type="email"
                                                                 class="form__input form__input--green"
                                                                 placeholder="dev@swapp.com"
                                                                 v-model="email"
+                                                                 v-on:keyup="cancelErrorEmail"
                                                             />
                                                             <label
                                                                 for="mail"
@@ -237,12 +255,12 @@
                                                     ></v-skeleton-loader>
                                                 </v-dialog>
                                                 <v-dialog
-                                                    content-class="modal"
+                                                    content-class="success-modal"
                                                     v-show="fetching"
                                                     v-model="fetching"
                                                     dark
                                                 >
-                                                    <h4>
+                                                    <h4 class="message-success">
                                                         {{
                                                             $tc(
                                                                 "mainWelcomeDonate.welcomeModale.success",
@@ -250,7 +268,7 @@
                                                             )
                                                         }}
                                                     </h4>
-                                                    <p>
+                                                    <p class="message">
                                                         {{
                                                             $tc(
                                                                 "mainWelcomeDonate.welcomeModale.successMsg",
@@ -364,50 +382,52 @@ export default {
         branch: "",
         migration: 0,
         fetching: false,
-        isStripeOpen: false
+        isStripeOpen: false,
+        errorEmail: false,
+        errorRepo: false
     }),
     methods: {
-        // handleGithubUrl: function() {
-        //     this.loading = true;
-        //     const splittedUrl = this.repository.split("/");
-        //     const username = splittedUrl[splittedUrl.length - 2];
-        //     const repo = splittedUrl[splittedUrl.length - 1];
-        //     const email = this.email;
-        //     const migration = this.migration;
-        //     const branch = this.branch;
-        //     const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
-        //     console.log({ url });
-        //     this.axios.get(url).then(response => {
-        //         this.loading = false;
-        //         this.fetching = true;
-        //         setTimeout(() => {
-        //             this.fetching = false;
-        //         }, 3000);
-        //     });
-        // },
+        handleGithubUrl: function() {
+            if (!this.email || !this.repository) {
+                if (!this.email) {
+                    this.errorEmail = true;
+                }
+                if (!this.repository) {
+                    this.errorRepo = true;
+                }
+            } else {
+                this.loading = true;
+                const splittedUrl = this.repository.split("/");
+                const username = splittedUrl[splittedUrl.length - 2];
+                const repo = splittedUrl[splittedUrl.length - 1];
+                const email = this.email;
+                const migration = this.migration;
+                const branch = this.branch;
+                const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
+                console.log({ url });
+                this.axios.get(url).then(
+                    response => {
+                        this.loading = false;
+                        this.fetching = true;
+                        setTimeout(() => {
+                            this.fetching = false;
+                        }, 5000);
+                    },
+                    err => console.log({ err })
+                );
+            }
+        },
         showStripeForm: function() {
             this.isStripeOpen = true;
         },
         hideStripeForm: function() {
             this.isStripeOpen = false;
         },
-        handleGithubUrl: function() {
-            this.loading = true;
-            console.log("click");
-            const splittedUrl = this.repository.split("/");
-            const username = splittedUrl[splittedUrl.length - 2];
-            const repo = splittedUrl[splittedUrl.length - 1];
-            const email = this.email;
-            const branch = this.branch;
-            const url = `github/${username}/${repo}/${migration}/${branch}`;
-            console.log({ url });
-            this.$http.get(url).then(response => {
-                this.loading = false;
-                this.fetching = true;
-                setTimeout(() => {
-                    this.fetching = false;
-                }, 3000);
-            });
+        cancelErrorRepo: function()  {
+            this.errorRepo = false;
+        },
+        cancelErrorEmail: function()  {
+            this.errorEmail = false;
         }
     }
 };
@@ -432,9 +452,46 @@ export default {
     position: relative;
 }
 
+.success-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    padding: 40px;
+    background: black;
+}
+
+.message-success {
+    font-size: 22px;
+    font-weight: bold;
+    color: #62cb5c;
+    text-align: center;
+}
+
+.message {
+    text-align: center;
+}
+
 .loader {
     animation: rotation 1s infinite linear;
     position: absolute;
+}
+
+.errorAlertRepo {
+    color: red;
+    position: absolute;
+    bottom: 10px;
+}
+.errorAlertEmail {
+    color: red;
+    position: absolute;
+    bottom: 25px;
+}
+.input {
+    position: relative;
 }
 
 @keyframes rotation {
