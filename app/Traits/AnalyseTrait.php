@@ -46,7 +46,7 @@ trait AnalyseTrait
             $workingPath = base_path() . '\vendor\bin\phpstan'; // Windows path with backslashes
             // $workingPath = base_path() . '/vendor/bin/phpstan'; // Linux path with slashes
             $cmd = ' analyse ';
-            $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
+            $option = '--error-format=json --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
             // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/config/configuration.neon'; // Linux path with slashes
             $exec = $prefix . $workingPath . $cmd . $option;
         }elseif ($tool == 'progpilot'){// Analyze with ProgPilot : security threats test
@@ -128,6 +128,9 @@ trait AnalyseTrait
                 }
                 return ['errorQuantity' => $errorsQuantity, 'file' => $outFile];
             }
+            else{
+                return ['errorQuantity' => 0, 'file' => ''];
+            }
         }
         elseif ($tool == 'progpilot'){
             $json = '';
@@ -172,6 +175,7 @@ trait AnalyseTrait
                 }
                 return ['errorQuantity' => $errorQuantity, 'file' => $outFile];
             }
+                return ['errorQuantity' => 0, 'file' => ''];
         }
     }
 }

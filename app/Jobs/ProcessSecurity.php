@@ -68,48 +68,56 @@ class ProcessSecurity implements ShouldQueue
     public function handle()
     {
         //____________________Copie en local des fichiers php cibles________________________////
-        $list = json_decode($this->list);
-        // On récupère les chemin des fichiers php du repos:
-        $paths = [];
-        foreach ($list->tree as $tree){
-            if (substr($tree->path, -4) == '.php'){
-                $paths[] = $tree->path;
-            }
-        }
-        $baseContentUrl = $this->baseUrl . "contents/";
-        foreach ($paths as $path){
-            //$baseContentUrl . path pour récupérer le contenu du fichier:
-            $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
-            $this->addFile($path, $content, base_path().'/public/Scan/');
-        }
+//        $list = json_decode($this->list);
+//        // On récupère les chemin des fichiers php du repos:
+//        $paths = [];
+//        foreach ($list->tree as $tree){
+//            if (substr($tree->path, -4) == '.php'){
+//                $paths[] = $tree->path;
+//            }
+//        }
+//        $baseContentUrl = $this->baseUrl . "contents/";
+//        foreach ($paths as $path){
+//            //$baseContentUrl . path pour récupérer le contenu du fichier:
+//            $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
+//            $this->addFile($path, $content, base_path().'/public/Scan/');
+//        }
         $files = [];
         if ($this->migration == 0){
             //____________________Analyse PHPStan________________________////
             $result = $this->analyse('phpstan');
-            $files[] = $result['file'];
             $errorFound = $result['errorQuantity'];
+            if ($errorFound){
+                $files[] = $result['file'];
+            }
             //____________________Analyse Progpilot________________________////
             $result = $this->analyse('progpilot');
-            $files[] = $result['file'];
             $securityFails = $result['errorQuantity'];
+            if ($securityFails){
+                $files[] = $result['file'];
+            }
         }
         elseif ($this->migration == 1 && $this->userConnected){
             //____________________Analyse PHPStan________________________////
             $result = $this->analyse('phpstan');
-            $files[] = $result['file'];
             $errorFound = $result['errorQuantity'];
-            //____________________Analyse PHP7mar________________________////
-            $result = $this->analyse('php7mar');
-            $files[] = $result['file'];
+            if ($errorFound){
+                $files[] = $result['file'];
+            }
             //____________________Analyse Progpilot________________________////
             $result = $this->analyse('progpilot');
-            $files[] = $result['file'];
             $securityFails = $result['errorQuantity'];
+            if ($securityFails){
+                $files[] = $result['file'];
+            }
+            //____________________Analyse PHP7mar________________________////
+            $this->analyse('php7mar');
+            $files[] = base_path().'\public\reports\migration.md';
         }
         elseif ($this->migration == 2 && $this->userConnected){
             //____________________Analyse PHP7mar________________________////
-            $result = $this->analyse('php7mar');
-            $files[] = $result['file'];
+            $this->analyse('php7mar');
+            $files[] = base_path().'\public\reports\migration.md';
             $errorFound = 0;
             $securityFails = 0;
         }
@@ -118,12 +126,12 @@ class ProcessSecurity implements ShouldQueue
         $project = str_replace("_","/","$this->githubInfo");
         Mail::to($this->email)->send(new Analyse($files, $project));
 
-        if ($this->userConnected){
+        if ($this->userConnected && !empty($files)){
             $user = User::find($this->userConnected);
             // Conserver les fichiers pour les utilisateur connectés:
             $newFiles = [];
             foreach ($files as $file){
-                $newFilename = str_replace('reports/', 'users/'.$user->name.'_'.$this->githubInfo, $file);
+                $newFilename = str_replace('reports\\', 'users\\'.$user->name.'_'.$this->githubInfo, $file);
                 rename($file, $newFilename);
                 $newFiles[] = $newFilename;
             }
@@ -136,7 +144,7 @@ class ProcessSecurity implements ShouldQueue
             $count=iterator_count($objects);
             $scannedFiles = $count-2;
             // Associer l'analyse à l'utilisateur dans la base de donnée:
-            $analyse = \App\Analyse::where('repository', '=', str_replace("_","/","$this->githubInfo")->first());
+            $analyse = \App\Analyse::where('repository', '=', str_replace("_","/","$this->githubInfo"))->first();
             // Si le repos à déjà été scanné:
             if ($analyse != null){
                 $analyse->errorsFound = $errorFound;

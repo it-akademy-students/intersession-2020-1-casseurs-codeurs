@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Analyse;
 use App\Jobs\ProcessSecurity;
 use App\Models\User;
+use App\Traits\AnalyseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
+    use AnalyseTrait;
     /**
      * @param $url
      * @return mixed
@@ -50,7 +53,7 @@ class ApiController extends Controller
     public function github(string $username, string $repos, string $email, string $migration, string $branch = 'master' )
     {
         try{
-            Auth::check() ? $userConnected = Auth::user()->id : $userConnected = 0;
+            Auth::user() ? $userConnected = Auth::user()->id : $userConnected = 0;
             //Construction de l'url a appelé:
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
             //Url API v3 Github pour lister l'architecture d'un repos:

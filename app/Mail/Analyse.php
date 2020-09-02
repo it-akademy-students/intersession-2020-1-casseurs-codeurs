@@ -33,7 +33,7 @@ class Analyse extends Mailable
     {
         $mail = $this->from('it.intersession.swapp@gmail.com')
             ->subject("Analyse du projet $this->project")
-            ->markdown('emails.analyse');
+            ->markdown('emails.analyse')->with('files' , sizeof($this->files));
         // Joindre les fichiers à envoyer par mail:
         foreach ($this->files as $file){
             $mail->attach($file);
