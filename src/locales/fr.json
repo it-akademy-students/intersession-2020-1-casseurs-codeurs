@@ -152,5 +152,32 @@
           "send": "Envoyer"
         }
       }
+    },
+    "dashboard": {
+      "title": "Votre tableau de bord",
+      "btn": {
+        "title": "Rapports",
+        "action": "Voir mon Tableau de bord"
+      },
+      "card": {
+        "nbrRepoTitle": "Number of repo scan",
+        "nbrBugsTitle": "Number of repo scan",
+        "nbrSecurityTitle": "Number of repo scan",
+        "nbrLastRepoTitle": "Number of repo scan"
+      }
+    },
+    "ResultTable": {
+      "headers": {
+        "repo": "Répertoire :",
+        "date": "Date :",
+        "status": "Status :"
+      },
+      "headersExpanded": {
+        "fileName": "File name :",
+        "date": "Date :",
+        "status": "Status :",
+        "download": "Download :"
+        
+      }
     }
 }
