@@ -136,7 +136,7 @@ class ProcessSecurity implements ShouldQueue
                 $newFiles[] = $newFilename;
             }
             // Compter le nombre de fichier scanneés:
-            $scannedFiles = 11;
+            $scannedFiles = sizeof($paths);
             // Associer l'analyse à l'utilisateur dans la base de donnée:
             $analyse = \App\Analyse::where([
                 ['repository', '=', str_replace("_","/","$this->githubInfo")],
