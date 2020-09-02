@@ -13,31 +13,23 @@
                   padding="24"
                   stroke-linecap="round"
                   smooth
+                  :auto-draw="!!values.length"
                 >
                   <template v-slot:label="item">{{ item.value }}</template>
                 </v-sparkline>
               </v-sheet>
             </v-card-text>
             <v-card-text>
-              <div class="display-1 font-weight-thin">Reports</div>
+              <div class="display-1 font-weight-thin">{{ $tc("dashboard.btn.title", 1) }}</div>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="justify-center">
-              <v-btn block text @click="dialog = true">Go to Dashboard</v-btn>
+              <v-btn block text @click="dialog = true">{{ $tc("dashboard.btn.action", 1) }}</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
-      <!-- <v-col cols="12">
-        <v-row justify="center">
-          <button
-            class="my-5 btn btn--violet"
-            style="min-width:35ch;"
-            @click="dialog = true"
-          >{{ $tc("logged.btnActions.analysis", 1) }}</button>
-        </v-row>
-      </v-col>-->
-
+      <!-- dialog -->
       <v-dialog
         v-model="dialog"
         fullscreen
@@ -48,24 +40,26 @@
         <v-card tile color="colorPrimaryLight">
           <v-toolbar flat color="primary">
             <v-btn icon @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
+              <v-icon color="secondary">mdi-close</v-icon>
             </v-btn>
 
-            <v-toolbar-title>Your dashboard Reports</v-toolbar-title>
+            <v-toolbar-title class="secondary--text">{{ $tc("dashboard.title", 1) }}</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
-
+          
           <v-card-text>
             <v-container fluid class="mb-5">
-              <v-row justify="space-around" align-content="baseline">
+              <v-row justify="space-around" align="baseline">
                 <v-col cols="6" md="3">
                   <v-card color="colorSecondaryLight" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div>Number of repo scan</div>
-                        <v-icon>mdi-file-code</v-icon>
+                        <div
+                          class="colorPrimaryUltraLight--text"
+                        >{{ $tc("dashboard.card.nbrRepoTitle", 1) }}</div>
+                        <v-icon color="colorPrimaryUltraLight">mdi-file-code</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary">24</p>
+                      <p class="display-1 text--primary colorPrimaryUltraLight--text">24</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -73,10 +67,12 @@
                   <v-card color="warning" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div>Bugs founds</div>
-                        <v-icon>mdi-bug</v-icon>
+                        <div
+                          class="colorPrimaryUltraLight--text"
+                        >{{ $tc("dashboard.card.nbrBugsTitle", 1) }}</div>
+                        <v-icon color="colorPrimaryUltraLight">mdi-bug</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary">255</p>
+                      <p class="display-1 text--primary colorPrimaryUltraLight--text">255</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -84,10 +80,12 @@
                   <v-card color="error" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div>Security holes founds</div>
-                        <v-icon>mdi-security-network</v-icon>
+                        <div
+                          class="colorPrimaryUltraLight--text"
+                        >{{ $tc("dashboard.card.nbrSecurityTitle", 1) }}</div>
+                        <v-icon color="colorPrimaryUltraLight">mdi-security-network</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary">66</p>
+                      <p class="display-1 text--primary colorPrimaryUltraLight--text">66</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -95,11 +93,12 @@
                   <v-card color="colorTertiaryLight" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div>Last repo scan</div>
-                        <v-icon>mdi-source-repository</v-icon>
+                        <div
+                          class="colorPrimaryUltraLight--text"
+                        >{{ $tc("dashboard.card.nbrLastRepoTitle", 1) }}</div>
+                        <v-icon color="colorPrimaryUltraLight">mdi-source-repository</v-icon>
                       </v-row>
-
-                      <p class="display-1 text--primary">repo name</p>
+                      <p class="display-1 text--primary colorPrimaryUltraLight--text">repo name</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -109,17 +108,13 @@
             <v-divider class="secondary"></v-divider>
 
             <v-container fluid class="mt-5">
-              <v-row justify="space-around" align="center" class="mt-5">
+              <v-row justify="center" align="center" class="my-5">
                 <v-col cols="12">
                   <result-table />
                 </v-col>
-                <!-- <v-col cols="6">
-                  <circle-stats />
-                </v-col> -->
               </v-row>
             </v-container>
           </v-card-text>
-
           <div style="flex: 1 1 auto;"></div>
         </v-card>
       </v-dialog>
@@ -128,16 +123,12 @@
 </template>
 
 <script>
-import StatsGraph from "@/js/components/StatsGraph";
-import CircleStats from "@/js/components/CircleStats";
-import ResultTable from "@/js/components/ResultTable"
+import ResultTable from "@/js/components/ResultTable";
 
 export default {
   name: "Dashboard",
   components: {
-    StatsGraph,
-    CircleStats,
-    ResultTable
+    ResultTable,
   },
   data() {
     return {

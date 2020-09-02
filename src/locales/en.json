@@ -152,5 +152,32 @@
         "send": "Send"
       }
     }
+  },
+  "dashboard": {
+    "title": "Votre historique de données",
+    "btn": {
+      "title": "Reports",
+      "action": "Go to Dashboard"
+    },
+    "card": {
+      "nbrRepoTitle": "Number of repo scan",
+      "nbrBugsTitle": "Number of bugs founds",
+      "nbrSecurityTitle": "Number of security hole founds",
+      "nbrLastRepoTitle": "Last repo scan"
+    }
+  },
+  "ResultTable": {
+    "headers": {
+      "repo": "Repository:",
+      "date": "Date:",
+      "status": "Status:"
+    },
+    "headersExpanded": {
+      "fileName": "Nom du fichier:",
+      "date": "Date:",
+      "status": "Status:",
+      "download": "Télécharger:"
+      
+    }
   }
 }

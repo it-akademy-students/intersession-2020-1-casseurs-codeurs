@@ -53,7 +53,7 @@ class ApiController extends Controller
     public function github(string $username, string $repos, string $email, string $migration, string $branch = 'master' )
     {
         try{
-            Auth::user() ? $userConnected = Auth::user()->id : $userConnected = 0;
+            Auth::user() ? $userConnected = Auth::id() : $userConnected = 0;
             //Construction de l'url a appelé:
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
             //Url API v3 Github pour lister l'architecture d'un repos:

@@ -17,37 +17,7 @@
               {{ $tc("logged.stats.textPart2", 1) }}
             </p>
           </v-col>
-
-          <!-- <v-col cols="12">
-            <v-row justify="center" class="pa-0 ma-0">
-              <v-col cols="12">
-                <v-card class="mx-auto text-center" color="colorTertiary">
-                  <v-card-text>
-                    <v-sheet color="rgba(0, 0, 0, .12)">
-                      <v-sparkline
-                        :value="values"
-                        :gradient="['#f72047', '#ffd200', '#62cb5c']"
-                        height="100"
-                        padding="24"
-                        stroke-linecap="round"
-                        smooth
-                      >
-                        <template v-slot:label="item">{{ item.value }}</template>
-                      </v-sparkline>
-                    </v-sheet>
-                  </v-card-text>
-                  <v-card-text>
-                    <div class="display-1 font-weight-thin">Reports</div>
-                  </v-card-text>
-                  <v-divider></v-divider>
-                  <v-card-actions class="justify-center">
-                    <v-btn block text>Go to Dashboard</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-col> -->
-
+          <!-- dashboard -->
           <v-col cols="12">
             <dashboard />
           </v-col>
@@ -59,13 +29,13 @@
 
 <script>
 import Dashboard from "@/js/components/Dashboard";
+
 export default {
   name: "Logged",
   components: {
     Dashboard,
   },
   data: () => ({
-    // @TODO: users stats
     dialog: false,
     user: {
       stats: 1200,
