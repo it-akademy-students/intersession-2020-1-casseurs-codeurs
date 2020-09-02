@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Analyse;
+use App\Statistic;
 use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
@@ -20,6 +21,7 @@ class StatisticsController extends Controller
                 $total['totalSecurityFails'] += $analyse['totalSecurityFails'];
             }
             $total['totalRepository'] = sizeof($analyses);
+            $total['lastRepository'] = end($analyses)['repository'];
             return ['response' => 'success', 'code' => 200, 'data' => $total];
         } catch (Exeption $e){
             return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
@@ -36,6 +38,12 @@ class StatisticsController extends Controller
                 $repository['name'] =$analyse['repository'];
                 foreach(json_decode($analyse['files']) as $file){
                     $repository['files'][] = $file;
+                    $filename = explode("\\",$file);
+                    $filename = end($filename);
+                    $search = str_replace('/', '_',$analyse['repository']);
+                    $filename = explode($search,$filename);
+                    $filename = end($filename);
+                    $repository['filesName'][] = $filename;
                 }
                 if ($analyse['errorsFound'] == 0 && $analyse['securityFails'] == 0){
                     $repository['status'] = 'clean';
@@ -54,6 +62,14 @@ class StatisticsController extends Controller
                 $list[] = $repository;
             }
             return ['response' => 'success', 'code' => 200, 'data' => $list];
+        } catch (Exeption $e){
+            return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
+        }
+    }
+
+    public function generalStatistics(){
+        try{
+            return ['response' => 'success', 'code' => 200, 'data' => Statistic::first()->toArray()];
         } catch (Exeption $e){
             return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
         }
