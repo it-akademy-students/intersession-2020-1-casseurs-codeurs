@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('github/{username}/{repos}/{email}/{migration}/{branch?}', 'ApiController@github');
 // Route to handle page reload in Vue except for api routes
 Route::get('/{any?}', function (){
     return view('app');
