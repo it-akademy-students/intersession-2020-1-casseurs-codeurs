@@ -269,12 +269,7 @@ export default {
       }
     },
     showStripeForm: function() {
-      this.isStripeOpen = true;
-    },
-    hideStripeForm: function() {
-      this.isStripeOpen = false;
-    },
-    showStripeForm: function() {
+        console.log('biteomlqsgfkqsdhf')
       this.isStripeOpen = true;
     },
     hideStripeForm: function() {

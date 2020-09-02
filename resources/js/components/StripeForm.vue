@@ -106,8 +106,7 @@ export default {
     props: {
         method: { type: Function }
     },
-    data: {
-        isStripeOpen: false,
+    data: () => ({
         dialog: true,
         stripeResponse: "",
         email: "",
@@ -129,11 +128,8 @@ export default {
             { text: "14", value: "14" },
             { text: "15", value: "15" }
         ]
-    },
+    }),
     methods: {
-        closeModal: () => {
-            this.isStripeOpen = false;
-        },
         initializeStripe: event => {
             // Create an instance of Elements.
             const elements = stripe.elements();
