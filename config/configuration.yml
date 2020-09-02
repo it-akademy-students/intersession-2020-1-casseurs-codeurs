@@ -20,7 +20,7 @@ inputs:
         exclude_folders: ~
 
     setFolder: '.\..\public\scan' # Windows path with backslashes
-    #setFolder: 'Z:/laragon/www/intersession-2020-1-casseurs-codeurs/public/scan' # Linux path with slashes
+    #setFolder: './../public/scan' # Linux path with slashes
     setFile: ~
     setCode: ~
     setResolvedIncludes: ~

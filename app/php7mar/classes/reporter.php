@@ -75,7 +75,7 @@ class reporter {
 		} else {
 			$this->reportFolder = PHP7MAR_DIR.DIRECTORY_SEPARATOR.'reports';
 		}
-		$this->fullFilePath = $this->reportFolder.DIRECTORY_SEPARATOR."php7mar.md";
+		$this->fullFilePath = $this->reportFolder.DIRECTORY_SEPARATOR."migration.md";
 
 		$this->file = fopen($this->fullFilePath, 'w+');
 		register_shutdown_function([$this, 'onShutdown']);
