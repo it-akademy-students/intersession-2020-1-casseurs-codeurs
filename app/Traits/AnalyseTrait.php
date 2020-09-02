@@ -39,68 +39,72 @@ trait AnalyseTrait
         file_put_contents($baseFolder.$path, $content);
     }
 
-    public function analyse(string $tool, string $baseFileName){
+    public function analyse(string $tool){
 
         if ($tool == 'phpstan'){// Analyze with PHPStan : errors research in the code
             $prefix='';
             $workingPath = base_path() . '\vendor\bin\phpstan'; // Windows path with backslashes
             // $workingPath = base_path() . '/vendor/bin/phpstan'; // Linux path with slashes
             $cmd = ' analyse ';
-            $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
+            $option = '--error-format=json --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
             // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/config/configuration.neon'; // Linux path with slashes
             $exec = $prefix . $workingPath . $cmd . $option;
-            //dd($exec);
         }elseif ($tool == 'progpilot'){// Analyze with ProgPilot : security threats test
             $prefix='';
             $workingPath = base_path() . '\vendor\bin\progpilot '; // Windows path with backslashes
             // $workingPath = base_path() . '/vendor/bin/progpilot '; // Linux path with slashes
-            $cmd = '';
-            //$option = '';
             $option = '--configuration ' . base_path() . '\config\configuration.yml'; // Windows path with backslashes
             // $option = '--configuration ' . base_path() . '/config/configuration.yml'; // Linux path with slashes
-            $exec = $prefix . $workingPath . $cmd . $option;
-            //dd($exec);
+            $exec = $prefix . $workingPath . $option;
         }elseif ($tool == 'php7mar'){// Analyze with php7mar : Migration Assistant Report between PHP 5 & PHP 7
             $prefix = 'php ';
             $workingPath = base_path() . '\app\php7mar\mar.php'; // Windows path with backslashes
             // $workingPath = base_path() . '/app/php7mar/mar.php'; // Linux path with slashes
-            $cmd = '';
-            $option = '';
             $scanPath = ' -f="' . base_path() . '\public\scan"'; // Windows path with backslashes
             // $scanPath = ' -f="' . base_path() . '/public/scan"';// Linux path with slashes
             $reportsPath = ' -r="' . base_path() . '\public\reports"'; // Windows path with backslashes
             // $reportsPath = ' -r="' . base_path() . '/public/reports"'; // Linux path with slashes
-            $exec = $prefix . $workingPath . $cmd . $option . $scanPath . $reportsPath;
-            //dd($exec);
+            $exec = $prefix . $workingPath . $scanPath . $reportsPath;
         }
-
         try{
+            //On execute la commande:
             exec($exec , $output);
+            // php7mar renvoie un format md, pour les autres il faut les convertir:
             if ($tool != 'php7mar'){
-                $this->convertOutput($tool, $output);
-                }
-            return ['response' => 'success' , 'value' => $output];
+                return $this->convertOutput($tool, $output);
+            }
+            return ['response' => 'success' , 'file' => base_path() . '\public\reports\migration.md'];
         } catch (\Exception $exception) {
             return['response' => 'error' , $exception->getMessage()];
         }
 
     }
 
+    /**
+     * @param string $tool
+     * @param $output
+     * @return array
+     * Permet de convertir la sortie de l'excution de la commande en format markdown
+     */
     private function convertOutput(string $tool, $output){
-        if ($tool == 'phpstan'){
+        if ($tool == 'phpstan') {
             $output = json_decode($output[0]);
             $errorsQuantity = $output->totals->errors;
             $phpstanResult = [];
-            $outFile = base_path().'\public\reports\errorsCode.md';
-            if($errorsQuantity){
-                foreach($convertedDatas->files as $key => $file){
-                    if($file->errors){
+            $outFile = base_path() . '\public\reports\errorsReport.md';
+            if ($errorsQuantity) {
+                //On recupère tout les rapport par fichiers retournés par l'analyse:
+                foreach ($output->files as $key => $file) {
+                    if ($file->errors) {
                         $messages = $file->messages;
                         $i = 0;
-                        foreach($messages as $message){
-                            if(!$message->ignorable){
+                        // On parcours tout les messages d'erreur relatif à ce fichier:
+                        foreach ($messages as $message) {
+                            // Si cette erreur ne peut pas être ignorée (selon le niveau definie dans la configuration.yml):
+                            if (!$message->ignorable) {
                                 $i++;
-                                $filename = str_replace(base_path().'\public\scan\\', '', $key);
+                                $filename = str_replace(base_path() . '\public\scan\\', '', $key);
+                                // On associe le nom du fichier à l'erreur:
                                 $phpstanResult[$filename][$i] = [
                                     'message' => $message->message,
                                     'line' => $message->line,
@@ -109,10 +113,13 @@ trait AnalyseTrait
                         }
                     }
                 }
+                //On crée le fichier de rapport .md:
                 file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n");
-                foreach($phpstanResult as $key => $errors){
-                    file_put_contents($outFile, "##".$key."\n\n", FILE_APPEND);
-                    foreach($errors as $errorKey => $error){
+                foreach ($phpstanResult as $key => $errors) {
+                    // Ajouter une ligne avec le nom du fichier:
+                    file_put_contents($outFile, "##" . $key . "\n\n", FILE_APPEND);
+                    // Ajouter des lignes message et line pour chaque erreur:
+                    foreach ($errors as $errorKey => $error) {
                         $message = $error['message'];
                         $line = $error['line'];
                         file_put_contents($outFile, "**Error $errorKey**<br>\n&nbsp;&nbsp;&nbsp;__message:__  $message\n<br>&nbsp;&nbsp;&nbsp;__line:__$line\n<br>", FILE_APPEND);
@@ -121,6 +128,10 @@ trait AnalyseTrait
                 }
                 return ['errorQuantity' => $errorsQuantity, 'file' => $outFile];
             }
+            else{
+                return ['errorQuantity' => 0, 'file' => ''];
+            }
+        }
         elseif ($tool == 'progpilot'){
             $json = '';
             foreach($output as $value){
@@ -131,9 +142,12 @@ trait AnalyseTrait
             $progpilotResult = [];
             $outFile = base_path().'\public\reports\securityFails.md';
             if($errorQuantity){
+                // On récupère toutes les erreurs retournées par l'analyse:
                 foreach($output as $error){
                     $filename = str_replace(base_path().'\public\scan\\', '', $error->sink_file);
+                    // Ajouter une nouvelle key associée au la key du fichier si elle existe déjà:
                     array_key_exists($filename,$progpilotResult) ? $i = sizeof($progpilotResult[$filename]) : $i = 0;
+                    // On associe le nom du fichier à l'erreur:
                     $progpilotResult[$filename][$i] = [
                         'source_name' => $error->source_name[0],
                         'source_line' => $error->source_line[0],
@@ -143,9 +157,12 @@ trait AnalyseTrait
                         'vuln_type' => $error->vuln_type
                     ];
                 }
-                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n");
+                //On crée le fichier de rapport .md:
+                file_put_contents($outFile, "# Fichier(s) incriminé(s)\n\n***vuln_cwe:***  correspondence to the CWE list.<br>***entry_point:***  point of entry of fail.<br>");
                 foreach($progpilotResult as $key => $errors){
+                    // Ajouter une ligne avec le nom du fichier:
                     file_put_contents($outFile, "##$key<br>", FILE_APPEND);
+                    // Ajouter des lignes pour chacune des valeurs du tableau $progpilotResult pour chaque erreur:
                     foreach($errors as $errorKey => $error){
                         $vulnName = $error['vuln_name'];
                         $vulnCwe = $error['vuln_cwe'];
@@ -158,6 +175,7 @@ trait AnalyseTrait
                 }
                 return ['errorQuantity' => $errorQuantity, 'file' => $outFile];
             }
+                return ['errorQuantity' => 0, 'file' => ''];
         }
-}
+    }
 }

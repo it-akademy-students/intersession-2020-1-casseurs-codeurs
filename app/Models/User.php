@@ -51,6 +51,14 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Recupérer les analyses d'un utilisateur
+     */
+    public function analyses()
+    {
+        return $this->hasMany('App\Analyse');
+    }
+    /**
      * Override the mail body for reset password notification mail.
      */
     public function sendPasswordResetNotification($token)

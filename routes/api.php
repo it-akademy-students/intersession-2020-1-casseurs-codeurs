@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::post('create-checkout-session', 'StripeController@checkout');
 
-Route::get('github/{username}/{repos}/{email}/{branch?}', 'ApiController@github');
+Route::get('github/{username}/{repos}/{email}/{migration}/{branch?}', 'ApiController@github');
 
 Route::post('contact', 'ContactController@contact');
 
@@ -50,3 +50,7 @@ Route::prefix('auth')->group(function () {
     
     });
 });
+
+Route::get('users/{id}/analyzes', 'StatisticsController@totalPerUser');
+
+Route::get('users/{id}/repository', 'StatisticsController@repositoryPerUser');
