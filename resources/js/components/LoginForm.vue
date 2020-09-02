@@ -169,6 +169,7 @@ export default {
             );
           },
           (err) => {
+            console.log({err})
             app.success = false;
             app.snackbar = true;
             app.has_error = true;

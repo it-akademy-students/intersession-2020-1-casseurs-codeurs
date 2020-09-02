@@ -12,7 +12,7 @@
                     <label for="email">
                         Email
                     </label>
-                    <input type="email" class="StripeElement" v-model=email />
+                    <input type="email" class="StripeElement" v-model="email" />
                 </div>
                 <div class="form-row top-form">
                     <label for="card-number">
@@ -106,7 +106,7 @@ export default {
     props: {
         method: { type: Function }
     },
-    data: () => ({
+    data: {
         isStripeOpen: false,
         dialog: true,
         stripeResponse: "",
@@ -129,7 +129,7 @@ export default {
             { text: "14", value: "14" },
             { text: "15", value: "15" }
         ]
-    }),
+    },
     methods: {
         closeModal: () => {
             this.isStripeOpen = false;
@@ -250,7 +250,7 @@ export default {
                 axios
                     .post("/create-checkout-session", {
                         data: {
-                            stripeToken: token,
+                            stripeToken: token
                             // email: this.email,
                             // amount: this.amount,
                             // id: this.$auth.user().id
@@ -259,11 +259,18 @@ export default {
                     .then(
                         function(response) {
                             // handle success
-                            console.log({response});
+                            console.log({ response });
                             this.stripeResponse = "success";
+                            axios.post("/validate-payment", {
+                                data: {
+                                    email: this.email,
+                                    amount: this.amount,
+                                    id: this.$auth.user().id
+                                }
+                            });
                         },
                         err => {
-                            console.log({err});
+                            console.log({ err });
                             this.stripeResponse = "error";
                         }
                     );

@@ -201,7 +201,7 @@
                                                             >
                                                                 <button
                                                                     class="btn btn--green"
-                                                                    @click="
+                                                                    @click.prevent="
                                                                         handleGithubUrl
                                                                     "
                                                                 >
@@ -367,24 +367,24 @@ export default {
         isStripeOpen: false
     }),
     methods: {
-        handleGithubUrl: function() {
-            this.loading = true;
-            const splittedUrl = this.repository.split("/");
-            const username = splittedUrl[splittedUrl.length - 2];
-            const repo = splittedUrl[splittedUrl.length - 1];
-            const email = this.email;
-            const migration = this.migration;
-            const branch = this.branch;
-            const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
-            console.log({ url });
-            this.axios.get(url).then(response => {
-                this.loading = false;
-                this.fetching = true;
-                setTimeout(() => {
-                    this.fetching = false;
-                }, 3000);
-            });
-        },
+        // handleGithubUrl: function() {
+        //     this.loading = true;
+        //     const splittedUrl = this.repository.split("/");
+        //     const username = splittedUrl[splittedUrl.length - 2];
+        //     const repo = splittedUrl[splittedUrl.length - 1];
+        //     const email = this.email;
+        //     const migration = this.migration;
+        //     const branch = this.branch;
+        //     const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
+        //     console.log({ url });
+        //     this.axios.get(url).then(response => {
+        //         this.loading = false;
+        //         this.fetching = true;
+        //         setTimeout(() => {
+        //             this.fetching = false;
+        //         }, 3000);
+        //     });
+        // },
         showStripeForm: function() {
             this.isStripeOpen = true;
         },
@@ -399,7 +399,7 @@ export default {
             const repo = splittedUrl[splittedUrl.length - 1];
             const email = this.email;
             const branch = this.branch;
-            const url = `github/${username}/${repo}/${branch}`;
+            const url = `github/${username}/${repo}/${migration}/${branch}`;
             console.log({ url });
             this.$http.get(url).then(response => {
                 this.loading = false;
