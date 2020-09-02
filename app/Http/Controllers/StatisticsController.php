@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Analyse;
+use App\Statistic;
 use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
@@ -68,9 +69,7 @@ class StatisticsController extends Controller
 
     public function generalStatistics(){
         try{
-            $analyses = Analyse::all()->toArray();
-            dd($analyses);
-            return ['response' => 'success', 'code' => 200, 'data' => ''];
+            return ['response' => 'success', 'code' => 200, 'data' => Statistic::first()->toArray()];
         } catch (Exeption $e){
             return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
         }

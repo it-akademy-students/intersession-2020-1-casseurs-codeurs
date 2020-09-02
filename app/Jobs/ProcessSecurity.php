@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\Analyse;
 use App\Models\User;
+use App\Statistic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -96,6 +97,7 @@ class ProcessSecurity implements ShouldQueue
             if ($securityFails){
                 $files[] = $result['file'];
             }
+            $migrationAssistance = 0;
         }
         elseif ($this->migration == 1 && $this->userConnected){
             //____________________Analyse PHPStan________________________////
@@ -113,11 +115,13 @@ class ProcessSecurity implements ShouldQueue
             //____________________Analyse PHP7mar________________________////
             $this->analyse('php7mar');
             $files[] = base_path().'\public\reports\migration.md';
+            $migrationAssistance = 1;
         }
         elseif ($this->migration == 2 && $this->userConnected){
             //____________________Analyse PHP7mar________________________////
             $this->analyse('php7mar');
             $files[] = base_path().'\public\reports\migration.md';
+            $migrationAssistance = 1;
             $errorFound = 0;
             $securityFails = 0;
         }
@@ -193,6 +197,14 @@ class ProcessSecurity implements ShouldQueue
         foreach ( $ri as $file ) {
             $file->isDir() ?  rmdir($file) : unlink($file);
         }
+
+        $statistic = Statistic::first();
+        $statistic->errorsFound += $errorFound;
+        $statistic->securityFails += $securityFails;
+        $statistic->scannedFiles += $scannedFiles;
+        $statistic->repositoryScanned += 1;
+        $statistic->migrationAssistance += $migrationAssistance;
+        $statistic->save();
     }
 
 }
