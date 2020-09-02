@@ -294,8 +294,6 @@ export default {
     handleGithubUrl: function () {
       this.loading = true;
       const splittedUrl = this.repository.split("/");
-      console.log(`repo ${this.repository}`)
-      console.log(`splittedUrl ${splittedUrl}`)
       const username = splittedUrl[splittedUrl.length - 2]
       const repo = splittedUrl[splittedUrl.length - 1]
       const email = this.email
@@ -303,9 +301,7 @@ export default {
       const branch = this.branch
       let url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
       url = url.replace("//", "/");
-      console.log({ url });
       this.axios.get(url).then((response) => {
-        console.log(response);
         this.loading = false;
         this.fetching = true;
         setTimeout(() => {
