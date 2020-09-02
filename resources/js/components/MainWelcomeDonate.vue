@@ -63,8 +63,8 @@
                               <v-radio-group row class="ma-0 pa-0" v-model="radioGroup">
                                 <v-row
                                   justify="space-around"
-                                  align="center"
-                                  align-content="baseline"
+                                  align-content="center"
+                                  align="baseline"
                                   class="ma-0"
                                 >
                                   <v-col cols="12" md="4">
@@ -269,7 +269,6 @@ export default {
       }
     },
     showStripeForm: function() {
-        console.log('biteomlqsgfkqsdhf')
       this.isStripeOpen = true;
     },
     hideStripeForm: function() {

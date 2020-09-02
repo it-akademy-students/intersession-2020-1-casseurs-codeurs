@@ -4,7 +4,7 @@
     :items="results"
     :single-expand="singleExpand"
     :expanded.sync="expanded"
-    :sort-by="['status', 'problem']"
+    :sort-by="['status', 'date']"
     :sort-desc="[true, true]"
     item-key="name"
     show-expand
@@ -21,11 +21,19 @@
           :items="item.files"
           hide-default-footer
           class="colorGrey"
-          :sort-by="['status', 'file', 'problem']"
+          :sort-by="['status', 'file']"
           :sort-desc="[true, true, false]"
         >
           <template v-slot:item.status="{ item }">
             <v-chip small :color="getColor(item.status)" class="caption my-2">{{ item.status }}</v-chip>
+          </template>
+
+          <template v-slot:item.filepath="{ item }">
+            <v-chip color="transparent" class="caption my-2">
+              <a :href="`public/scan/${item.filepath}`" download>
+                <v-icon color="secondary">mdi-file-download</v-icon>
+              </a>
+            </v-chip>
           </template>
         </v-data-table>
       </td>
@@ -42,19 +50,19 @@ export default {
       singleExpand: true,
       headers: [
         {
-          text: "Repository",
+          text: this.$tc("ResultTable.headers.repo", 1),
           align: "start",
           sortable: false,
           value: "name",
           class: "colorGreyDark colorSecondary--text",
         },
         {
-          text: "Problems",
+          text: this.$tc("ResultTable.headers.date", 1),
           value: "problem",
           class: "colorGreyDark colorSecondary--text",
         },
         {
-          text: "Status",
+          text: this.$tc("ResultTable.headers.status", 1),
           value: "status",
           class: "colorGreyDark colorSecondary--text",
         },
@@ -66,18 +74,23 @@ export default {
       ],
       headersExpanded: [
         {
-          text: "File name",
+          text: this.$tc("ResultTable.headersExpanded.fileName", 1),
           value: "file",
           class: "colorGreyDark colorTertiaryLight--text",
         },
         {
-          text: "Problem",
+          text: this.$tc("ResultTable.headersExpanded.date", 1),
           value: "problem",
           class: "colorGreyDark colorTertiaryLight--text",
         },
         {
-          text: "Status",
+          text: this.$tc("ResultTable.headersExpanded.status", 1),
           value: "status",
+          class: "colorGreyDark colorTertiaryLight--text",
+        },
+        {
+          text: this.$tc("ResultTable.headersExpanded.download", 1),
+          value: "filepath",
           class: "colorGreyDark colorTertiaryLight--text",
         },
       ],
@@ -238,10 +251,10 @@ export default {
       this.axios
         .get(url, header)
         .then((res) => {
-          console.log({res})
+          console.log({ res });
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         });
     },
     getReportsDetails() {
@@ -255,10 +268,10 @@ export default {
       this.axios
         .get(url, header)
         .then((res) => {
-          console.log({res})
+          console.log({ res });
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         });
     },
   },
