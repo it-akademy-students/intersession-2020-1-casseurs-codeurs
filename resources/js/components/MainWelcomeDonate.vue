@@ -370,11 +370,11 @@ export default {
         handleGithubUrl: function() {
             this.loading = true;
             const splittedUrl = this.repository.split("/");
-            const username = splittedUrl[splittedUrl.length - 2].replace("/", "");
-            const repo = splittedUrl[splittedUrl.length - 1].replace("/", "");
-            const email = this.email.replace("/", "");
-            const migration = this.migration.replace("/", "");
-            const branch = this.branch.replace("/", "");
+            const username = splittedUrl[splittedUrl.length - 2];
+            const repo = splittedUrl[splittedUrl.length - 1];
+            const email = this.email;
+            const migration = this.migration;
+            const branch = this.branch;
             const url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
             console.log({ url });
             this.axios.get(url).then(response => {
