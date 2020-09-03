@@ -18,19 +18,19 @@ import StripeElement from "./StripeForm";
 export default {
   name: "DonateBanner",
   components: {
-    StripeElement
+    StripeElement,
   },
   data: () => ({
-    isStripeOpen: false
+    isStripeOpen: false,
   }),
   methods: {
-     showStripeForm: function() {
+    showStripeForm: function () {
       this.isStripeOpen = true;
     },
-    hideStripeForm: function() {
+    hideStripeForm: function () {
       this.isStripeOpen = false;
     },
-  }
+  },
 };
 </script>
 

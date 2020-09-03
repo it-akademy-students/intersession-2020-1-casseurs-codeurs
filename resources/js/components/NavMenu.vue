@@ -102,13 +102,13 @@
       <v-img
         class="mx-1"
         src="../../img/swapp_image_logo.svg"
-        max-height="100"
-        max-width="100"
+        :max-height="{'50': $vuetify.breakpoint.smAndDown, '100': $vuetify.breakpoint.mdAndUp}"
+        :max-width="{'50': $vuetify.breakpoint.smAndDown, '100': $vuetify.breakpoint.mdAndUp}"
         contain
         alt="logo"
       ></v-img>
       <v-toolbar-title
-        class="colorSecondary--text display-1"
+        :class="{'subtitle-2 secondary--text': $vuetify.breakpoint.smAndDown, 'display-1 secondary--text': $vuetify.breakpoint.mdAndUp}"
         style="font-family: 'Open Sans', sans-serif;"
       >
         {{ $tc("navMenu.appName", 1) }}
@@ -278,19 +278,12 @@ export default {
     showModalContact: () => {
       store.commit("showContact");
     },
-    /*
-    //First check if the current route is on landing page (or wherever your #foo is) then set the click function for it.
-<v-btn v-if='this.$route.path == "/"' color="white" @click="() => this.$vuetify.goTo('#foo')" flat>How it Works</v-btn>
-
-//If route.path is not at "/" then we call the router push to redirect first to Landing and then scroll.
-<v-btn v-else color="white" @click="() => this.$router.push('/#foo')" flat>How it Works</v-btn>*/
     showLoginForm() {
       let destination;
-      if(this.$route.path == "/login") {
-        destination = this.$vuetify.goTo('#login-form')
-      }
-      else {
-        destination = this.$router.push('/#login-form')
+      if (this.$route.path == "/login") {
+        destination = this.$vuetify.goTo("#login-form");
+      } else {
+        destination = this.$router.push("/#login-form");
       }
       return (
         this.$store.dispatch("toggleLoginForm", true),
@@ -304,11 +297,10 @@ export default {
     },
     showRegisterForm() {
       let destination;
-      if(this.$route.path == "/register") {
-        destination = this.$vuetify.goTo('#register-form')
-      }
-      else {
-        destination = this.$router.push('/#register-form')
+      if (this.$route.path == "/register") {
+        destination = this.$vuetify.goTo("#register-form");
+      } else {
+        destination = this.$router.push("/#register-form");
       }
       return (
         this.$store.dispatch("toggleLoginForm", false),
@@ -322,11 +314,10 @@ export default {
     },
     showProfile() {
       let destination;
-      if(this.$route.path == "/user/account") {
-        destination = this.$vuetify.goTo('#user-profile')
-      }
-      else {
-        destination = this.$router.push('/#user-profile')
+      if (this.$route.path == "/user/account") {
+        destination = this.$vuetify.goTo("#user-profile");
+      } else {
+        destination = this.$router.push("/#user-profile");
       }
       return (
         this.$store.dispatch("toggleLoginForm", false),
@@ -340,11 +331,10 @@ export default {
     },
     showLoggedIn() {
       let destination;
-      if(this.$route.path == "/user") {
-        destination = this.$vuetify.goTo('#user-logged' )
-      }
-      else {
-        destination = this.$router.push('/#user-logged')
+      if (this.$route.path == "/user") {
+        destination = this.$vuetify.goTo("#user-logged");
+      } else {
+        destination = this.$router.push("/#user-logged");
       }
       return (
         this.$store.dispatch("toggleLoginForm", false),
