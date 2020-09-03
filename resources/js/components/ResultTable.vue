@@ -22,7 +22,6 @@
           hide-default-footer
           class="colorGrey"
         >
-
           <template v-slot:item.path="{ item }">
             <v-chip color="transparent" class="caption my-2">
               <a :href="`public/scan/${item.path}`" download>
@@ -43,7 +42,7 @@ export default {
     return {
       expanded: [],
       singleExpand: true,
-      
+
       headers: [
         {
           text: this.$tc("ResultTable.headers.name", 1),
@@ -100,11 +99,11 @@ export default {
           class: "colorGreyDark colorTertiaryLight--text",
         },
       ],
-      results: []
+      results: [],
     };
   },
   beforeMount() {
-    this.getUserRepository()
+    this.getUserRepository();
   },
   methods: {
     getColor(status) {
@@ -124,8 +123,8 @@ export default {
         .get(url, header)
         .then((res) => {
           console.log({ res });
-          console.log(res.data.data)
-          return this.results = res.data.data
+          console.log(res.data.data);
+          return (this.results = res.data.data);
         })
         .catch((err) => {
           console.log({ err });

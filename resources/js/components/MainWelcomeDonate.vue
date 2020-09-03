@@ -12,8 +12,8 @@
               class="mt-0 pt-0"
             >
               <v-col cols="12">
-                <h1 class="display-2 mb-5">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
-                <span class="text-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
+                <h1 :class="{'display-1 mb-3': $vuetify.breakpoint.smAndDown, 'display-2 mb-5': $vuetify.breakpoint.mdAndUp}">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
+                <span class="text-lg-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
                 <v-container fluid class="pa-0 mt-0">
                   <v-row align-content="center" no-gutters class="mt-0 pt-0">
                     <v-col cols="12">
@@ -153,14 +153,9 @@
                           >{{ $tc( "mainWelcomeDonate.welcomeModale.successMsg", 1 ) }}</p>
                         </v-dialog>
                       </form>
-                      <span class="subheading mb-5">
-                        {{
-                        $tc(
-                        "mainWelcomeDonate.welcomeAsterisk",
-                        1
-                        )
-                        }}
-                      </span>
+                      <span
+                        class="subheading mb-5 pt-2"
+                      >{{ $tc("mainWelcomeDonate.welcomeAsterisk", 1) }}</span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -179,16 +174,15 @@
 
           <!-- donate section -->
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
-            <v-row align-content="space-between" justify="space-around" no-gutters >
+            <v-row align-content="space-between" justify="space-around" no-gutters>
               <v-col cols="12">
-                <h2 class="display-1 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
                 <v-container fluid class="pa-0 mt-1">
-                  <v-row align-content="center" no-gutters >
+                  <v-row align-content="center" no-gutters>
                     <v-col cols="12">
                       <v-container fluid>
                         <v-row align="baseline" class="mr-5">
                           <v-col cols="12" lg="10">
-                            <h3 class="title">{{ $tc( "mainWelcomeDonate.donateAction", 1 ) }}</h3>
+                            <h2 class="mb-1 mt-2">{{ $tc( "mainWelcomeDonate.donateAction", 1 ) }}</h2>
                           </v-col>
                           <v-col cols="12" lg="2">
                             <button
@@ -221,7 +215,7 @@ import StripeElement from "./StripeForm";
 export default {
   name: "MainWelcome",
   components: {
-    StripeElement
+    StripeElement,
   },
   data: () => ({
     repository: "",
@@ -233,10 +227,10 @@ export default {
     isStripeOpen: false,
     errorEmail: false,
     errorRepo: false,
-    radioGroup: "0"
+    radioGroup: "0",
   }),
   methods: {
-    handleGithubUrl: function() {
+    handleGithubUrl: function () {
       let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
       if (
@@ -250,7 +244,7 @@ export default {
           this.errorRepo = true;
         }
       } else {
-        console.log(this.radioGroup)
+        console.log(this.radioGroup);
         this.loading = true;
         const splittedUrl = this.repository.split("/");
         const username = splittedUrl[splittedUrl.length - 2];
@@ -260,7 +254,7 @@ export default {
         const branch = this.branch;
         let url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
         url = url.replace("//", "/");
-        this.axios.get(url).then(response => {
+        this.axios.get(url).then((response) => {
           this.loading = false;
           this.fetching = true;
           setTimeout(() => {
@@ -269,24 +263,19 @@ export default {
         });
       }
     },
-    showStripeForm: function() {
+    showStripeForm: function () {
       this.isStripeOpen = true;
     },
-    hideStripeForm: function() {
+    hideStripeForm: function () {
       this.isStripeOpen = false;
     },
-    cancelErrorRepo: function() {
+    cancelErrorRepo: function () {
       this.errorRepo = false;
     },
-    cancelErrorEmail: function() {
+    cancelErrorEmail: function () {
       this.errorEmail = false;
-    }
+    },
   },
-  mounted () {
-    if(this.$auth.user()) {
-      this.email = this.$auth.user().email;
-    }
-  }
 };
 </script>
 

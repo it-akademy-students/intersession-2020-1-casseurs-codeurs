@@ -139,6 +139,17 @@
       "login": "Me connecter"
     }
   },
+  "forgotPwd": {
+    "title": "Mot de passe oublié :",
+    "subtitle": "Veuillez renseigner l'adresse e-mail de votre compte",
+    "action": "Modifier mon mot de passe"
+
+  },
+  "resetPwd": {
+    "title": "Réinitialisez votre mot de passe",
+    "action": "Valider mon nouveau mot de passe"
+
+  },
   "logged": {
     "title": {
       "hello": "Bonjour",
@@ -150,7 +161,13 @@
       "migration": "Outils de migration php5 vers php7"
     },
     "stats": {
-      "text": "L'application SWAPP vous permet de détecter les bogues et les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique"
+      "text": "L'application SWAPP vous permet de détecter les bogues et les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique",
+      "found": "SWAPP a déjà permis de détecter  ",
+      "errorsFound": "bogues",
+      "securityFails": "failles de sécurité, à travers ",
+      "scannedFiles": "fichiers analysés dans ",
+      "project": "projets",
+      "migrationAssistance": "dépôts GitHub et permis de faciliter la migration d'anciennes versions de php vers php7 pour plus de "
     }
   },
   "editProfile": {
@@ -225,5 +242,12 @@
   "repoError": {
     "email": "Renseignez un email valide",
     "repo": "Resnseignez une adresse github"
+  },
+  "cookies": {
+    "text": "Nous utilisons des cookies pour stocker et/ou accéder à des informations personnelles non sensibles stockées sur votre terminal (identifiants uniques, session, etc), que nous traitons  afin de réaliser des statistiques d'usage du site, personnaliser le contenu et en mesurer les performances, produire des données d’audience, développer et améliorer l’application. Cliquez sur le bouton 'Accepter' pour consentir à ces utilisations sur ce site.",
+    "actions": {
+      "agree": "Accepter",
+      "disagree": "Refuser"
+    }
   }
 }
