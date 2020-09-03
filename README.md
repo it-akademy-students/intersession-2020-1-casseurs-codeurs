@@ -113,6 +113,8 @@ L'analyse d'un repository peut prendre plusieurs minutes, c'est pourquoi **SWAPP
 Les résultats de l'analyse sont transmis par email.
 Pour les utilisateurs connectés, il est possible d'accéder a un historique et même au fichiers résultat de l'analyse.
 De plus, les utilisateurs ont accès au statistique de leurs scans.
+Actuellement, l'api Github nous limite a 60 appel par heure maximum. Une fois l'application en ligne, vous pourrez générer un token via Oauth2 sur la plateforme Github.
+Il vous faudrat ensuite modifier la fonction getGithubContent() dans l'ApiController et renseigner le token généré. Votre limite passera ainsi à 5000 par heure.
 
 Pour finir, **SWAPP** possède un système de don via la plateforme Stripe, un compte est donc requis.
 
