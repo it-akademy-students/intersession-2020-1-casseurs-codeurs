@@ -31,7 +31,7 @@ Route::prefix('auth')->group(function () {
     // Login User
     Route::post('login', 'AuthController@login');
     // Send reset password mail
-    Route::post('reset-password', 'AuthController@sendPasswordResetLink');
+    Route::post('reset-password/', 'AuthController@sendPasswordResetLink');
     // handle reset password form process
     Route::post('reset/password', 'AuthController@callResetPassword');
     
@@ -39,6 +39,10 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:api')->group(function () {
         // Get user info
         Route::get('user', 'AuthController@user');
+
+        // Route::post('user/{id}/analyzes', 'StatisticsController@totalPerUser');
+        // Route::post('user/{id}/repository', 'StatisticsController@repositoryPerUser');
+
         // Refresh the JWT Token
         Route::get('refresh', 'AuthController@refresh');
         // Logout user from application
@@ -50,3 +54,9 @@ Route::prefix('auth')->group(function () {
     
     });
 });
+
+Route::get('users/{id}/analyzes', 'StatisticsController@totalPerUser');
+
+Route::get('users/{id}/repository', 'StatisticsController@repositoryPerUser');
+
+Route::get('statistics', 'StatisticsController@generalStatistics');

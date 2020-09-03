@@ -22,7 +22,7 @@
               type="text"
               name="username"
               :label="$tc('userProfile.form.labelName', 1)"
-              required
+              readonly
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
@@ -32,7 +32,7 @@
               type="email"
               name="email"
               :label="$tc('userProfile.form.labelEmail', 1)"
-              required
+              readonly
               color="colorTertiaryLight"
             ></v-text-field>
           </v-col>
@@ -43,6 +43,7 @@
               :label="$tc('userProfile.form.labelJob', 1)"
               name="job"
               color="colorTertiaryLight"
+              readonly
             ></v-text-field>
           </v-col>
         </v-row>

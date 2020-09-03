@@ -9,7 +9,8 @@ import RegisterForm from "@/js/components/RegisterForm";
 import LoginForm from "@/js/components/LoginForm";
 import Logged from "@/js/components/Logged";
 import EditProfileForm from "@/js/components/EditProfileForm";
-import ContactForm from "@/js/components/ContactForm";
+import Dashboard from "@/js/components/Dashboard";
+import ResetPasswordForm from "@/js/pages/ResetPasswordForm";
 
 Vue.use(VueRouter);
 
@@ -73,19 +74,34 @@ const Route = new VueRouter({
                                     component: EditProfileForm
                                 }
                             ]
+                        },
+                        {
+                            path: ":id",
+                            name: "user-dashboard",
+                            component: Dashboard
                         }
                     ]
                 }
             ]
         },
-        {
-            path: "contact",
-            name: "contact",
-            component: ContactForm,
-            meta: {
-                auth: undefined
-            }
-        },
+        // RESET USER PASSWORD
+        { 
+            path: '/reset-password', 
+            name: 'reset-password', 
+            component: Home, 
+            meta: { 
+              auth:false 
+            } 
+          },
+          { 
+            path: '/reset-password/:token', 
+            name: 'reset-password-form', 
+            component: ResetPasswordForm, 
+            meta: { 
+              auth:false 
+            } 
+          },
+
         // 404 ROUTE
         {
             path: "*",
@@ -94,7 +110,11 @@ const Route = new VueRouter({
             meta: {
                 auth: undefined
             }
-        }
+        },
+
+        
+
+        
     ]
 });
 

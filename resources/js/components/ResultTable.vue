@@ -4,7 +4,7 @@
     :items="results"
     :single-expand="singleExpand"
     :expanded.sync="expanded"
-    :sort-by="['status', 'problem']"
+    :sort-by="['status', 'errorsFound']"
     :sort-desc="[true, true]"
     item-key="name"
     show-expand
@@ -21,11 +21,14 @@
           :items="item.files"
           hide-default-footer
           class="colorGrey"
-          :sort-by="['status', 'file', 'problem']"
-          :sort-desc="[true, true, false]"
         >
-          <template v-slot:item.status="{ item }">
-            <v-chip small :color="getColor(item.status)" class="caption my-2">{{ item.status }}</v-chip>
+
+          <template v-slot:item.path="{ item }">
+            <v-chip color="transparent" class="caption my-2">
+              <a :href="`public/scan/${item.path}`" download>
+                <v-icon color="secondary">mdi-file-download</v-icon>
+              </a>
+            </v-chip>
           </template>
         </v-data-table>
       </td>
@@ -40,21 +43,42 @@ export default {
     return {
       expanded: [],
       singleExpand: true,
+      
       headers: [
         {
-          text: "Repository",
+          text: this.$tc("ResultTable.headers.name", 1),
           align: "start",
           sortable: false,
           value: "name",
           class: "colorGreyDark colorSecondary--text",
         },
         {
-          text: "Problems",
-          value: "problem",
+          text: this.$tc("ResultTable.headers.errorsFound", 1),
+          value: "errorsFound",
           class: "colorGreyDark colorSecondary--text",
         },
         {
-          text: "Status",
+          text: this.$tc("ResultTable.headers.securityFalls", 1),
+          value: "securityFails",
+          class: "colorGreyDark colorSecondary--text",
+        },
+        {
+          text: this.$tc("ResultTable.headers.scannedFiles", 1),
+          value: "scannedFiles",
+          class: "colorGreyDark colorSecondary--text",
+        },
+        {
+          text: this.$tc("ResultTable.headers.numberOfScans", 1),
+          value: "numberOfScans",
+          class: "colorGreyDark colorSecondary--text",
+        },
+        {
+          text: this.$tc("ResultTable.headers.totalScannedFiles", 1),
+          value: "totalScannedFiles",
+          class: "colorGreyDark colorSecondary--text",
+        },
+        {
+          text: this.$tc("ResultTable.headers.status", 1),
           value: "status",
           class: "colorGreyDark colorSecondary--text",
         },
@@ -66,199 +90,45 @@ export default {
       ],
       headersExpanded: [
         {
-          text: "File name",
-          value: "file",
+          text: this.$tc("ResultTable.headersExpanded.fileName", 1),
+          value: "fileName",
           class: "colorGreyDark colorTertiaryLight--text",
         },
         {
-          text: "Problem",
-          value: "problem",
-          class: "colorGreyDark colorTertiaryLight--text",
-        },
-        {
-          text: "Status",
-          value: "status",
+          text: this.$tc("ResultTable.headersExpanded.download", 1),
+          value: "path",
           class: "colorGreyDark colorTertiaryLight--text",
         },
       ],
-      results: [
-        {
-          name: "Repo1",
-          file: "my file1",
-          problem: "delectus aut autem",
-          status: "clean",
-          criticity: 0,
-          files: [
-            {
-              file: "my file1",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-            {
-              file: "my file2",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-            // {
-            //   file: "my file3",
-            //   problem: "delectus aut autem",
-            //   status: "clean",
-            //   criticity: 0,
-            // },
-          ],
-        },
-        {
-          name: "Repo2",
-          file: "my file2",
-          problem: "delectus aut autem",
-          status: "warning",
-          criticity: 1,
-          files: [
-            {
-              file: "my file1",
-              problem: "delectus aut autem",
-              status: "warning",
-              criticity: 1,
-            },
-            {
-              file: "my file2",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-            {
-              file: "my file3",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-          ],
-        },
-        {
-          name: "Repo3",
-          file: "my file3",
-          problem: "delectus aut autem",
-          status: "warning",
-          criticity: 1,
-          files: [
-            {
-              file: "my file1",
-              problem: "delectus aut autem",
-              status: "warning",
-              criticity: 1,
-            },
-            {
-              file: "my file2",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-            {
-              file: "my file3",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-          ],
-        },
-        {
-          name: "Repo4",
-          file: "my file4",
-          problem: "delectus aut autem",
-          status: "danger",
-          criticity: 2,
-          files: [
-            {
-              file: "my file1",
-              problem: "delectus aut autem",
-              status: "warning",
-              criticity: 1,
-            },
-            {
-              file: "my file2",
-              problem: "delectus aut autem",
-              status: "danger",
-              criticity: 2,
-            },
-            {
-              file: "my file3",
-              problem: "delectus aut autem",
-              status: "clean",
-              criticity: 0,
-            },
-          ],
-        },
-        {
-          name: "Repo5",
-          file: "my file5",
-          problem: "delectus aut autem",
-          status: "danger",
-          criticity: 2,
-          files: [
-            {
-              file: "my file1",
-              problem: "delectus aut autem",
-              status: "danger",
-              criticity: 2,
-            },
-            {
-              file: "my file2",
-              problem: "delectus aut autem",
-              status: "warning",
-              criticity: 1,
-            },
-            {
-              file: "my file3",
-              problem: "delectus aut autem",
-              status: "danger",
-              criticity: 2,
-            },
-          ],
-        },
-      ],
+      results: []
     };
   },
-
+  beforeMount() {
+    this.getUserRepository()
+  },
   methods: {
     getColor(status) {
       if (status === "danger") return "colorDanger";
       else if (status === "warning") return "colorWarning";
       else return "colorSecondaryLight";
     },
-    getHistory() {
-      let url = `/auth/user/${this.$auth.user().id}/analyses`;
+    getUserRepository() {
+      let url = `/users/${this.$auth.user().id}/repository`;
+
       let header = {
         headers: {
           Authorization: `bearer ${this.$auth.token()}`,
-          "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-      this.axios
+      axios
         .get(url, header)
         .then((res) => {
-          console.log({res})
+          console.log({ res });
+          console.log(res.data.data)
+          return this.results = res.data.data
         })
         .catch((err) => {
-          console.log(err)
-        });
-    },
-    getReportsDetails() {
-      let url = `/auth/user/${this.$auth.user().id}/repository`;
-      let header = {
-        headers: {
-          Authorization: `bearer ${this.$auth.token()}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      this.axios
-        .get(url, header)
-        .then((res) => {
-          console.log({res})
-        })
-        .catch((err) => {
-          console.log(err)
+          console.log({ err });
         });
     },
   },
@@ -283,10 +153,4 @@ export default {
   justify-content: center;
   min-width: 10ch;
 }
-
-// .theme--dark.v-data-table .v-data-table-header th.sortable.active .v-data-table-header__icon,
-// .theme--dark.v-data-table .v-data-table-header th.sortable .v-data-table-header__icon,
-// .theme--dark.v-icon {
-//     color: currentColor !important;
-// }
 </style>

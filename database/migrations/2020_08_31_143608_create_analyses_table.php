@@ -19,8 +19,10 @@ class CreateAnalysesTable extends Migration
             $table->string('repository');
             $table->integer('errorsFound');
             $table->integer('maxErrorsFound');
+            $table->integer('totalErrorsFound');
             $table->integer('securityFails');
             $table->integer('maxSecurityFails');
+            $table->integer('totalSecurityFails');
             $table->integer('scannedFiles');
             $table->integer('numberOfScans');
             $table->json('files');

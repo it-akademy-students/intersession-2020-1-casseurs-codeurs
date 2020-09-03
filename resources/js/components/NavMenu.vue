@@ -278,7 +278,20 @@ export default {
     showModalContact: () => {
       store.commit("showContact");
     },
+    /*
+    //First check if the current route is on landing page (or wherever your #foo is) then set the click function for it.
+<v-btn v-if='this.$route.path == "/"' color="white" @click="() => this.$vuetify.goTo('#foo')" flat>How it Works</v-btn>
+
+//If route.path is not at "/" then we call the router push to redirect first to Landing and then scroll.
+<v-btn v-else color="white" @click="() => this.$router.push('/#foo')" flat>How it Works</v-btn>*/
     showLoginForm() {
+      let destination;
+      if(this.$route.path == "/login") {
+        destination = this.$vuetify.goTo('#login-form')
+      }
+      else {
+        destination = this.$router.push('/#login-form')
+      }
       return (
         this.$store.dispatch("toggleLoginForm", true),
         this.$store.dispatch("toggleSignInOn", false),
@@ -286,10 +299,17 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home-login" })
+        destination
       );
     },
     showRegisterForm() {
+      let destination;
+      if(this.$route.path == "/register") {
+        destination = this.$vuetify.goTo('#register-form')
+      }
+      else {
+        destination = this.$router.push('/#register-form')
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -297,10 +317,17 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home-register" })
+        destination
       );
     },
     showProfile() {
+      let destination;
+      if(this.$route.path == "/user/account") {
+        destination = this.$vuetify.goTo('#user-profile')
+      }
+      else {
+        destination = this.$router.push('/#user-profile')
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -308,10 +335,17 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", true),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user-account" })
+        destination
       );
     },
     showLoggedIn() {
+      let destination;
+      if(this.$route.path == "/user") {
+        destination = this.$vuetify.goTo('#user-logged' )
+      }
+      else {
+        destination = this.$router.push('/#user-logged')
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -319,7 +353,7 @@ export default {
         this.$store.dispatch("toggleLoggedIn", true),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user" })
+        destination
       );
     },
     initShowForm() {
