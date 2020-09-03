@@ -173,9 +173,6 @@ export default {
       axios
         .get(url, header)
         .then((res) => {
-          console.log("dans le analizes");
-          console.log({ res });
-          console.log( res.data );
           this.totalSecurityFails = res.data.data.totalSecurityFails;
           this.totalErrorsFound = res.data.data.totalErrorsFound;
           this.numberOfScans = res.data.data.numberOfScans;
