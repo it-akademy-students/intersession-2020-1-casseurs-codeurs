@@ -36,7 +36,8 @@
     },
     "welcomeModale": {
       "success":  "Success",
-      "successMsg": "We will sent your result by email"
+      "successMsg": "We will sent your result by email",
+      "successStripe": "Thank you for your donation"
       },
     "donate": "Support the project ",
     "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",

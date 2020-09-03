@@ -36,7 +36,8 @@
       },
       "welcomeModale": {
         "success":  "Succès",
-        "successMsg": "Vous allez recevoir les résultats par e-mail"
+        "successMsg": "Vous allez recevoir les résultats par e-mail",
+        "successStripe": "Merci pour votre don"
         },
       "donate": "Soutenez le project ",
       "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et / ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
@@ -179,5 +180,11 @@
         "download": "Download :"
         
       }
+    },
+    "StripeForm": {
+      "cardName": "Name on card",
+      "expirationDate": "Expiration date",
+      "amount": "Amount",
+      ""
     }
 }

@@ -67,7 +67,7 @@
     </div>
     <v-dialog content-class="success-modal" v-show="stripeResponse" v-model="stripeResponse" dark>
       <h4 class="message-success">{{ $tc( "mainWelcomeDonate.welcomeModale.success", 1 ) }}</h4>
-      <p class="message">{{ $tc( "mainWelcomeDonate.welcomeModale.successMsg", 1 ) }}</p>
+      <p class="message">{{ $tc( "mainWelcomeDonate.welcomeModale.successStripe", 1 ) }}</p>
     </v-dialog>
   </v-dialog>
 </template>
@@ -243,11 +243,12 @@ export default {
         this.stripeResponse = false;
         this.method()
       }, 5000);
+      const userId = this.$auth.user() ? this.$auth.user().id : "0"
       axios
         .post("/validate-payment", {
           email: formEmail,
           amount: 15,
-          id: this.$auth.user().id ? this.$auth.user().id : null
+          id: userId
         })
         .then(res => console.log({ res }))
         .catch(err => console.log({ err }));
