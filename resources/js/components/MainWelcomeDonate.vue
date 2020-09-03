@@ -244,7 +244,6 @@ export default {
           this.errorRepo = true;
         }
       } else {
-        console.log(this.radioGroup);
         this.loading = true;
         const splittedUrl = this.repository.split("/");
         const username = splittedUrl[splittedUrl.length - 2];

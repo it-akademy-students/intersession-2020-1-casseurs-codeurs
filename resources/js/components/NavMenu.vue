@@ -102,8 +102,8 @@
       <v-img
         class="mx-1"
         src="../../img/swapp_image_logo.svg"
-        :max-height="{'50': $vuetify.breakpoint.smAndDown, '100': $vuetify.breakpoint.mdAndUp}"
-        :max-width="{'50': $vuetify.breakpoint.smAndDown, '100': $vuetify.breakpoint.mdAndUp}"
+        max-height="100"
+        max-width="100"
         contain
         alt="logo"
       ></v-img>

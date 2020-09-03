@@ -122,8 +122,6 @@ export default {
       axios
         .get(url, header)
         .then((res) => {
-          console.log({ res });
-          console.log(res.data.data);
           return (this.results = res.data.data);
         })
         .catch((err) => {
