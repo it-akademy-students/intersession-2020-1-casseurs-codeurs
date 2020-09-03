@@ -119,8 +119,7 @@
       "migration": "Migration tools php5 > php7"
     },
     "stats": {
-      "textPart1": "The SWAPP application has already enabled you to detect ",
-      "textPart2": " bugs and security vulnerabilities in your code!"
+      "text": "SWAPP application allows you to detect bugs and security vulnerabilities in your code! Go to your dashboard to view your history"
     }
   },
   "editProfile": {
@@ -161,24 +160,38 @@
       "action": "Go to Dashboard"
     },
     "card": {
-      "nbrRepoTitle": "Number of repo scan",
-      "nbrBugsTitle": "Number of bugs founds",
-      "nbrSecurityTitle": "Number of security hole founds",
-      "nbrLastRepoTitle": "Last repo scan"
+      "lastRepository": "Last repo analyzed",
+      "numberOfScans": "Number of scans on this repo",
+      "totalRepository": "Total number of repo analyzed",
+      "totalSecurityFails": "Total number of security breaches found",
+      "totalErrorsFound": "Total number of bugs found",
+      "scannedFiles": "Number of files scanned during the last scan"
     }
   },
   "ResultTable": {
     "headers": {
-      "repo": "Repository:",
-      "date": "Date:",
+      "name": "Repository name:",
+      "errorsFound": "Numbers of errors founds:",
+      "securityFalls": "Numbers of security holes founds:",
+      "scannedFiles": "Numbers of scanned files:",
+      "numberOfScans": "Numbers of scans:",
+      "totalScannedFiles": "Total of scanned files:",
       "status": "Status:"
     },
     "headersExpanded": {
-      "fileName": "Nom du fichier:",
-      "date": "Date:",
-      "status": "Status:",
-      "download": "Télécharger:"
-      
+      "fileName": "File name:",
+      "download": "Download:"
     }
+  },
+  "stripeForm": {
+    "cardName": "Name on card",
+    "expirationDate": "Expiration date",
+    "amount": "Amount",
+    "creditCardNumbers": "Card numbers",
+    "submit": "Donate"
+  },
+  "repoError": {
+    "email": "Valid email is required",
+    "repo": "Valid github adress is required"
   }
 }

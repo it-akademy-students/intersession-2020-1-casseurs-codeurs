@@ -16,12 +16,12 @@
           <div class="errorAlertEmail" v-show="errorEmail">Valid email is required</div>
         </div>
         <div class="form-row top-form">
-          <label for="card-number">Name on card</label>
+          <label for="card-number">{{ $tc( "stripeForm.cardName", 1 ) }}</label>
           <div>
             <input type="text" class="StripeElement" id="name_on_card" name="name_on_card" />
           </div>
           <div class="top-form">
-            <label for="card-number">Credit card</label>
+            <label for="card-number">{{ $tc( "stripeForm.creditCardNumbers", 1 ) }}</label>
             <div id="card-number">
               <!-- A Stripe Element will be inserted here. -->
             </div>
@@ -32,7 +32,7 @@
         </div>
         <div class="form-card-row">
           <div>
-            <label for="card-date">Expiration date</label>
+            <label for="card-date">{{ $tc( "stripeForm.expirationDate", 1 ) }}</label>
             <div id="card-date">
               <!-- A Stripe Element will be inserted here. -->
             </div>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div id="amount">
-          <label for="amount">Amount</label>
+          <label for="amount">{{ $tc( "stripeForm.amount", 1 ) }}</label>
           <div>
             <select v-model="amount" class="StripeElement" id="input-amount">
               <option
@@ -62,7 +62,7 @@
             </select>
           </div>
         </div>
-        <button @click="validePayment" class="my-5 btn btn--violet button">Submit Payment</button>
+        <button @click="validePayment" class="my-5 btn btn--violet button">{{ $tc( "stripeForm.submit", 1 ) }}</button>
       </form>
     </div>
     <v-dialog content-class="success-modal" v-show="stripeResponse" v-model="stripeResponse" dark>
