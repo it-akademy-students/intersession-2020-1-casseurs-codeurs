@@ -83,7 +83,7 @@ Bon challenge ! Code with love :heart: !
 
 ### Mise en route
 
-####Installation
+#### Installation
 Pour commencer, cloner le repository. Ensuite executez les commandes:
     ```composer update```
     ```npm i```
@@ -106,7 +106,7 @@ Enfin, deux commandes sont nécessaire lors du lancement de l'application:
    ```npm run hot```
    ```php artisan queue:work``` (lancer le système de file d'attente asynchrone)
    
-####Informations
+#### Informations
 
 L'analyse d'un repository peut prendre plusieurs minutes, c'est pourquoi **SWAPP** fonctionne de manière asynchrone afin de ne pas bloquer l'utilisateur. 
 Les résultats de l'analyse sont transmis par email.
