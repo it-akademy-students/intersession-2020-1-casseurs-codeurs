@@ -110,7 +110,7 @@ export default {
     errorEmail: false
   }),
   methods: {
-    initializeStripe: event => {
+    initializeStripe: function(event) {
       // Create an instance of Elements.
       const elements = stripe.elements();
       // Custom styling can be passed to options when creating an Element.
@@ -213,24 +213,7 @@ export default {
 
         // Submit the form
         // form.submit();
-        handleSubmit(token);
-      }
-
-      function handleSubmit(token) {
-        axios
-          .post("/create-checkout-session", {
-            data: {
-              stripeToken: token
-            }
-          })
-          .then(
-            response => {
-              console.log({ response });
-            },
-            err => {
-              console.log({ err });
-            }
-          );
+        this.token = token;
       }
     },
     validePayment() {
@@ -244,10 +227,10 @@ export default {
         this.method()
       }, 5000);
       axios
-        .post("/validate-payment", {
+        .post("/donate", {
           email: formEmail,
-          amount: 15,
-          id: this.$auth.user().id ? this.$auth.user().id : null
+          amount: amount,
+          tokenId: this.token.id
         })
         .then(res => console.log({ res }))
         .catch(err => console.log({ err }));
