@@ -5,8 +5,15 @@
         <div class="email top-form">
           <label for="email">Email</label>
           <div>
-            <input type="email" class="StripeElement" id="email" name="email" />
+            <input
+              type="email"
+              class="StripeElement"
+              id="email"
+              name="email"
+              v-on:keyup="cancelErrorEmail"
+            />
           </div>
+          <div class="errorAlertEmail" v-show="errorEmail">Valid email is required</div>
         </div>
         <div class="form-row top-form">
           <label for="card-number">Name on card</label>
@@ -55,9 +62,13 @@
             </select>
           </div>
         </div>
-        <button @click="handleSubmit" class="my-5 btn btn--violet button">Submit Payment</button>
+        <button @click="validePayment" class="my-5 btn btn--violet button">Submit Payment</button>
       </form>
     </div>
+    <v-dialog content-class="success-modal" v-show="stripeResponse" v-model="stripeResponse" dark>
+      <h4 class="message-success">{{ $tc( "mainWelcomeDonate.welcomeModale.success", 1 ) }}</h4>
+      <p class="message">{{ $tc( "mainWelcomeDonate.welcomeModale.successMsg", 1 ) }}</p>
+    </v-dialog>
   </v-dialog>
 </template>
 
@@ -76,7 +87,7 @@ export default {
   },
   data: () => ({
     dialog: true,
-    stripeResponse: "",
+    stripeResponse: false,
     email: "",
     amount: "1",
     options: [
@@ -95,7 +106,8 @@ export default {
       { text: "13", value: "13" },
       { text: "14", value: "14" },
       { text: "15", value: "15" }
-    ]
+    ],
+    errorEmail: false
   }),
   methods: {
     initializeStripe: event => {
@@ -212,26 +224,46 @@ export default {
             }
           })
           .then(
-            function(response) {
-              const formEmail = document.getElementById("email").value;
-              // TODO in BACK
-              axios
-                .post("/validate-payment", {
-                  email: formEmail,
-                  amount: 15,
-                  id: this.$auth.user().id ? this.$auth.user().id : null
-                })
-                .then(res => console.log({ res }))
-                .catch(err => console.log({ err }));
-              this.stripeResponse = "success";
+            response => {
+              console.log({ response });
             },
             err => {
               console.log({ err });
-              this.stripeResponse = "error";
             }
           );
       }
     },
+    validePayment() {
+      const formEmail = document.getElementById("email").value;
+      setTimeout(() => {
+        this.stripeResponse = true;
+      }, 500);
+      
+      setTimeout(() => {
+        this.stripeResponse = false;
+        this.method()
+      }, 5000);
+      axios
+        .post("/validate-payment", {
+          email: formEmail,
+          amount: 15,
+          id: this.$auth.user().id ? this.$auth.user().id : null
+        })
+        .then(res => console.log({ res }))
+        .catch(err => console.log({ err }));
+    },
+    checkEmail() {
+      let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+      if (!reg.test(document.getElementById("email").value)) {
+        this.errorEmail = true;
+      } else {
+        this.errorEmail = false;
+      }
+    },
+    cancelErrorEmail: () => {
+      this.errorEmail = false;
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -290,6 +322,7 @@ export default {
 .email {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .input {
   background: "#aab7c4";
@@ -323,5 +356,25 @@ export default {
 .top-form,
 #amount {
   margin-top: 15px;
+}
+.errorAlertEmail {
+  color: red;
+  position: absolute;
+  bottom: 25px;
+  right: 15px;
+  font-weight: bold;
+  top: 0px;
+  right: 10%;
+}
+.success-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  padding: 40px;
+  background: black;
 }
 </style>

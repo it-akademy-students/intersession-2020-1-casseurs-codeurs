@@ -16,7 +16,7 @@ class StripeController extends Controller
        try {
         $charge = $stripe->charges()->create([
             'currency' => 'EUR',
-            'amount'   => 50.49,
+            'amount'   => 15.00,
             'source' => $token,
         ]);
         

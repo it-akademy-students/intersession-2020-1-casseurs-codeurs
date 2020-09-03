@@ -237,7 +237,6 @@ export default {
   methods: {
     handleGithubUrl: function() {
       let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-      console.log(reg.test(this.email));
 
       if (
         !this.repository.startsWith("https://github.com/") ||
