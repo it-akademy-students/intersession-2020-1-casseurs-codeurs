@@ -59,7 +59,7 @@ export default {
         },
         {
           text: this.$tc("ResultTable.headers.securityFalls", 1),
-          value: "securityFalls",
+          value: "securityFails",
           class: "colorGreyDark colorSecondary--text",
         },
         {
@@ -101,47 +101,6 @@ export default {
         },
       ],
       results: []
-      // results: [
-      //   {
-      //     name: "Repo1",
-      //     files: [
-      //       {
-      //         fileName: "my file1",
-      //         path: "delectus aut autem",
-      //       },
-      //       {
-      //         fileName: "my file2",
-      //         path: "delectus aut autem",
-      //       },
-      //     ],
-      //     errorsFound: 0,
-      //     securityFalls: 0,
-      //     scannedFiles: 0,
-      //     numberOfScans: 2,
-      //     totalScannedFiles: 0,
-      //     status: "warning",
-      //   },
-      //   {
-      //     name: "Repo2",
-      //     files: [
-      //       {
-      //         fileName: "my file1",
-      //         path: "delectus aut autem",
-      //       },
-      //       {
-      //         fileName: "my file2",
-      //         path: "delectus aut autem",
-      //       },
-      //     ],
-      //     errorsFound: 0,
-      //     securityFalls: 0,
-      //     scannedFiles: 0,
-      //     numberOfScans: 0,
-      //     totalScannedFiles: 0,
-      //     status: "warning",
-      //   },
-        
-      // ],
     };
   },
   beforeMount() {
