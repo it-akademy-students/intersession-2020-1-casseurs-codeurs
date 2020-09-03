@@ -101,7 +101,7 @@ class AuthController extends Controller
 
     //UPDATE
     /**
-     * Update the specified resource in storage.
+     * Update user
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -117,8 +117,9 @@ class AuthController extends Controller
         ]);
     }
 
+    //DELETE
     /**
-     * Remove the specified resource from storage.
+     * Remove the user from DB
      *
      * @return \Illuminate\Http\Response
      */
@@ -131,6 +132,7 @@ class AuthController extends Controller
         ]);
     }
 
+    // RESET PASSWORD
     /**
      * Send password reset link. 
      */

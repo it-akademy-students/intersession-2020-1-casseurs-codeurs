@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Analyse;
 use App\Jobs\ProcessSecurity;
-use App\Models\User;
+use App\Statistic;
 use App\Traits\AnalyseTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class ApiController extends Controller
 {
@@ -53,6 +49,10 @@ class ApiController extends Controller
     public function github(string $username, string $repos, string $email, string $migration, string $branch = 'master' )
     {
         try{
+            if (Statistic::first() == null){
+                $statistic = new Statistic();
+                $statistic->save();
+            }
             Auth::user() ? $userConnected = Auth::id() : $userConnected = 0;
             //Construction de l'url a appelé:
             $baseUrl = "https://api.github.com/repos/$username/$repos/";
@@ -72,7 +72,6 @@ class ApiController extends Controller
         } catch (Exeption $e){
             return ['response' => 'error', 'code' => $e->getCode(), 'message' => $e->getMessage()];
         }
-
     }
 
 }
