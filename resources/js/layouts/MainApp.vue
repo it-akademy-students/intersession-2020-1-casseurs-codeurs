@@ -109,8 +109,6 @@ export default {
       axios
         .get(url)
         .then((res) => {
-          console.log({ res });
-          console.log(res.data.data);
           this.errorsFound = res.data.data.errorsFound;
           this.securityFails = res.data.data.securityFails;
           this.scannedFiles = res.data.data.scannedFiles;
