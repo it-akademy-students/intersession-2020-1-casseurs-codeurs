@@ -10,11 +10,7 @@
           </v-col>
           <v-col cols="12">
             <p class="text-center">
-              {{ $tc("logged.stats.textPart1", 1) }}
-              <span
-                class="colorTertiaryLight--text text-h6"
-              >{{ user.stats }}</span>
-              {{ $tc("logged.stats.textPart2", 1) }}
+              {{ $tc("logged.stats.text", 1) }}
             </p>
           </v-col>
           <!-- dashboard -->
@@ -37,24 +33,7 @@ export default {
   },
   data: () => ({
     dialog: false,
-    user: {
-      stats: 1200,
-      repository: "1200",
-      errorsFound: 24,
-      scannedFiles: "",
-      numberOfScans: "",
-      files: "",
-      created_at: "",
-    },
-    interval: {},
-    start: 0,
     values: [423, 446, 675, 510, 590, 610, 760],
   }),
 };
 </script>
-
-<style scoped>
-.v-progress-circular {
-  margin: 1rem;
-}
-</style>
