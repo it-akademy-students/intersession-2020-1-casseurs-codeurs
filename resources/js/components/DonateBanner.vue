@@ -6,17 +6,31 @@
       <v-btn
         text
         class="btn-text btn-text--green"
-        to="/"
-        link
+        @click="showStripeForm"
       >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</v-btn>
     </template>
+    <stripe-element v-if="isStripeOpen" v-model="isStripeOpen" :method="hideStripeForm" />
   </v-banner>
 </template>   
 
 <script>
+import StripeElement from "./StripeForm";
 export default {
   name: "DonateBanner",
-  data: () => ({}),
+  components: {
+    StripeElement
+  },
+  data: () => ({
+    isStripeOpen: false
+  }),
+  methods: {
+     showStripeForm: function() {
+      this.isStripeOpen = true;
+    },
+    hideStripeForm: function() {
+      this.isStripeOpen = false;
+    },
+  }
 };
 </script>
 
