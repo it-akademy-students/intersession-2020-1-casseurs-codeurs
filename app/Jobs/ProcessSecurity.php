@@ -139,9 +139,10 @@ class ProcessSecurity implements ShouldQueue
                 rename($file, $newFilename);
                 $newFiles[] = $newFilename;
             }
-            // Compter le nombre de fichier scanneés:
+            //Nombre de fichier scannés:
             $scannedFiles = sizeof($paths);
             // Associer l'analyse à l'utilisateur dans la base de donnée:
+            //On vérifie l'existance d'un précédent scan sur le repos:
             $analyse = \App\Models\Analyse::where([
                 ['repository', '=', str_replace("_","/","$this->githubInfo")],
                 ['user_id', '=', $user->id ],
@@ -197,7 +198,7 @@ class ProcessSecurity implements ShouldQueue
         foreach ( $ri as $file ) {
             $file->isDir() ?  rmdir($file) : unlink($file);
         }
-
+        //On met à jour les statistiques général de l'application:
         $statistic = Statistic::first();
         $statistic->errorsFound += $errorFound;
         $statistic->securityFails += $securityFails;
