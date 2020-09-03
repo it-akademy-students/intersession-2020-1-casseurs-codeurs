@@ -97,6 +97,7 @@ Renommer le fichier .env.exemple en .env et remplissez les variables:
         - STRIPE_PUBLISHABLE_KEY (La key fournit par Stripe pour le service de don)
 
 Executez les commandes:
+    ```php artisan migrate```
     ```php artisan cache:clear```
     ```php artisan config:clear```
     ```php artisan key:generate```
