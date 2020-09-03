@@ -151,7 +151,8 @@
         "cancel": "Cancel",
         "send": "Send"
       }
-    }
+    },
+    "success": "Message sent"
   },
   "dashboard": {
     "title": "Votre historique de données",
