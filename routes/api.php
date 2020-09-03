@@ -56,3 +56,8 @@ Route::get('users/{id}/analyzes', 'StatisticsController@totalPerUser');
 Route::get('users/{id}/repository', 'StatisticsController@repositoryPerUser');
 
 Route::get('statistics', 'StatisticsController@generalStatistics');
+
+// Donate
+//Route::group(['middleware' => ['web']], function () {
+    Route::post('donate', 'StripeController@store');
+//});
