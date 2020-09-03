@@ -175,12 +175,13 @@ export default {
         .then((res) => {
           console.log("dans le analizes");
           console.log({ res });
-          this.totalSecurityFails = this.res.data.data.totalSecurityFails;
-          this.totalErrorsFound = this.res.data.data.totalErrorsFound;
-          this.numberOfScans = this.res.data.data.numberOfScans;
-          this.totalRepository = this.res.data.data.totalRepository;
-          this.scannedFiles = this.res.data.data.scannedFiles;
-          this.lastRepository = this.res.data.data.lastRepository;
+          console.log( res.data );
+          this.totalSecurityFails = res.data.data.totalSecurityFails;
+          this.totalErrorsFound = res.data.data.totalErrorsFound;
+          this.numberOfScans = res.data.data.numberOfScans;
+          this.totalRepository = res.data.data.totalRepository;
+          this.scannedFiles = res.data.data.scannedFiles;
+          this.lastRepository = res.data.data.lastRepository;
         })
         .catch((err) => {
           console.log({ err });

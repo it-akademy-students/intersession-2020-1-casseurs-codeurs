@@ -104,7 +104,7 @@ Executez les commandes:
     ```php artisan jwt:secret```
 
 Enfin, deux commandes sont nécessaire lors du lancement de l'application:
-   ```npm run hot```
+   ```npm run prod``` (ou ```npm run hot``` en local => /public/hot)
    ```php artisan queue:work``` (lancer le système de file d'attente asynchrone)
    
 #### Informations
