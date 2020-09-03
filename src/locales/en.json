@@ -36,7 +36,8 @@
     },
     "welcomeModale": {
       "success":  "Success",
-      "successMsg": "We will sent your result by email"
+      "successMsg": "We will sent your result by email",
+      "successStripe": "Thank you for your donation"
       },
     "donate": "Support the project ",
     "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
@@ -178,8 +179,19 @@
       "status": "Status:"
     },
     "headersExpanded": {
-      "fileName": "Nom du fichier:",
-      "download": "Télécharger:"
+      "fileName": "File name:",
+      "download": "Download:"
     }
+  },
+  "stripeForm": {
+    "cardName": "Name on card",
+    "expirationDate": "Expiration date",
+    "amount": "Amount",
+    "creditCardNumbers": "Card numbers",
+    "submit": "Donate"
+  },
+  "repoError": {
+    "email": "Valid email is required",
+    "repo": "Valid github adress is required"
   }
 }

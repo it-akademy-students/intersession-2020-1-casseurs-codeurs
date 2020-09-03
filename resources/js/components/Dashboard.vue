@@ -150,12 +150,12 @@ export default {
     return {
       dialog: false,
       values: [423, 446, 675, 510, 590, 610, 760],
-      lastRepository: "no data",
-      numberOfScans: 0,
-      scannedFiles: 0,
-      totalErrorsFound: 0,
-      totalRepository: 0,
-      totalSecurityFails: 0,
+      lastRepository: "",
+      numberOfScans: "",
+      scannedFiles: "",
+      totalErrorsFound: "",
+      totalRepository: "",
+      totalSecurityFails: "",
     };
   },
   beforeMount() {

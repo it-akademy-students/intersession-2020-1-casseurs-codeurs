@@ -30,7 +30,7 @@
                               <div
                                 class="errorAlertRepo"
                                 v-show="errorRepo"
-                              >Github repository is required</div>
+                              >{{ $tc("repoError.repo", 1) }}</div>
                               <input
                                 id="repository"
                                 type="url"
@@ -40,6 +40,7 @@
                                 placeholder="https://github.com/example"
                                 v-model="repository"
                                 v-on:keyup="cancelErrorRepo"
+                                @focus="cancelErrorRepo"
                               />
                               <label
                                 for="repository"
@@ -101,7 +102,7 @@
                               <div
                                 class="errorAlertEmail"
                                 v-show="errorEmail"
-                              >Valid email is required</div>
+                              >{{ $tc('repoError.email', 1) }}</div>
                               <input
                                 id="mail"
                                 pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
@@ -110,6 +111,7 @@
                                 placeholder="dev@swapp.com"
                                 v-model="email"
                                 v-on:keyup="cancelErrorEmail"
+                                @focus="cancelErrorEmail"
                               />
                               <label
                                 for="mail"
@@ -177,11 +179,11 @@
 
           <!-- donate section -->
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
-            <v-row align-content="space-between" justify="space-around" no-gutters>
+            <v-row align-content="space-between" justify="space-around" no-gutters >
               <v-col cols="12">
                 <h2 class="display-1 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
                 <v-container fluid class="pa-0 mt-1">
-                  <v-row align-content="center" no-gutters>
+                  <v-row align-content="center" no-gutters >
                     <v-col cols="12">
                       <v-container fluid>
                         <v-row align="baseline" class="mr-5">
@@ -227,7 +229,6 @@ export default {
     loading: false,
     email: "",
     branch: "",
-    migration: 0,
     fetching: false,
     isStripeOpen: false,
     errorEmail: false,
@@ -249,12 +250,13 @@ export default {
           this.errorRepo = true;
         }
       } else {
+        console.log(this.radioGroup)
         this.loading = true;
         const splittedUrl = this.repository.split("/");
         const username = splittedUrl[splittedUrl.length - 2];
         const repo = splittedUrl[splittedUrl.length - 1];
         const email = this.email;
-        const migration = this.migration;
+        const migration = this.radioGroup;
         const branch = this.branch;
         let url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
         url = url.replace("//", "/");
@@ -342,7 +344,7 @@ export default {
 .errorAlertEmail {
   color: red;
   position: absolute;
-  bottom: 25px;
+  top: 50px;
   right: 15px;
   font-weight: bold;
 }

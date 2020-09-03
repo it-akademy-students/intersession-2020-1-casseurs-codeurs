@@ -22,6 +22,7 @@
                 required
                 color="secondary"
                 v-model="lastname"
+                :rules="['Required']"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -29,6 +30,7 @@
                 :label="$tc('contactForm.form.labelFirstName', 1)"
                 color="secondary"
                 v-model="firstname"
+                :rules="['Required']"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -37,6 +39,7 @@
                 required
                 color="secondary"
                 v-model="email"
+                :rules="['Required']"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -44,6 +47,7 @@
                 color="secondary"
                 :label="$tc('contactForm.form.labelMsg', 1)"
                 v-model="message"
+                :rules="['Required']"
               ></v-textarea>
             </v-col>
           </v-row>

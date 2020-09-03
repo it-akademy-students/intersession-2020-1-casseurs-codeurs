@@ -33,9 +33,34 @@
       "labelOption1": "Avec les outils de migration",
       "labelOption2": "Uniquement les outils de migration"
     },
-    "welcomeModale": {
-      "success": "Succès",
-      "successMsg": "Vous allez recevoir les résultats par e-mail"
+    "footer": {
+        "copyright": "2020, réalisé par ",
+        "brand": "Les Casseurs Codeurs",
+        "link": ". Code source disponible sur "
+      },
+    "mainWelcomeDonate": {
+      "welcome": "Bienvenue sur SWAPP !",
+      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs ou des failles de sécurité.",
+      "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^5.4",
+      "welcomeAction": "Scannez votre projet GitHub",
+      "welcomeBtn": "Analyser !",
+      "welcomeForm": {
+        "labelUrl": "Saisissez l'URL de votre dépôt",
+        "labelBranch": "Saisissez la Branch",
+        "labelEmail": "Entrez votre email",
+        "labelOption0": "Sans les outils de migration",
+        "labelOption1": "Avec les outils de migration",
+        "labelOption2": "Uniquement les outils de migration"
+      },
+      "welcomeModale": {
+        "success":  "Succès",
+        "successMsg": "Vous allez recevoir les résultats par e-mail",
+        "successStripe": "Merci pour votre don"
+        },
+      "donate": "Soutenez le project ",
+      "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et / ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
+      "donateAction": "Participez à la maintenance de ce projet: faites un don !",
+      "donateBtn": "Je soutiens !"
     },
     "donate": "Soutenez le project ",
     "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et / ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
@@ -182,11 +207,22 @@
       "scannedFiles": "Nombres de fichiers scannés :",
       "numberOfScans": "Nombres de scans:",
       "totalScannedFiles": "Total de fichiers scannés:",
-      "status": "Status:"
+      "status": "Statut:"
     },
     "headersExpanded": {
       "fileName": "Nom du fichier :",
       "download": "Télécharger :"
     }
+  },
+  "stripeForm": {
+    "cardName": "Nom",
+    "expirationDate": "Date d'expiration",
+    "amount": "Montant",
+    "creditCardNumbers": "Numéros de carte",
+    "submit": "Soutenir"
+  },
+  "repoError": {
+    "email": "Renseignez un email valide",
+    "repo": "Resnseignez une adresse github"
   }
 }
