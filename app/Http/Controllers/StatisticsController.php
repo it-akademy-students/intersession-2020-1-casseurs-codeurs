@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Analyse;
-use App\Statistic;
+use App\Models\Analyse;
+use App\Models\Statistic;
 use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
@@ -37,13 +37,12 @@ class StatisticsController extends Controller
             foreach ($analyses as $analyse){
                 $repository['name'] =$analyse['repository'];
                 foreach(json_decode($analyse['files']) as $file){
-                    $repository['files'][] = $file;
                     $filename = explode("\\",$file);
                     $filename = end($filename);
                     $search = str_replace('/', '_',$analyse['repository']);
                     $filename = explode($search,$filename);
                     $filename = end($filename);
-                    $repository['filesName'][] = $filename;
+                    $repository['files'][] = ['fileName' => $filename, 'path' => $file];
                 }
                 if ($analyse['errorsFound'] == 0 && $analyse['securityFails'] == 0){
                     $repository['status'] = 'clean';
