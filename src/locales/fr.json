@@ -182,7 +182,8 @@
         "cancel": "Annuler",
         "send": "Envoyer"
       }
-    }
+    },
+    "success": "Message envoyé"
   },
   "dashboard": {
     "title": "Votre tableau de bord",

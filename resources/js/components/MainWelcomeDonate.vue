@@ -281,6 +281,11 @@ export default {
     cancelErrorEmail: function() {
       this.errorEmail = false;
     }
+  },
+  mounted () {
+    if(this.$auth.user()) {
+      this.email = this.$auth.user().email;
+    }
   }
 };
 </script>
