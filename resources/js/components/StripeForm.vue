@@ -196,7 +196,7 @@ export default {
             errorElement.textContent = result.error.message;
           } else {
             // Send the token to your server.
-            stripeTokenHandler(result.token);
+            this.validePayment(result)
           }
         });
       });
@@ -210,28 +210,24 @@ export default {
         hiddenInput.setAttribute("name", "stripeToken");
         hiddenInput.setAttribute("value", token.id);
         form.appendChild(hiddenInput);
-
-        // Submit the form
-        // form.submit();
         this.token = token;
       }
     },
-    validePayment() {
+    validePayment(token) {
       const formEmail = document.getElementById("email").value;
       setTimeout(() => {
         this.stripeResponse = true;
       }, 500);
-      
       setTimeout(() => {
         this.stripeResponse = false;
         this.method()
       }, 5000);
-      const userId = this.$auth.user() ? this.$auth.user().id : "0"
+    const amount = document.getElementById('input-amount').value;
       axios
         .post("/donate", {
           email: formEmail,
           amount: amount,
-          tokenId: this.token.id
+          tokenId: token.id
         })
         .then(res => console.log({ res }))
         .catch(err => console.log({ err }));
