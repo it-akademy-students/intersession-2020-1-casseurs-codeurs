@@ -179,11 +179,11 @@
 
           <!-- donate section -->
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
-            <v-row align-content="space-between" justify="space-around" no-gutters>
+            <v-row align-content="space-between" justify="space-around" no-gutters >
               <v-col cols="12">
                 <h2 class="display-1 mb-1 mt-2">{{ $tc("mainWelcomeDonate.donate", 1) }}</h2>
                 <v-container fluid class="pa-0 mt-1">
-                  <v-row align-content="center" no-gutters>
+                  <v-row align-content="center" no-gutters >
                     <v-col cols="12">
                       <v-container fluid>
                         <v-row align="baseline" class="mr-5">
