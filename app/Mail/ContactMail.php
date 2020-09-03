@@ -29,7 +29,7 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->data['email'])
+        return $this->from($this->data['email'], 'SWAPP - Security Scan for Web Apps')
             ->subject('Contact depuis le site')
             ->replyTo($this->data['email'])
             ->markdown('emails.contact', ['data' => $this->data]);

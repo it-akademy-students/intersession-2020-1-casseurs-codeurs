@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Analyse;
-use App\Statistic;
+use App\Models\Analyse;
+use App\Models\Statistic;
 use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
