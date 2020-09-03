@@ -5,6 +5,6 @@
         This password reset link will expire in {{ config('auth.passwords.users.expire') }} minutes.
         If you did not request a password reset, no further action is required.
         [Reset paassword]({{$link}}
-        
+
     {{ config('app.name') }} team
 @endcomponent
