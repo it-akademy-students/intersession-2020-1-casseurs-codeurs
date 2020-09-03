@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessSecurity;
-use App\Statistic;
+use App\Models\Statistic;
 use App\Traits\AnalyseTrait;
 use Illuminate\Support\Facades\Auth;
 

@@ -3,7 +3,7 @@
     <v-row align-content="center" justify="space-around" no-gutters>
       <v-col cols="12">
         <v-row justify="center">
-          <h2 class="my-5 pa-4 text-center">{{ $tc("signInOn.title", 1) }}</h2>
+          <h2 class="my-5 pa-4 pa-xs-0 my-xs-1 text-center">{{ $tc("signInOn.title", 1) }}</h2>
         </v-row>
       </v-col>
       <v-col cols="12">
@@ -25,10 +25,10 @@
         </v-row>
       </v-col>
       <v-col cols="12">
-        <h3 class="mt-5 pa-4">{{ $tc("signInOn.whyTitle", 1) }}</h3>
+        <h3 class="mt-5 pa-4 ">{{ $tc("signInOn.whyTitle", 1) }}</h3>
       </v-col>
       <v-col cols="12">
-        <p class="mb-5 pa-4 text-left">{{ $tc("signInOn.whyText", 1) }}</p>
+        <p class="mb-5 pa-4  text-left">{{ $tc("signInOn.whyText", 1) }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -49,25 +49,37 @@ export default {
       "toggleEditProfile",
     ]),
     showLoginForm() {
+      let destination;
+      if (this.$route.path == "/login") {
+        destination = this.$vuetify.goTo("#login-form");
+      } else {
+        destination = this.$router.push("/#login-form");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", true),
         this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleEditProfile", false),
         this.$store.dispatch("toggleRegisterForm", false),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$router.push({ name: "home-login" })
+        this.$store.dispatch("toggleEditProfile", false),
+        destination
       );
     },
     showRegisterForm() {
+      let destination;
+      if (this.$route.path == "/register") {
+        destination = this.$vuetify.goTo("#register-form");
+      } else {
+        destination = this.$router.push("/#register-form");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleEditProfile", false),
         this.$store.dispatch("toggleRegisterForm", true),
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
-        this.$router.push({ name: "home-register" })
+        this.$store.dispatch("toggleEditProfile", false),
+        destination
       );
     },
   },

@@ -108,7 +108,7 @@
         alt="logo"
       ></v-img>
       <v-toolbar-title
-        class="colorSecondary--text display-1"
+        :class="{'subtitle-2 secondary--text': $vuetify.breakpoint.smAndDown, 'display-1 secondary--text': $vuetify.breakpoint.mdAndUp}"
         style="font-family: 'Open Sans', sans-serif;"
       >
         {{ $tc("navMenu.appName", 1) }}
@@ -279,6 +279,12 @@ export default {
       store.commit("showContact");
     },
     showLoginForm() {
+      let destination;
+      if (this.$route.path == "/login") {
+        destination = this.$vuetify.goTo("#login-form");
+      } else {
+        destination = this.$router.push("/#login-form");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", true),
         this.$store.dispatch("toggleSignInOn", false),
@@ -286,10 +292,16 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home-login" })
+        destination
       );
     },
     showRegisterForm() {
+      let destination;
+      if (this.$route.path == "/register") {
+        destination = this.$vuetify.goTo("#register-form");
+      } else {
+        destination = this.$router.push("/#register-form");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -297,10 +309,16 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home-register" })
+        destination
       );
     },
     showProfile() {
+      let destination;
+      if (this.$route.path == "/user/account") {
+        destination = this.$vuetify.goTo("#user-profile");
+      } else {
+        destination = this.$router.push("/#user-profile");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -308,10 +326,16 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", true),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user-account" })
+        destination
       );
     },
     showLoggedIn() {
+      let destination;
+      if (this.$route.path == "/user") {
+        destination = this.$vuetify.goTo("#user-logged");
+      } else {
+        destination = this.$router.push("/#user-logged");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -319,7 +343,7 @@ export default {
         this.$store.dispatch("toggleLoggedIn", true),
         this.$store.dispatch("toggleUserProfile", false),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user" })
+        destination
       );
     },
     initShowForm() {

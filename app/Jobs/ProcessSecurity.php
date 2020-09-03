@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\Analyse;
 use App\Models\User;
-use App\Statistic;
+use App\Models\Statistic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -139,10 +139,11 @@ class ProcessSecurity implements ShouldQueue
                 rename($file, $newFilename);
                 $newFiles[] = $newFilename;
             }
-            // Compter le nombre de fichier scanneés:
+            //Nombre de fichier scannés:
             $scannedFiles = sizeof($paths);
             // Associer l'analyse à l'utilisateur dans la base de donnée:
-            $analyse = \App\Analyse::where([
+            //On vérifie l'existance d'un précédent scan sur le repos:
+            $analyse = \App\Models\Analyse::where([
                 ['repository', '=', str_replace("_","/","$this->githubInfo")],
                 ['user_id', '=', $user->id ],
             ])->first();
@@ -164,7 +165,7 @@ class ProcessSecurity implements ShouldQueue
                 $analyse->save();
             }
             else{
-                $analyse = new \App\Analyse();
+                $analyse = new \App\Models\Analyse();
                 $analyse->repository = str_replace("_","/","$this->githubInfo");
                 $analyse->errorsFound = $errorFound;
                 $analyse->maxErrorsFound = $errorFound;
@@ -197,7 +198,7 @@ class ProcessSecurity implements ShouldQueue
         foreach ( $ri as $file ) {
             $file->isDir() ?  rmdir($file) : unlink($file);
         }
-
+        //On met à jour les statistiques général de l'application:
         $statistic = Statistic::first();
         $statistic->errorsFound += $errorFound;
         $statistic->securityFails += $securityFails;

@@ -58,7 +58,7 @@ class StripeController extends Controller
 
         $amount=intval($donate['amount'])/100;
         Mail::to($request->email)->send(new DonateMail($amount));
-        
+
         return response()->json(['status' => 'success'], 201);
 
         //return $donate;

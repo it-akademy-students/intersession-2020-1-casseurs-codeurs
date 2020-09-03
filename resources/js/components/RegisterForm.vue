@@ -31,7 +31,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">{{ $tc("register.title", 1) }}</h2>
+          <h2 :class="{'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown, 'pa-2 text-center': $vuetify.breakpoint.mdAndUp}">{{ $tc("register.title", 1) }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>

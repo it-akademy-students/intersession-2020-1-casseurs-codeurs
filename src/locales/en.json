@@ -36,7 +36,8 @@
     },
     "welcomeModale": {
       "success":  "Success",
-      "successMsg": "We will sent your result by email"
+      "successMsg": "We will sent your result by email",
+      "successStripe": "Thank you for your donation"
       },
     "donate": "Support the project ",
     "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
@@ -107,6 +108,16 @@
       "login": "Log In"
     }
   },
+  "forgotPwd": {
+    "title": "Forgot password:",
+    "subtitle": "Please enter your account email address",
+    "action": "Confirm my new password"
+
+  },
+  "resetPwd": {
+    "title": "Reset your password",
+    "action": "Change my password"
+  },
   "logged": {
     "title": {
       "hello": "Hello",
@@ -118,8 +129,13 @@
       "migration": "Migration tools php5 > php7"
     },
     "stats": {
-      "textPart1": "The SWAPP application has already enabled you to detect ",
-      "textPart2": " bugs and security vulnerabilities in your code!"
+      "text": "SWAPP application allows you to detect bugs and security vulnerabilities in your code! Go to your dashboard to view your history",
+      "found": "SWAPP has already detected ",
+      "errorsFound": "bugs",
+      "securityFails": "security vulnerabilities, through",
+      "scannedFiles": "files analyzed in ",
+      "project": "projects",
+      "migrationAssistance": "repositories, and facilitated the migration of old versions of php to php7 for more than "
     }
   },
   "editProfile": {
@@ -151,33 +167,55 @@
         "cancel": "Cancel",
         "send": "Send"
       }
-    }
+    },
+    "success": "Message sent"
   },
   "dashboard": {
-    "title": "Votre historique de données",
+    "title": "Your Dashboard",
     "btn": {
       "title": "Reports",
       "action": "Go to Dashboard"
     },
     "card": {
-      "nbrRepoTitle": "Number of repo scan",
-      "nbrBugsTitle": "Number of bugs founds",
-      "nbrSecurityTitle": "Number of security hole founds",
-      "nbrLastRepoTitle": "Last repo scan"
+      "lastRepository": "Last repo analyzed",
+      "numberOfScans": "Number of scans on this repo",
+      "totalRepository": "Total number of repo analyzed",
+      "totalSecurityFails": "Total number of security breaches found",
+      "totalErrorsFound": "Total number of bugs found",
+      "scannedFiles": "Number of files scanned during the last scan"
     }
   },
   "ResultTable": {
     "headers": {
-      "repo": "Repository:",
-      "date": "Date:",
+      "name": "Repository name:",
+      "errorsFound": "Numbers of errors founds:",
+      "securityFalls": "Numbers of security holes founds:",
+      "scannedFiles": "Numbers of scanned files:",
+      "numberOfScans": "Numbers of scans:",
+      "totalScannedFiles": "Total of scanned files:",
       "status": "Status:"
     },
     "headersExpanded": {
-      "fileName": "Nom du fichier:",
-      "date": "Date:",
-      "status": "Status:",
-      "download": "Télécharger:"
-      
+      "fileName": "File name:",
+      "download": "Download:"
+    }
+  },
+  "stripeForm": {
+    "cardName": "Name on card",
+    "expirationDate": "Expiration date",
+    "amount": "Amount",
+    "creditCardNumbers": "Card numbers",
+    "submit": "Donate"
+  },
+  "repoError": {
+    "email": "Valid email is required",
+    "repo": "Valid github adress is required"
+  },
+  "cookies": {
+    "text": "We use cookies to store and / or access non-sensitive personal information stored on your device (unique identifiers, session, etc.), which we process in order to carry out site usage statistics, personalize the content and measure the results. performance, produce audience data, develop and improve the application.Click the 'Agree' button to consent to these uses on this site.",
+    "actions": {
+      "agree": "Agree",
+      "disagree": "Disagree"
     }
   }
 }

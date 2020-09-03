@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-row justify="center" class="pa-0 ma-0">
         <v-col cols="12">
-          <v-card class="mx-auto text-center" color="colorTertiary">
+          <v-card class="mx-auto text-center" color="colorTertiary" @click="dialog = true">
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -13,10 +13,9 @@
                   padding="24"
                   stroke-linecap="round"
                   smooth
+                  elevation="1"
                   :auto-draw="!!values.length"
-                >
-                  <template v-slot:label="item">{{ item.value }}</template>
-                </v-sparkline>
+                ></v-sparkline>
               </v-sheet>
             </v-card-text>
             <v-card-text>
@@ -24,7 +23,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="justify-center">
-              <v-btn block text @click="dialog = true">{{ $tc("dashboard.btn.action", 1) }}</v-btn>
+              <v-btn block text>{{ $tc("dashboard.btn.action", 1) }}</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -46,59 +45,71 @@
             <v-toolbar-title class="secondary--text">{{ $tc("dashboard.title", 1) }}</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
-          
+
           <v-card-text>
             <v-container fluid class="mb-5">
               <v-row justify="space-around" align="baseline">
+                <!-- total repo -->
                 <v-col cols="6" md="3">
                   <v-card color="colorSecondaryLight" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
-                          class="colorPrimaryUltraLight--text"
-                        >{{ $tc("dashboard.card.nbrRepoTitle", 1) }}</div>
-                        <v-icon color="colorPrimaryUltraLight">mdi-file-code</v-icon>
+                          class="colorPrimaryLight--text font-weight-black"
+                        >{{ $tc("dashboard.card.totalRepository", 1) }}</div>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-file-code</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary colorPrimaryUltraLight--text">24</p>
+                      <p
+                        class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
+                      >{{ totalRepository }}</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
+                <!-- bugs -->
                 <v-col cols="6" md="3">
                   <v-card color="warning" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
-                          class="colorPrimaryUltraLight--text"
-                        >{{ $tc("dashboard.card.nbrBugsTitle", 1) }}</div>
-                        <v-icon color="colorPrimaryUltraLight">mdi-bug</v-icon>
+                          class="colorPrimaryLight--text font-weight-black"
+                        >{{ $tc("dashboard.card.totalErrorsFound", 1) }}</div>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-bug</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary colorPrimaryUltraLight--text">255</p>
+                      <p
+                        class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
+                      >{{ totalErrorsFound }}</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
+                <!-- security holes -->
                 <v-col cols="6" md="3">
                   <v-card color="error" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
-                          class="colorPrimaryUltraLight--text"
-                        >{{ $tc("dashboard.card.nbrSecurityTitle", 1) }}</div>
-                        <v-icon color="colorPrimaryUltraLight">mdi-security-network</v-icon>
+                          class="colorPrimaryLight--text font-weight-black"
+                        >{{ $tc("dashboard.card.totalSecurityFails", 1) }}</div>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-security</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary colorPrimaryUltraLight--text">66</p>
+                      <p
+                        class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4 mx-4"
+                      >{{ totalSecurityFails }}</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
+                <!-- last repo -->
                 <v-col cols="6" md="3">
                   <v-card color="colorTertiaryLight" class="mx-auto">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
-                          class="colorPrimaryUltraLight--text"
-                        >{{ $tc("dashboard.card.nbrLastRepoTitle", 1) }}</div>
-                        <v-icon color="colorPrimaryUltraLight">mdi-source-repository</v-icon>
+                          class="colorPrimaryLight--text font-weight-black"
+                        >{{ $tc("dashboard.card.lastRepository", 1) }}</div>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-source-repository</v-icon>
                       </v-row>
-                      <p class="display-1 text--primary colorPrimaryUltraLight--text">repo name</p>
+                      <p
+                        class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
+                      >{{ lastRepository }}</p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -109,6 +120,7 @@
 
             <v-container fluid class="mt-5">
               <v-row justify="center" align="center" class="my-5">
+                <!-- result list -->
                 <v-col cols="12">
                   <result-table />
                 </v-col>
@@ -134,7 +146,40 @@ export default {
     return {
       dialog: false,
       values: [423, 446, 675, 510, 590, 610, 760],
+      lastRepository: "",
+      numberOfScans: "",
+      scannedFiles: "",
+      totalErrorsFound: "",
+      totalRepository: "",
+      totalSecurityFails: "",
     };
+  },
+  beforeMount() {
+    this.getUsersAnalizes();
+  },
+  methods: {
+    getUsersAnalizes() {
+      let url = `/users/${this.$auth.user().id}/analyzes`;
+
+      let header = {
+        headers: {
+          Authorization: `bearer ${this.$auth.token()}`,
+        },
+      };
+      axios
+        .get(url, header)
+        .then((res) => {
+          this.totalSecurityFails = res.data.data.totalSecurityFails;
+          this.totalErrorsFound = res.data.data.totalErrorsFound;
+          this.numberOfScans = res.data.data.numberOfScans;
+          this.totalRepository = res.data.data.totalRepository;
+          this.scannedFiles = res.data.data.scannedFiles;
+          this.lastRepository = res.data.data.lastRepository;
+        })
+        .catch((err) => {
+          console.log({ err });
+        });
+    },
   },
 };
 </script>
