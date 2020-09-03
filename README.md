@@ -81,7 +81,7 @@ Bon challenge ! Code with love :heart: !
         
 **SWAPP** nécessite PHP >= 7.1., composer, npm, yarn.
 
-### Mise en route
+## Mise en route
 
 #### Installation
 Pour commencer, cloner le repository. Ensuite executez les commandes:
