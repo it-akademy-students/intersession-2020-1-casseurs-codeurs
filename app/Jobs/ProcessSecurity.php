@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Mail\Analyse;
+use App\Models\User;
+use App\Models\Statistic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,18 +33,32 @@ class ProcessSecurity implements ShouldQueue
      * @var string
      */
     private $email;
+    /**
+     * @var int
+     */
+    private $migration;
+    /**
+     * @var int
+     */
+    private $userConnected;
 
     /**
      * ProcessSecurity constructor.
-     * @param $list
+     * @param string $list
      * @param string $baseUrl
+     * @param string $githubInfo
+     * @param string $email
+     * @param int $migration
+     * @param int $userConnected
      */
-    public function __construct( string $list, string $baseUrl, string $githubInfo, string $email)
+    public function __construct( string $list, string $baseUrl, string $githubInfo, string $email, int $migration, int $userConnected)
     {
         $this->list = $list;
         $this->baseUrl = $baseUrl;
         $this->githubInfo = $githubInfo;
         $this->email = $email;
+        $this->migration = $migration;
+        $this->userConnected = $userConnected;
     }
 
     /**
@@ -57,7 +73,7 @@ class ProcessSecurity implements ShouldQueue
         // On récupère les chemin des fichiers php du repos:
         $paths = [];
         foreach ($list->tree as $tree){
-            if (substr($tree->path, -4) == '.php'){
+            if (substr($tree->path, -4) == '.php' && strpos($tree->path, 'vendor') === false && strpos($tree->path, 'node_modules') === false){
                 $paths[] = $tree->path;
             }
         }
@@ -67,29 +83,114 @@ class ProcessSecurity implements ShouldQueue
             $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
             $this->addFile($path, $content, base_path().'/public/Scan/');
         }
-        //____________________Analyse PHPStan________________________////
-        $this->analyse('phpstan', $this->githubInfo);
-        $phpstanPath = base_path().'/public/reports/'.$this->githubInfo.'_phpstan.json';
-        //____________________Analyse PHP7mar________________________////
-        $this->analyse('php7mar', $this->githubInfo);
-        $php7marPath = base_path().'/public/reports/php7mar.md';
-        //____________________Analyse Progpilot________________________////
-        $this->analyse('progpilot', $this->githubInfo);
-        $progpilotPath = base_path().'/public/reports/'.$this->githubInfo.'_progpilot.json';
-        $files = [
-            $phpstanPath,
-            $php7marPath,
-            $progpilotPath
-        ];
+        $files = [];
+        if ($this->migration == 0){
+            //____________________Analyse PHPStan________________________////
+            $result = $this->analyse('phpstan');
+            $errorFound = $result['errorQuantity'];
+            if ($errorFound){
+                $files[] = $result['file'];
+            }
+            //____________________Analyse Progpilot________________________////
+            $result = $this->analyse('progpilot');
+            $securityFails = $result['errorQuantity'];
+            if ($securityFails){
+                $files[] = $result['file'];
+            }
+            $migrationAssistance = 0;
+        }
+        elseif ($this->migration == 1 && $this->userConnected){
+            //____________________Analyse PHPStan________________________////
+            $result = $this->analyse('phpstan');
+            $errorFound = $result['errorQuantity'];
+            if ($errorFound){
+                $files[] = $result['file'];
+            }
+            //____________________Analyse Progpilot________________________////
+            $result = $this->analyse('progpilot');
+            $securityFails = $result['errorQuantity'];
+            if ($securityFails){
+                $files[] = $result['file'];
+            }
+            //____________________Analyse PHP7mar________________________////
+            $this->analyse('php7mar');
+            $files[] = base_path().'\public\reports\migration.md';
+            $migrationAssistance = 1;
+        }
+        elseif ($this->migration == 2 && $this->userConnected){
+            //____________________Analyse PHP7mar________________________////
+            $this->analyse('php7mar');
+            $files[] = base_path().'\public\reports\migration.md';
+            $migrationAssistance = 1;
+            $errorFound = 0;
+            $securityFails = 0;
+        }
+
         //Envoie du resultat par mail:
         $project = str_replace("_","/","$this->githubInfo");
         Mail::to($this->email)->send(new Analyse($files, $project));
 
-//      Suppression des fichiers:
-        // reports:
-        unlink("$phpstanPath");
-        unlink("$php7marPath");
-        unlink("$progpilotPath");
+        if ($this->userConnected){
+            $user = User::find($this->userConnected);
+            // Conserver les fichiers pour les utilisateur connectés:
+            $newFiles = [];
+            foreach ($files as $file){
+                $newFilename = str_replace('public\reports\\', 'storage\users\\'.$user->name.'_'.$this->githubInfo, $file);
+                rename($file, $newFilename);
+                $newFiles[] = $newFilename;
+            }
+            //Nombre de fichier scannés:
+            $scannedFiles = sizeof($paths);
+            // Associer l'analyse à l'utilisateur dans la base de donnée:
+            //On vérifie l'existance d'un précédent scan sur le repos:
+            $analyse = \App\Models\Analyse::where([
+                ['repository', '=', str_replace("_","/","$this->githubInfo")],
+                ['user_id', '=', $user->id ],
+            ])->first();
+            // Si le repos à déjà été scanné:
+            if ($analyse != null){
+                $analyse->errorsFound = $errorFound;
+                if ($analyse->maxErrorsFound < $errorFound){
+                    $analyse->maxErrorsFound = $errorFound;
+                }
+                $analyse->totalErrorsFound += $errorFound;
+                $analyse->securityFails = $securityFails;
+                if ($analyse->maxSecurityFails < $securityFails){
+                    $analyse->maxSecurityFails = $securityFails;
+                }
+                $analyse->totalSecurityFails += $securityFails;
+                $analyse->scannedFiles = $scannedFiles;
+                $analyse->numberOfScans += 1;
+                $analyse->files = json_encode($newFiles);
+                $analyse->save();
+            }
+            else{
+                $analyse = new \App\Models\Analyse();
+                $analyse->repository = str_replace("_","/","$this->githubInfo");
+                $analyse->errorsFound = $errorFound;
+                $analyse->maxErrorsFound = $errorFound;
+                $analyse->totalErrorsFound = $errorFound;
+                $analyse->securityFails = $securityFails;
+                $analyse->maxSecurityFails = $securityFails;
+                $analyse->totalSecurityFails = $securityFails;
+                $analyse->scannedFiles = $scannedFiles;
+                $analyse->numberOfScans = 1;
+                $analyse->files = json_encode($newFiles);
+
+                $user->analyses()->save($analyse);
+            }
+        }
+        else{
+            //Suppression des fichiers:
+            // reports:
+            $dir = base_path().'\public\reports';
+            $di = new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS);
+            $ri = new \RecursiveIteratorIterator($di, \RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ( $ri as $file ) {
+                $file->isDir() ?  rmdir($file) : unlink($file);
+            }
+        }
+        //Suppression des fichiers:
         // Scan:
         $dir = base_path()."\public\Scan";
         $di = new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS);
@@ -97,6 +198,14 @@ class ProcessSecurity implements ShouldQueue
         foreach ( $ri as $file ) {
             $file->isDir() ?  rmdir($file) : unlink($file);
         }
+        //On met à jour les statistiques général de l'application:
+        $statistic = Statistic::first();
+        $statistic->errorsFound += $errorFound;
+        $statistic->securityFails += $securityFails;
+        $statistic->scannedFiles += $scannedFiles;
+        $statistic->repositoryScanned += 1;
+        $statistic->migrationAssistance += $migrationAssistance;
+        $statistic->save();
     }
 
 }
