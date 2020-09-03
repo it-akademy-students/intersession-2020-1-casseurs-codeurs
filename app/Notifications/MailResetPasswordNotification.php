@@ -45,8 +45,7 @@ class MailResetPasswordNotification extends ResetPassword
         return ( new MailMessage )
             ->from('it.intersession.swapp@gmail.com', 'SWAPP - Security Scan for Web Apps')
             ->subject( 'Reset Password Notification' )
-            ->markdown('emails.reset')
-            ->action( 'Reset Password', $link );
+            ->markdown('emails.reset')->with('link', $link);
     }
 
     /**
