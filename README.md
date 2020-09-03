@@ -69,8 +69,3 @@ Nous vous incitons enfin à utiliser les fonctionnalités de gestion de projet f
 
 
 Bon challenge ! Code with love :heart: !
-
-
-
-
-
