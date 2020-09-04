@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Analyse extends Mailable
+class AnalyseMail extends Mailable
 {
     use Queueable, SerializesModels;
     private $files;

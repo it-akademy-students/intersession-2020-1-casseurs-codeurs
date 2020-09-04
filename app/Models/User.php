@@ -56,7 +56,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function analyses()
     {
-        return $this->hasMany('App\Analyse');
+        return $this->hasMany('App\Models\AnalyseModel');
     }
     /**
      * Override the mail body for reset password notification mail.

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Analyse;
+use App\Models\AnalyseModel;
 use App\Models\Statistic;
 use Illuminate\Http\Request;
 
@@ -10,7 +10,7 @@ class StatisticsController extends Controller
 {
     public function totalPerUser(int $id){
         try{
-            $analyses = Analyse::where([
+            $analyses = AnalyseModel::where([
                 ['user_id', '=', $id ],
             ])->get()->toArray();
             $total['scannedFiles'] = $total['numberOfScans'] = $total['totalErrorsFound'] = $total['totalSecurityFails'] = 0;
@@ -30,7 +30,7 @@ class StatisticsController extends Controller
 
     public function repositoryPerUser(int $id){
         try{
-            $analyses = Analyse::where([
+            $analyses = AnalyseModel::where([
                 ['user_id', '=', $id ],
             ])->get()->toArray();
             $list = [];
