@@ -31,7 +31,7 @@
     <v-col cols="12">
       <v-row>
         <v-col cols="11">
-          <h2 class="pa-2 text-center">{{ $tc("register.title", 1) }}</h2>
+          <h2 :class="{'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown, 'pa-2 text-center': $vuetify.breakpoint.mdAndUp}">{{ $tc("register.title", 1) }}</h2>
         </v-col>
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
@@ -108,12 +108,6 @@
                     @click.stop="terms = true"
                     class="btn-text btn-text--violet"
                   >{{ $tc("register.form.termsLink", 1) }}</a>
-                  {{ $tc("register.form.and", 1) }}
-                  <a
-                    href="javascript:;"
-                    @click.stop="conditions = true"
-                    class="btn-text btn-text--violet"
-                  >{{ $tc("register.form.conditionsLink", 1) }}</a>
                 </div>
               </template>
             </v-checkbox>
@@ -134,22 +128,10 @@
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
         <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.termsTitle", 1) }}</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ $tc("register.termsText", 1) }}</v-card-text>
+        <v-card-text >{{ $tc("register.termsText", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="colorTertiaryLight" @click="terms = false">Ok</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="conditions" width="70%">
-      <v-card class="colorPrimaryUltraLight">
-        <v-card-title
-          class="title colorTertiaryLight--text"
-        >{{ $tc("register.conditionsTitle", 1) }}</v-card-title>
-        <v-card-text v-for="n in 5" :key="n">{{ $tc("register.conditionsText", 1) }}</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn text color="colorTertiaryLight" @click="conditions = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
