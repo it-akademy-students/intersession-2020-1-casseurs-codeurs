@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -104,7 +105,8 @@ const store = new Vuex.Store({
         setUserAuthenticated: (store, val) => {
             store.commit("SET_USER_AUTHENTICATED", val);
         }
-    }
+    },
+    plugins: [createPersistedState()]
 });
 
 global.store = store;

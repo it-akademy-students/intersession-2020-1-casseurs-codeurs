@@ -27,7 +27,7 @@
     "welcomeAction": "Scan your repository",
     "welcomeBtn": "Analize!",
     "welcomeForm": {
-      "labelUrl": "Enter the URL of your repo",
+      "labelUrl": "Enter the URL of your project",
       "labelBranch": "Branch to scan",
       "labelEmail": "Enter your email",
       "labelOption0": "Without the migration reporting tools",
@@ -78,15 +78,11 @@
       "jobs": ["Frontend Developer","Backend Developer","Full Stack Developer", "Admin sys", "Cyber Security", "Project Manager", "Other"],
       "acceptTerms": "Please read and accept",
       "termsLink": "terms",
-      "and": "and",
-      "conditionsLink": "conditions.",
       "create": "Create my account",
       "cancel": "Cancel"
     },
     "termsTitle": "Terms",
-    "termsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-    "conditionsTitle": "Conditions",
-    "conditionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "termsText": "Licenses: The content of the app is under MIT License. The engine of the site is under Laravel, under and the theme of the site is a creation of Les Casseurs Codeurs. Computing and Freedom: In accordance with the provisions of the Data Protection Act of January 6, 1978 as amended by the Law of August 6, 2004, all computer data concerning you is treated in a strictly confidential manner. You have the right to access, rectify and oppose your data. To do this, all you have to do is send us a request by e-mail, indicating your name, first name, address.Editor:Les Casseurs Codeurs. Use the contact form to contact them. Director of publication: Mohamed Zoghlami. Host: erre-tec",
     "snackBar": {
       "success": "Congratulations! Your account have been successfully created!",
       "error": "Ooops! Error, can not register at the moment. If the problem persists, please contact an administrator."
@@ -108,6 +104,16 @@
       "login": "Log In"
     }
   },
+  "forgotPwd": {
+    "title": "Forgot password:",
+    "subtitle": "Please enter your account email address",
+    "action": "Send"
+
+  },
+  "resetPwd": {
+    "title": "Reset your password",
+    "action": "Confirm my new password"
+  },
   "logged": {
     "title": {
       "hello": "Hello",
@@ -119,7 +125,13 @@
       "migration": "Migration tools php5 > php7"
     },
     "stats": {
-      "text": "SWAPP application allows you to detect bugs and security vulnerabilities in your code! Go to your dashboard to view your history"
+      "text": "SWAPP application allows you to detect bugs and security vulnerabilities in your code! Go to your dashboard to view your history",
+      "found": "SWAPP has already detected ",
+      "errorsFound": "bugs",
+      "securityFails": "security vulnerabilities, through",
+      "scannedFiles": "files analyzed in ",
+      "project": "projects",
+      "migrationAssistance": "repositories, and facilitated the migration of old versions of php to php7 for more than "
     }
   },
   "editProfile": {
@@ -151,18 +163,19 @@
         "cancel": "Cancel",
         "send": "Send"
       }
-    }
+    },
+    "success": "Message sent"
   },
   "dashboard": {
-    "title": "Votre historique de données",
+    "title": "Your Dashboard",
     "btn": {
       "title": "Reports",
       "action": "Go to Dashboard"
     },
     "card": {
-      "lastRepository": "Last repo analyzed",
-      "numberOfScans": "Number of scans on this repo",
-      "totalRepository": "Total number of repo analyzed",
+      "lastRepository": "Last project analyzed",
+      "numberOfScans": "Number of scans on this project",
+      "totalRepository": "Total number of projects analyzed",
       "totalSecurityFails": "Total number of security breaches found",
       "totalErrorsFound": "Total number of bugs found",
       "scannedFiles": "Number of files scanned during the last scan"
@@ -193,5 +206,12 @@
   "repoError": {
     "email": "Valid email is required",
     "repo": "Valid github adress is required"
+  },
+  "cookies": {
+    "text": "We use cookies to store and / or access non-sensitive personal information stored on your device (unique identifiers, session, etc.), which we process in order to carry out site usage statistics, personalize the content and measure the results. performance, produce audience data, develop and improve the application.Click the 'Agree' button to consent to these uses on this site.",
+    "actions": {
+      "agree": "Agree",
+      "disagree": "Disagree"
+    }
   }
 }

@@ -22,7 +22,6 @@
           hide-default-footer
           class="colorGrey"
         >
-
           <template v-slot:item.path="{ item }">
             <v-chip color="transparent" class="caption my-2">
               <a :href="`public/scan/${item.path}`" download>
@@ -43,7 +42,7 @@ export default {
     return {
       expanded: [],
       singleExpand: true,
-      
+
       headers: [
         {
           text: this.$tc("ResultTable.headers.name", 1),
@@ -59,7 +58,7 @@ export default {
         },
         {
           text: this.$tc("ResultTable.headers.securityFalls", 1),
-          value: "securityFalls",
+          value: "securityFails",
           class: "colorGreyDark colorSecondary--text",
         },
         {
@@ -100,52 +99,11 @@ export default {
           class: "colorGreyDark colorTertiaryLight--text",
         },
       ],
-      results: []
-      // results: [
-      //   {
-      //     name: "Repo1",
-      //     files: [
-      //       {
-      //         fileName: "my file1",
-      //         path: "delectus aut autem",
-      //       },
-      //       {
-      //         fileName: "my file2",
-      //         path: "delectus aut autem",
-      //       },
-      //     ],
-      //     errorsFound: 0,
-      //     securityFalls: 0,
-      //     scannedFiles: 0,
-      //     numberOfScans: 2,
-      //     totalScannedFiles: 0,
-      //     status: "warning",
-      //   },
-      //   {
-      //     name: "Repo2",
-      //     files: [
-      //       {
-      //         fileName: "my file1",
-      //         path: "delectus aut autem",
-      //       },
-      //       {
-      //         fileName: "my file2",
-      //         path: "delectus aut autem",
-      //       },
-      //     ],
-      //     errorsFound: 0,
-      //     securityFalls: 0,
-      //     scannedFiles: 0,
-      //     numberOfScans: 0,
-      //     totalScannedFiles: 0,
-      //     status: "warning",
-      //   },
-        
-      // ],
+      results: [],
     };
   },
   beforeMount() {
-    this.getUserRepository()
+    this.getUserRepository();
   },
   methods: {
     getColor(status) {
@@ -164,9 +122,7 @@ export default {
       axios
         .get(url, header)
         .then((res) => {
-          console.log({ res });
-          console.log(res.data.data)
-          return this.results = res.data.data
+          return (this.results = res.data.data);
         })
         .catch((err) => {
           console.log({ err });

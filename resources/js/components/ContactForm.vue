@@ -15,42 +15,47 @@
       </v-card-title>
       <v-card-text>
         <v-container>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                :label="$tc('contactForm.form.labelLastName', 1)"
-                required
-                color="secondary"
-                v-model="lastname"
-                :rules="['Required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                :label="$tc('contactForm.form.labelFirstName', 1)"
-                color="secondary"
-                v-model="firstname"
-                :rules="['Required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                :label="$tc('contactForm.form.labelEmail', 1)"
-                required
-                color="secondary"
-                v-model="email"
-                :rules="['Required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                color="secondary"
-                :label="$tc('contactForm.form.labelMsg', 1)"
-                v-model="message"
-                :rules="['Required']"
-              ></v-textarea>
-            </v-col>
-          </v-row>
+          <v-form v-model="isValid">
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  :label="$tc('contactForm.form.labelLastName', 1)"
+                  required
+                  color="secondary"
+                  v-model="lastname"
+                  :rules="[v => !!v || 'Last name is required']"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  :label="$tc('contactForm.form.labelFirstName', 1)"
+                  color="secondary"
+                  v-model="firstname"
+                  required
+                  :rules="[v => !!v || 'First name is required']"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  id="email"
+                  :label="$tc('contactForm.form.labelEmail', 1)"
+                  required
+                  color="secondary"
+                  v-model="email"
+                  :rules="[v => !!v || 'Email is required']"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  color="secondary"
+                  :label="$tc('contactForm.form.labelMsg', 1)"
+                  v-model="message"
+                  required
+                  :rules="[v => !!v || 'Message is required']"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-container>
         <small>{{ $tc("contactForm.form.required", 2) }}</small>
       </v-card-text>
@@ -62,12 +67,16 @@
           @click="closeModal"
         >{{ $tc("contactForm.form.actions.cancel", 1) }}</v-btn>
         <v-btn
+          :disabled="!isValid"
           color="success"
           text
           @click.prevent="submitForm"
         >{{ $tc("contactForm.form.actions.send", 1) }}</v-btn>
       </v-card-actions>
     </v-card>
+    <v-dialog content-class="success-modal" v-show="isSubmitSucced" v-model="isSubmitSucced" dark>
+      <h4 class="message-success">{{ $tc( "contactForm.success", 1 ) }}</h4>
+    </v-dialog>
   </v-dialog>
 </template>
 
@@ -83,6 +92,7 @@ export default {
       firstname: "",
       lastname: "",
       isSubmitSucced: false,
+      isValid: true,
     };
   },
   computed: {
@@ -110,8 +120,21 @@ export default {
       };
       this.axios.post("contact", postData).then((res) => {
         this.isSubmitSucced = true;
+        setTimeout(() => {
+          this.isSubmitSucced = false;
+          this.closeModal();
+          (this.message = ""),
+            (this.email = ""),
+            (this.firstname = ""),
+            (this.lastname = "");
+        }, 3000);
       });
     },
+  },
+  mounted() {
+    if (this.$auth.user()) {
+      document.getElementById("email").value = this.$auth.user().email;
+    }
   },
 };
 </script>
@@ -129,5 +152,16 @@ export default {
   font-weight: bold;
   cursor: pointer;
   padding: 5px;
+}
+.success-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  padding: 40px;
+  background: black;
 }
 </style>

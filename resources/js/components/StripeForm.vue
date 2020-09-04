@@ -79,7 +79,6 @@ const stripeObj = loadStripe(
   "pk_test_51HKQ6eEDdpH3cWNoddQJ31BBxp3uWCFyFVuj7Ge0ObIwOBj59a4wfqmjPT1NDg09UeYPHeYeDW7JOgFnuiDO7HNu00jDCMt69v"
 ).then(res => (stripe = res));
 const axios = require("axios").default;
-
 export default {
   name: "StripeElement",
   props: {
@@ -110,7 +109,7 @@ export default {
     errorEmail: false
   }),
   methods: {
-    initializeStripe: event => {
+    initializeStripe: function(event) {
       // Create an instance of Elements.
       const elements = stripe.elements();
       // Custom styling can be passed to options when creating an Element.
@@ -130,16 +129,13 @@ export default {
           iconColor: "#fa755a"
         }
       };
-
       // Create an instance of the card Element.
       const cardNumber = elements.create("cardNumber", {
         style: style,
         showIcon: true
       });
-
       // Add an instance of the card Element into the `card-element` <div>.
       cardNumber.mount("#card-number");
-
       // // Handle real-time validation errors from the card Element.
       cardNumber.on("change", function(event) {
         const displayError = document.getElementById("card-number-errors");
@@ -149,14 +145,11 @@ export default {
           displayError.textContent = "";
         }
       });
-
       const cardExpiry = elements.create("cardExpiry", {
         style: style
       });
-
       // Add an instance of the card Element into the `card-element` <div>.
       cardExpiry.mount("#card-date");
-
       // // Handle real-time validation errors from the card Element.
       cardExpiry.on("change", function(event) {
         const displayError = document.getElementById("card-date-errors");
@@ -166,12 +159,10 @@ export default {
           displayError.textContent = "";
         }
       });
-
       const cardCvc = elements.create("cardCvc", {
         style: style
       });
       cardCvc.mount("#card-cvc");
-
       // // Handle real-time validation errors from the card Element.
       cardCvc.on("change", function(event) {
         const displayError = document.getElementById("card-cvc-errors");
@@ -181,7 +172,6 @@ export default {
           displayError.textContent = "";
         }
       });
-
       // // Handle form submission.
       const form = document.getElementById("payment-form");
       form.addEventListener("submit", function(event) {
@@ -196,11 +186,10 @@ export default {
             errorElement.textContent = result.error.message;
           } else {
             // Send the token to your server.
-            stripeTokenHandler(result.token);
+            this.validePayment(result)
           }
         });
       });
-
       // Submit the form with the token ID.
       function stripeTokenHandler(token) {
         // Insert the token ID into the form so it gets submitted to the server
@@ -210,52 +199,30 @@ export default {
         hiddenInput.setAttribute("name", "stripeToken");
         hiddenInput.setAttribute("value", token.id);
         form.appendChild(hiddenInput);
-
-        // Submit the form
-        // form.submit();
-        handleSubmit(token);
-      }
-
-      function handleSubmit(token) {
-        axios
-          .post("/create-checkout-session", {
-            data: {
-              stripeToken: token
-            }
-          })
-          .then(
-            response => {
-              console.log({ response });
-            },
-            err => {
-              console.log({ err });
-            }
-          );
+        this.token = token;
       }
     },
-    validePayment() {
+    validePayment(token) {
       const formEmail = document.getElementById("email").value;
       setTimeout(() => {
         this.stripeResponse = true;
       }, 500);
-      
       setTimeout(() => {
         this.stripeResponse = false;
         this.method()
       }, 5000);
-      const userId = this.$auth.user() ? this.$auth.user().id : "0"
+    const amount = document.getElementById('input-amount').value;
       axios
-        .post("/validate-payment", {
+        .post("/donate", {
           email: formEmail,
-          amount: 15,
-          id: userId
+          amount: amount,
+          tokenId: token.id
         })
         .then(res => console.log({ res }))
         .catch(err => console.log({ err }));
     },
     checkEmail() {
       let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
       if (!reg.test(document.getElementById("email").value)) {
         this.errorEmail = true;
       } else {
@@ -277,15 +244,11 @@ export default {
 <style lang="scss">
 .StripeElement {
   box-sizing: border-box;
-
   height: 40px;
-
   padding: 10px 12px;
-
   border: 1px solid transparent;
   border-radius: 4px;
   background-color: white;
-
   box-shadow: 0 1px 3px 0 #e6ebf1;
   -webkit-transition: box-shadow 150ms ease;
   transition: box-shadow 150ms ease;
@@ -293,19 +256,15 @@ export default {
   max-width: 70vw;
   color: #32325d;
 }
-
 .StripeElement--focus {
   box-shadow: 0 1px 3px 0 #cfd7df;
 }
-
 .StripeElement--invalid {
   border-color: #fa755a;
 }
-
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
 }
-
 .stripe-form {
   background: grey;
   padding: 20px;
