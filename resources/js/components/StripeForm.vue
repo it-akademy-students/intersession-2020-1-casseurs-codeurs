@@ -63,7 +63,10 @@
             </select>
           </div>
         </div>
-        <button @click="validePayment" class="my-5 btn btn--violet button">{{ $tc( "stripeForm.submit", 1 ) }}</button>
+        <button
+          @click="validePayment"
+          class="my-5 btn btn--violet button"
+        >{{ $tc( "stripeForm.submit", 1 ) }}</button>
       </form>
     </div>
     <v-dialog content-class="success-modal" v-show="stripeResponse" v-model="stripeResponse" dark>
@@ -187,40 +190,28 @@ export default {
             errorElement.textContent = result.error.message;
           } else {
             // Send the token to your server.
-            this.validePayment(result)
+            const formEmail = document.getElementById("email").value;
+            const amount = document.getElementById("input-amount").value;
+            axios
+              .post("/donate", {
+                email: formEmail,
+                amount: amount,
+                token: result.token.id
+              })
+              .then(res => console.log({ res }))
+              .catch(err => console.log({ err }));
           }
         });
       });
-      // Submit the form with the token ID.
-      function stripeTokenHandler(token) {
-        // Insert the token ID into the form so it gets submitted to the server
-        const form = document.getElementById("payment-form");
-        const hiddenInput = document.createElement("input");
-        hiddenInput.setAttribute("type", "hidden");
-        hiddenInput.setAttribute("name", "stripeToken");
-        hiddenInput.setAttribute("value", token.id);
-        form.appendChild(hiddenInput);
-        this.token = token;
-      }
     },
-    validePayment(token) {
-      const formEmail = document.getElementById("email").value;
+    validePayment() {
       setTimeout(() => {
         this.stripeResponse = true;
       }, 500);
       setTimeout(() => {
         this.stripeResponse = false;
-        this.method()
+        this.method();
       }, 5000);
-    const amount = document.getElementById('input-amount').value;
-      axios
-        .post("/donate", {
-          email: formEmail,
-          amount: amount,
-          tokenId: token.id
-        })
-        .then(res => console.log({ res }))
-        .catch(err => console.log({ err }));
     },
     checkEmail() {
       let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -238,6 +229,9 @@ export default {
     setTimeout(() => {
       this.initializeStripe();
     }, 400);
+    if(this.$auth.user()) {
+      document.getElementById("email").value = this.$auth.user().email
+    }
   }
 };
 </script>
