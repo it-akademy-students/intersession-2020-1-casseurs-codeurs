@@ -20,7 +20,7 @@ class CreateStatisticsTable extends Migration
             $table->integer('scannedFiles')->default(0);
             $table->integer('repositoryScanned')->default(0);
             $table->integer('migrationAssistance')->default(0);
-            $table->integer('donation')->default(0);
+            $table->integer('donations')->default(0);
         });
     }
 

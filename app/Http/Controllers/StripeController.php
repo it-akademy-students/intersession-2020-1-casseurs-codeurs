@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\DonateMail;
 use Illuminate\Http\Request;
 use Stripe;
-use App\Statistic;
+use App\Models\Statistic;
 use Illuminate\Support\Facades\Mail;
 use Validator;
 
@@ -35,7 +35,7 @@ class StripeController extends Controller
         $stripe = Stripe::make('sk_test_51HKQ6eEDdpH3cWNor0L1dwlEVt4rD0eOMEvLwo5BdNEaqjh3zFJ3XBWhD3shatgBsTkbeoYzPtMwWInLTDau9ixo00GyM3qQDY');
     
             $donate = $stripe->charges()->create([
-                'source' => $request->get('tokenId'),
+                'source' => $request->get('token'),
                 'currency' => 'EUR',
                 'amount' => $request->get('amount'),
                 ]);

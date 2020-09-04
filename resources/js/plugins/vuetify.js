@@ -45,14 +45,3 @@ const opts = new Vuetify({
 });
 
 export default new Vuetify(opts);
-
-// src/plugins/vuetify.js si on utlise vuetify loader
-
-// import Vue from 'vue'
-// import Vuetify from 'vuetify/lib'
-
-// Vue.use(Vuetify)
-
-// const opts = {}
-
-// export default new Vuetify(opts)
