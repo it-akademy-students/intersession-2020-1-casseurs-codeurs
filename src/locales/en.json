@@ -25,7 +25,7 @@
     "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
     "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^5.4.",
     "welcomeAction": "Scan your repository",
-    "welcomeBtn": "Analize!",
+    "welcomeBtn": "Analyze!",
     "welcomeForm": {
       "labelUrl": "Enter the URL of your project",
       "labelBranch": "Branch to scan",
