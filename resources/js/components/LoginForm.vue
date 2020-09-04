@@ -239,7 +239,6 @@ export default {
         .post(url, data, header)
         .then((response) => {
           return (
-            console.log(response)
             (app.success = true), (app.snackbar = true)
           );
         })

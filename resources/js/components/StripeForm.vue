@@ -11,14 +11,15 @@
               id="email"
               name="email"
               v-on:keyup="cancelErrorEmail"
+              required
             />
           </div>
-          <div class="errorAlertEmail" v-show="errorEmail">Valid email is required</div>
+          <div class="errorAlertEmail" v-show="errorEmail">{{ $tc('repoError.email', 1) }}</div>
         </div>
         <div class="form-row top-form">
           <label for="card-number">{{ $tc( "stripeForm.cardName", 1 ) }}</label>
           <div>
-            <input type="text" class="StripeElement" id="name_on_card" name="name_on_card" />
+            <input type="text" class="StripeElement" id="name_on_card" name="name_on_card" required/>
           </div>
           <div class="top-form">
             <label for="card-number">{{ $tc( "stripeForm.creditCardNumbers", 1 ) }}</label>
