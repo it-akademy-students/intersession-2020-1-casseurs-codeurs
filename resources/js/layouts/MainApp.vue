@@ -120,9 +120,11 @@ export default {
         });
     },
     initCookies() {
-      setTimeout(() => {
-        this.dialog = true;
-      }, 3000);
+      if (!this.$auth.check()) {
+        setTimeout(() => {
+          this.dialog = true;
+        }, 3000);
+      }
     },
   },
 };
