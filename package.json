@@ -24,11 +24,8 @@
     "vue-router": "^3.4.3",
     "vuetify": "^2.3.7",
     "vuex": "^3.5.1",
-<<<<<<< HEAD
-    "yarn": "^1.22.5"
-=======
+    "yarn": "^1.22.5",
     "vuex-persistedstate": "^3.1.0"
->>>>>>> b40d5e4b9ffca2dd74e42c38846f008f7e68eb79
   },
   "devDependencies": {
     "axios": "^0.19.2",
