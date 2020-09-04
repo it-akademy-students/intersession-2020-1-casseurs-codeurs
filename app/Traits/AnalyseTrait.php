@@ -34,7 +34,7 @@ trait AnalyseTrait
             $folderPath = str_replace(end($folders),"", $path);
             if (!file_exists($baseFolder.'/'.$folderPath)){
                 $oldmask = umask(0);
-                mkdir($baseFolder.'/'.$folderPath);
+                mkdir($baseFolder.'/'.$folderPath, 0777, true);
                 umask($oldmask);
             }
         }
