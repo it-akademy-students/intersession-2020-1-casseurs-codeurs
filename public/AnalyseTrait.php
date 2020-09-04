@@ -32,13 +32,11 @@ trait AnalyseTrait
         $quantity = sizeof($folders)-1;
         if ($quantity != 0){
             $folderPath = str_replace(end($folders),"", $path);
-            if (!file_exists($baseFolder.'/'.$folderPath)){
-                $oldmask = umask(0);
-                mkdir($baseFolder.'/'.$folderPath);
-                umask($oldmask);
+            if (!file_exists($baseFolder.$folderPath)){
+                mkdir($baseFolder.$folderPath, 0644, true);
             }
         }
-        file_put_contents($baseFolder.'/'.$path, $content);
+        file_put_contents($baseFolder.$path, $content);
     }
 
     public function analyse(string $tool){
