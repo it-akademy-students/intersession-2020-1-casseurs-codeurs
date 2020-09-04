@@ -1,4 +1,4 @@
-<a href="#">
+<a href="http://erre-tec.hd.free.fr/">
     <img src="public/img/swapp_image_logo.png" alt="SWAPP logo" title="SWAPP" align="right" height="60" />
 </a>
 
@@ -72,6 +72,6 @@ De plus, les utilisateurs ont accès aux statistiques de leurs scans.
 Actuellement, l'api Github nous limite à 60 appels par heure maximum. Une fois l'application en ligne, vous pourrez générer un token via Oauth2 sur la plateforme Github.
 Il vous faudra ensuite modifier la fonction getGithubContent() dans l'ApiController et renseigner le token généré. Votre limite passera ainsi à 5000 appels par heure.
 
-Pour finir, **SWAPP** possède un système de don via la plateforme Stripe, pour soutenir le projet, un compte est donc requis.
+Pour finir, **SWAPP** possède un système de don via la plateforme Stripe pour soutenir le projet.
 
 Code with love :heart: !
