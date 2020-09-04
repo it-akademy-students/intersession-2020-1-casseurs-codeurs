@@ -8,7 +8,7 @@
 ### Pourquoi prendre connaissance de nos directives ?  
 
 > Suivre ces directives permet de montrer que vous respectez le temps des développeurs qui gèrent et développent ce projet open source. En retour, ils vous rendront la pareille en traitant votre problème, en évaluant les changements et en vous aidant à finaliser vos pull requests.  
-> Comme pour tout le reste du projet, les contributions à SWAPP sont régies par notre [Code de conduite](http://SWAPP/code-of-conduct/).  
+> Comme pour tout le reste du projet, les contributions à SWAPP sont régies par notre [Code de conduite](https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs/blob/master/CODE_OF_CONDUCT.md).  
 
 ### Les types de contribution que nous recherchons :
 
@@ -27,19 +27,19 @@
 > * Créez des issues pour les modifications et améliorations majeures que vous souhaitez apporter. Discutez des choses de manière transparente et obtenez les retours de la communauté.
 > * N'ajoutez aucune classe à la base de code à moins que cela ne soit absolument nécessaire. Err du côté de l'utilisation des fonctions.
 > * Gardez les versions de fonctionnalités aussi petites que possible, de préférence une nouvelle fonctionnalité par version.
-> * Soyez accueillant envers les nouveaux arrivants et encouragez divers nouveaux contributeurs de tous horizons. Consultez le [Code de conduite de la communauté SWAPP](https://SWAPP/link/).
+> * Soyez accueillant envers les nouveaux arrivants et encouragez divers nouveaux contributeurs de tous horizons. Consultez le [Code de conduite de la communauté SWAPP](https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## Issues tracker :
 
 Tout d'abord: **Ne signalez PAS les vulnérabilités de sécurité dans les problèmes publics!**  
-Veuillez le divulguer de manière responsable en informant [l'équipe SWAPP](<mailto:team@.com?subject=Security>).  
+Veuillez le divulguer de manière responsable en informant [l'équipe SWAPP](<mailto:it.intersession.swapp@gmail.com?subject=Security>).  
 Nous évaluerons le problème dans les meilleurs délais et vous donnerons une estimation du moment où nous aurons un correctif et une version disponibles pour une éventuelle divulgation publique.
 
 L'outil issue tracker est le moyen à priviligier pour les [bug reports](#bugs),
 [features requests](#features) et [pull requests](#pull-requests), mais veillez à observer les restrictions suivantes :
 
-* Veuillez **ne pas** utiliser l'outil issue tracker pour les demandes d'assistance personnelle. Adressez-vous plutôt à [l'équipe SWAPP](<mailto:team@.com?subject=Support>).
+* Veuillez **ne pas** utiliser l'outil issue tracker pour les demandes d'assistance personnelle. Adressez-vous plutôt à [l'équipe SWAPP](<mailto:it.intersession.swapp@gmail.com?subject=Support>).
 
 * Veuillez également **ne pas** vous éloigner du sujet ou troller les issues. Gardez la discussion sur le sujet et veillez à respecter les opinions des autres.
 
@@ -108,7 +108,7 @@ Les pull requests - correctifs, améliorations, nouvelles fonctionnalités - son
    # Accédez au répertoire nouvellement cloné
    cd <repo-name>
    # Attribuez le dépôt d'origine à une remote appelée «upstream»
-   git remote add upstream https://github.com/swapp/<repo-name>
+   git remote add upstream https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs/<repo-name>
    ```
 
 2. Si vous avez cloné il y a quelque temps, récupérez les dernières modifications sur la master :
@@ -147,7 +147,7 @@ Les pull requests - correctifs, améliorations, nouvelles fonctionnalités - son
 1. Cloner le dépôt et créer une branche  
 
    ```bash
-   git clone https://github.com/swapp/<repo-name>
+   git clone https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs.git
    cd <repo-name>
    git checkout -b <topic-branch-name>
    ```
@@ -184,14 +184,14 @@ même licence que celle utilisée par le projet.
 
 # Community
 
-L'équipe principale du projet se trouve dans la section [Team](TEAM.md).
+L'équipe principale du projet se trouve dans la section [Team](https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs/blob/master/TEAM.md).
 
 
 # Soutenez ce projet !
 
-Ce projet est géré par des bénévoles. Vous avez la possibilité de soutenir ce projet en faisant un don sur [SWAPP](http://SWAPP/). Votre aide est précieuse, merci du fond du :heart: !
+Ce projet est géré par des bénévoles. Vous avez la possibilité de soutenir ce projet en faisant un don sur [SWAPP](http://erre-tec.hd.free.fr/). Votre aide est précieuse, merci du fond du :heart: !
 
 
 # Code de conduite
 
-Toutes les personnes qui interagissent dans les bases de code, issue trackers, les discussions et les listes de diffusion du projet SWAPP sont priées de suivre le [Code de conduite de la communauté SWAPP](https://SWAPP/link/).
+Toutes les personnes qui interagissent dans les bases de code, issue trackers, les discussions et les listes de diffusion du projet SWAPP sont priées de suivre le [Code de conduite de la communauté SWAPP](https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs/blob/master/CODE_OF_CONDUCT.md).
