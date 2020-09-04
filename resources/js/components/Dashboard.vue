@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-row justify="center" class="pa-0 ma-0">
         <v-col cols="12">
-          <v-card class="mx-auto text-center" color="colorTertiary">
+          <v-card class="mx-auto text-center" color="colorTertiary" @click="dialog = true">
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -13,10 +13,9 @@
                   padding="24"
                   stroke-linecap="round"
                   smooth
+                  elevation="1"
                   :auto-draw="!!values.length"
-                >
-                  <template v-slot:label="item">{{ item.value }}</template>
-                </v-sparkline>
+                ></v-sparkline>
               </v-sheet>
             </v-card-text>
             <v-card-text>
@@ -24,7 +23,7 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="justify-center">
-              <v-btn block text @click="dialog = true">{{ $tc("dashboard.btn.action", 1) }}</v-btn>
+              <v-btn block text>{{ $tc("dashboard.btn.action", 1) }}</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -58,7 +57,7 @@
                         <div
                           class="colorPrimaryLight--text font-weight-black"
                         >{{ $tc("dashboard.card.totalRepository", 1) }}</div>
-                        <v-icon color="colorPrimaryLight font-weight-black" size="25">mdi-file-code</v-icon>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-file-code</v-icon>
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
@@ -74,7 +73,7 @@
                         <div
                           class="colorPrimaryLight--text font-weight-black"
                         >{{ $tc("dashboard.card.totalErrorsFound", 1) }}</div>
-                        <v-icon color="colorPrimaryLight font-weight-black" size="25">mdi-bug</v-icon>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-bug</v-icon>
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
@@ -90,7 +89,7 @@
                         <div
                           class="colorPrimaryLight--text font-weight-black"
                         >{{ $tc("dashboard.card.totalSecurityFails", 1) }}</div>
-                        <v-icon color="colorPrimaryLight font-weight-black" size="25">mdi-security</v-icon>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-security</v-icon>
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4 mx-4"
@@ -106,10 +105,7 @@
                         <div
                           class="colorPrimaryLight--text font-weight-black"
                         >{{ $tc("dashboard.card.lastRepository", 1) }}</div>
-                        <v-icon
-                          color="colorPrimaryLight font-weight-black"
-                          size="25"
-                        >mdi-source-repository</v-icon>
+                        <v-icon color="colorPrimaryLight" size="25">mdi-source-repository</v-icon>
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"

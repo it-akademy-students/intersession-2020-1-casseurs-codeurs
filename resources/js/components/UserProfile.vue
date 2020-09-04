@@ -133,7 +133,7 @@ export default {
     handleDeleteUser() {
       let url = `/auth/user/${this.$auth.user().id}`;
       this.$auth.logout();
-      this.axios.delete(url)
+      this.axios.delete(url);
       this.resetForm();
       this.initShowForm();
       this.$store.dispatch("setUser", "");

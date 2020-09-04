@@ -107,17 +107,14 @@
         "Chef de projet",
         "Autre"
       ],
-      "acceptTerms": "Veuillez lire et accepter ",
+      "acceptTerms": "Veuillez lire et accepter les ",
       "termsLink": "termes",
-      "and": "et",
-      "conditionsLink": "conditions",
       "create": "Créer mon compte",
       "cancel": "Annuler"
     },
     "termsTitle": "Terms",
-    "termsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
-    "conditionsTitle": "Conditions",
-    "conditionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "termsText": "Licences :   Le contenu du guide est sous MIT License.  Le moteur du site est sous Laravel, sous et le thème du site est une création de Les Casseurs Codeurs.  Informatique et libertés :  Conformément aux dispositions de la loi Informatique et Libertés du 6 janvier 1978 modifiée par la Loi du 6 août 2004, toutes les données informatiques vous concernant sont traitées de manières strictement confidentielles. Vous disposez d’un droit d’accès, de rectification, et d’opposition sur vos données. Pour cela il vous suffit de nous en faire la demande par courrier électronique en nous indiquant vos nom, prénom, adresse.  Éditeur:  Les Casseurs Codeurs  Utilisez le formulaire de contact pour nous contacter.  Directeur de la publication :  Mohamed Zoghlami  Hébergeur : erre-tec",
+    
     "snackBar": {
       "success": "Félicitations ! Votre compte a été créé avec succès !",
       "error": "Ooops ! Erreur, impossible de s'inscrire pour le moment. Si le problème persiste, veuillez contacter un administrateur."
@@ -139,6 +136,17 @@
       "login": "Me connecter"
     }
   },
+  "forgotPwd": {
+    "title": "Mot de passe oublié :",
+    "subtitle": "Veuillez renseigner l'adresse e-mail de votre compte",
+    "action": "Envoyer"
+
+  },
+  "resetPwd": {
+    "title": "Réinitialisez votre mot de passe",
+    "action": "Valider mon nouveau mot de passe"
+
+  },
   "logged": {
     "title": {
       "hello": "Bonjour",
@@ -150,7 +158,13 @@
       "migration": "Outils de migration php5 vers php7"
     },
     "stats": {
-      "text": "L'application SWAPP vous permet de détecter les bogues et les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique"
+      "text": "L'application SWAPP vous permet de détecter les bogues et les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique",
+      "found": "SWAPP a déjà permis de détecter  ",
+      "errorsFound": "bogues",
+      "securityFails": "failles de sécurité, à travers ",
+      "scannedFiles": "fichiers analysés dans ",
+      "project": "projets",
+      "migrationAssistance": "dépôts GitHub et permis de faciliter la migration d'anciennes versions de php vers php7 pour plus de "
     }
   },
   "editProfile": {
@@ -192,9 +206,9 @@
       "action": "Voir mon Tableau de bord"
     },
     "card": {
-      "lastRepository": "Dernier repo analysé",
-      "numberOfScans": "Nombres de scan sur ce repo",
-      "totalRepository": "Nombres total de repo analysés",
+      "lastRepository": "Dernier projet analysé",
+      "numberOfScans": "Nombres de scan sur ce projet",
+      "totalRepository": "Nombres total de projets analysés",
       "totalSecurityFails": "Nombres total de failles de sécurités trouvés",
       "totalErrorsFound": "Nombre total de bogues trouvés",
       "scannedFiles": "Nombres de fichiers scannés lors de la dernière analyse"
@@ -202,7 +216,7 @@
   },
   "ResultTable": {
     "headers": {
-      "name": "Nom du repo:",
+      "name": "Nom du projet:",
       "errorsFound": "Nombres de bogues trouvés :",
       "securityFalls": "Nombres de failles de sécurité trouvées :",
       "scannedFiles": "Nombres de fichiers scannés :",
@@ -225,5 +239,12 @@
   "repoError": {
     "email": "Renseignez un email valide",
     "repo": "Resnseignez une adresse github"
+  },
+  "cookies": {
+    "text": "Nous utilisons des cookies pour stocker et/ou accéder à des informations personnelles non sensibles stockées sur votre terminal (identifiants uniques, session, etc), que nous traitons  afin de réaliser des statistiques d'usage du site, personnaliser le contenu et en mesurer les performances, produire des données d’audience, développer et améliorer l’application. Cliquez sur le bouton 'Accepter' pour consentir à ces utilisations sur ce site.",
+    "actions": {
+      "agree": "Accepter",
+      "disagree": "Refuser"
+    }
   }
 }

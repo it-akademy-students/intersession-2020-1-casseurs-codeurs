@@ -92,7 +92,7 @@ export default {
       firstname: "",
       lastname: "",
       isSubmitSucced: false,
-      isValid: true
+      isValid: true,
     };
   },
   computed: {
@@ -102,13 +102,13 @@ export default {
      */
     showContact() {
       return this.$store.getters.isShowContact;
-    }
+    },
   },
   methods: {
     closeModal: () => {
       store.commit("hideContact");
     },
-    updateMessage: e => {
+    updateMessage: (e) => {
       this.$store.commit("updateContact", e.target.value);
     },
     submitForm() {
@@ -116,9 +116,9 @@ export default {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
-        message: this.message
+        message: this.message,
       };
-      this.axios.post("contact", postData).then(res => {
+      this.axios.post("contact", postData).then((res) => {
         this.isSubmitSucced = true;
         setTimeout(() => {
           this.isSubmitSucced = false;
@@ -129,13 +129,13 @@ export default {
             (this.lastname = "");
         }, 3000);
       });
-    }
+    },
   },
   mounted() {
     if (this.$auth.user()) {
-      document.getElementById('email').value = this.$auth.user().email;
+      document.getElementById("email").value = this.$auth.user().email;
     }
-  }
+  },
 };
 </script>
 
