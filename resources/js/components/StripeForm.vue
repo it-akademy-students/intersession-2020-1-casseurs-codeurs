@@ -10,11 +10,9 @@
               class="StripeElement"
               id="email"
               name="email"
-              v-on:keyup="cancelErrorEmail"
               required
             />
           </div>
-          <div class="errorAlertEmail" v-show="errorEmail">{{ $tc('repoError.email', 1) }}</div>
         </div>
         <div class="form-row top-form">
           <label for="card-number">{{ $tc( "stripeForm.cardName", 1 ) }}</label>
@@ -110,7 +108,6 @@ export default {
       { text: "14", value: "14" },
       { text: "15", value: "15" }
     ],
-    errorEmail: false
   }),
   methods: {
     initializeStripe: function(event) {
@@ -213,17 +210,7 @@ export default {
         this.method();
       }, 5000);
     },
-    checkEmail() {
-      let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-      if (!reg.test(document.getElementById("email").value)) {
-        this.errorEmail = true;
-      } else {
-        this.errorEmail = false;
-      }
-    },
-    cancelErrorEmail: () => {
-      this.errorEmail = false;
-    }
+
   },
   mounted() {
     setTimeout(() => {
