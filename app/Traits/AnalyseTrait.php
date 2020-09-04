@@ -32,37 +32,39 @@ trait AnalyseTrait
         $quantity = sizeof($folders)-1;
         if ($quantity != 0){
             $folderPath = str_replace(end($folders),"", $path);
-            if (!file_exists($baseFolder.$folderPath)){
-                mkdir($baseFolder.$folderPath, 0644, true);
+            if (!file_exists($baseFolder.'/'.$folderPath)){
+                $oldmask = umask(0);
+                mkdir($baseFolder.'/'.$folderPath);
+                umask($oldmask);
             }
         }
-        file_put_contents($baseFolder.$path, $content);
+        file_put_contents($baseFolder.'/'.$path, $content);
     }
 
     public function analyse(string $tool){
 
         if ($tool == 'phpstan'){// Analyze with PHPStan : errors research in the code
             $prefix='';
-            $workingPath = base_path() . '\vendor\bin\phpstan'; // Windows path with backslashes
-            // $workingPath = base_path() . '/vendor/bin/phpstan'; // Linux path with slashes
+            $workingPath = realpath(base_path() . '/vendor/bin/phpstan');
             $cmd = ' analyse ';
-            $option = '--error-format=json --no-progress -c ' . base_path() . '\config\configuration.neon'; // Windows path with backslashes
+            $configPath = realpath(base_path() . '/config/configuration.neon');
+            $option = '--error-format=json --no-progress -c ' . $configPath; // Windows path with backslashes
             // $option = '--error-format=prettyJson --no-progress -c ' . base_path() . '/config/configuration.neon'; // Linux path with slashes
             $exec = $prefix . $workingPath . $cmd . $option;
         }elseif ($tool == 'progpilot'){// Analyze with ProgPilot : security threats test
             $prefix='';
-            $workingPath = base_path() . '\vendor\bin\progpilot '; // Windows path with backslashes
-            // $workingPath = base_path() . '/vendor/bin/progpilot '; // Linux path with slashes
-            $option = '--configuration ' . base_path() . '\config\configuration.yml'; // Windows path with backslashes
+            $workingPath = realpath(base_path() .'/vendor/bin/progpilot');
+            $configPath = realpath(base_path() . '/config/configuration.yml');
+            $option = ' --configuration ' . $configPath; // Windows path with backslashes
             // $option = '--configuration ' . base_path() . '/config/configuration.yml'; // Linux path with slashes
             $exec = $prefix . $workingPath . $option;
         }elseif ($tool == 'php7mar'){// Analyze with php7mar : Migration Assistant Report between PHP 5 & PHP 7
             $prefix = 'php ';
-            $workingPath = base_path() . '\app\php7mar\mar.php'; // Windows path with backslashes
-            // $workingPath = base_path() . '/app/php7mar/mar.php'; // Linux path with slashes
-            $scanPath = ' -f="' . base_path() . '\public\scan"'; // Windows path with backslashes
-            // $scanPath = ' -f="' . base_path() . '/public/scan"';// Linux path with slashes
-            $reportsPath = ' -r="' . base_path() . '\public\reports"'; // Windows path with backslashes
+            $workingPath = realpath(base_path() .'/app/php7mar/mar.php');
+            $scanPath = realpath(base_path() . '/public/Scan');
+            $scanPath = ' -f="' . $scanPath . '"';
+            $reportsPath = realpath(base_path() . '/public/reports');
+            $reportsPath = ' -r="' . $reportsPath . '"';
             // $reportsPath = ' -r="' . base_path() . '/public/reports"'; // Linux path with slashes
             $exec = $prefix . $workingPath . $scanPath . $reportsPath;
         }
@@ -73,7 +75,7 @@ trait AnalyseTrait
             if ($tool != 'php7mar'){
                 return $this->convertOutput($tool, $output);
             }
-            return ['response' => 'success' , 'file' => base_path() . '\public\reports\migration.md'];
+            return ['response' => 'success' , 'file' => realpath(base_path() . '/public/reports/migration.md')];
         } catch (\Exception $exception) {
             return['response' => 'error' , $exception->getMessage()];
         }
@@ -91,7 +93,7 @@ trait AnalyseTrait
             $output = json_decode($output[0]);
             $errorsQuantity = $output->totals->errors;
             $phpstanResult = [];
-            $outFile = base_path() . '\public\reports\errorsReport.md';
+            $outFile = realpath(base_path() . '/public/reports/errorsReport.md');
             if ($errorsQuantity) {
                 //On recupère tout les rapport par fichiers retournés par l'analyse:
                 foreach ($output->files as $key => $file) {
@@ -103,7 +105,7 @@ trait AnalyseTrait
                             // Si cette erreur ne peut pas être ignorée (selon le niveau definie dans la configuration.yml):
                             if (!$message->ignorable) {
                                 $i++;
-                                $filename = str_replace(base_path() . '\public\scan\\', '', $key);
+                                $filename = str_replace(realpath(base_path() . '/public/Scan/'), '', $key);
                                 // On associe le nom du fichier à l'erreur:
                                 $phpstanResult[$filename][$i] = [
                                     'message' => $message->message,
@@ -140,11 +142,11 @@ trait AnalyseTrait
             $output = json_decode($json);
             $errorQuantity = sizeof($output);
             $progpilotResult = [];
-            $outFile = base_path().'\public\reports\securityFails.md';
+            $outFile = realpath(base_path().'/public/reports/securityFails.md');
             if($errorQuantity){
                 // On récupère toutes les erreurs retournées par l'analyse:
                 foreach($output as $error){
-                    $filename = str_replace(base_path().'\public\scan\\', '', $error->sink_file);
+                    $filename = str_replace(realpath(base_path().'/public/Scan/'), '', $error->sink_file);
                     // Ajouter une nouvelle key associée au la key du fichier si elle existe déjà:
                     array_key_exists($filename,$progpilotResult) ? $i = sizeof($progpilotResult[$filename]) : $i = 0;
                     // On associe le nom du fichier à l'erreur:

@@ -19,8 +19,8 @@ inputs:
 
         exclude_folders: ~
 
-    setFolder: '.\..\public\scan' # Windows path with backslashes
-    #setFolder: './../public/scan' # Linux path with slashes
+#    setFolder: '.\..\public\Scan' # Windows path with backslashes
+    setFolder: './../public/Scan' # Linux path with slashes
     setFile: ~
     setCode: ~
     setResolvedIncludes: ~
