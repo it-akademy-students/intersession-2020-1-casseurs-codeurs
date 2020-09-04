@@ -41,11 +41,11 @@ class StripeController extends Controller
                 ]);
 
                 $statistic = Statistic::first();
-                $statistic->donation += intval($donate['amount']); //IMPORTANT=>la valeur doit être initialement de 0 pour s'incrémenter
+                $statistic->donations += intval($donate['amount'])/100; //IMPORTANT=>la valeur doit être initialement de 0 pour s'incrémenter
                 $statistic->save();
 
         $donatorMail = Validator::make($request->all(), [
-            'name' => 'required|min:3',
+            'name' => 'min:3',
             'email' => 'required|email',
         ]);
 
