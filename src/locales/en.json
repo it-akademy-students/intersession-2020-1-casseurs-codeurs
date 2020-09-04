@@ -27,7 +27,7 @@
     "welcomeAction": "Scan your repository",
     "welcomeBtn": "Analize!",
     "welcomeForm": {
-      "labelUrl": "Enter the URL of your repo",
+      "labelUrl": "Enter the URL of your project",
       "labelBranch": "Branch to scan",
       "labelEmail": "Enter your email",
       "labelOption0": "Without the migration reporting tools",
@@ -173,9 +173,9 @@
       "action": "Go to Dashboard"
     },
     "card": {
-      "lastRepository": "Last repo analyzed",
-      "numberOfScans": "Number of scans on this repo",
-      "totalRepository": "Total number of repo analyzed",
+      "lastRepository": "Last project analyzed",
+      "numberOfScans": "Number of scans on this project",
+      "totalRepository": "Total number of projects analyzed",
       "totalSecurityFails": "Total number of security breaches found",
       "totalErrorsFound": "Total number of bugs found",
       "scannedFiles": "Number of files scanned during the last scan"

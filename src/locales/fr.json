@@ -206,9 +206,9 @@
       "action": "Voir mon Tableau de bord"
     },
     "card": {
-      "lastRepository": "Dernier repo analysé",
-      "numberOfScans": "Nombres de scan sur ce repo",
-      "totalRepository": "Nombres total de repo analysés",
+      "lastRepository": "Dernier projet analysé",
+      "numberOfScans": "Nombres de scan sur ce projet",
+      "totalRepository": "Nombres total de projets analysés",
       "totalSecurityFails": "Nombres total de failles de sécurités trouvés",
       "totalErrorsFound": "Nombre total de bogues trouvés",
       "scannedFiles": "Nombres de fichiers scannés lors de la dernière analyse"
@@ -216,7 +216,7 @@
   },
   "ResultTable": {
     "headers": {
-      "name": "Nom du repo:",
+      "name": "Nom du projet:",
       "errorsFound": "Nombres de bogues trouvés :",
       "securityFalls": "Nombres de failles de sécurité trouvées :",
       "scannedFiles": "Nombres de fichiers scannés :",
