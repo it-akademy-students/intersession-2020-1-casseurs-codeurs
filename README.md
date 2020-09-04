@@ -9,7 +9,7 @@
 ## Description :
 
 
-Application permettant de détecter les erreurs et failles de sécurité dans le code de projets publics déposés sur GitHub et codés en PHP 7.0 minimum.
+Application permettant de détecter les erreurs de code et failles de sécurité dans le code de projets publics déposés sur GitHub et codés en PHP 5.4 minimum.
 
 L'application est visible à l'adresse suivante : <http://erre-tec.hd.free.fr/>
 
@@ -40,7 +40,7 @@ Responsables : [Team](TEAM.md)
 ## Mise en route
 
 #### Installation
-Pour commencer, cloner le repository. Ensuite executez les commandes:
+Pour commencer, cloner le repository. Ensuite executer les commandes:
     ```composer update```
     ```npm i```
     ```yarn```
