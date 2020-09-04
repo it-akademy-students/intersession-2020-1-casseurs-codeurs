@@ -190,13 +190,6 @@ export default {
           } else {
             // Send the token to your server.
             const formEmail = document.getElementById("email").value;
-            setTimeout(() => {
-              this.stripeResponse = true;
-            }, 500);
-            setTimeout(() => {
-              this.stripeResponse = false;
-              this.method();
-            }, 5000);
             const amount = document.getElementById("input-amount").value;
             axios
               .post("/donate", {
@@ -209,6 +202,15 @@ export default {
           }
         });
       });
+    },
+    validePayment() {
+      setTimeout(() => {
+        this.stripeResponse = true;
+      }, 500);
+      setTimeout(() => {
+        this.stripeResponse = false;
+        this.method();
+      }, 5000);
     },
     checkEmail() {
       let reg = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -226,6 +228,9 @@ export default {
     setTimeout(() => {
       this.initializeStripe();
     }, 400);
+    if(this.$auth.user()) {
+      document.getElementById("email").value = this.$auth.user().email
+    }
   }
 };
 </script>
