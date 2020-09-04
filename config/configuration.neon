@@ -2,8 +2,8 @@ parameters:
     phpVersion: null
     level: 4
     paths:
-        - .\..\public\scan # Windows path with backslashes
-        #- Z:/laragon/www/intersession-2020-1-casseurs-codeurs/public/scan # Linux path with slashes
+#        - .\..\public\Scan # Windows path with backslashes
+        - ./../public\Scan # Linux path with slashes
     excludes_analyse:
         - vendor/*
     parallel:
