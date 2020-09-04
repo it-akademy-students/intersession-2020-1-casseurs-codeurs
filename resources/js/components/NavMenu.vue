@@ -100,7 +100,7 @@
       ></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-img
-        class="mx-1"
+        class="mx-1 hidden-sm-and-down"
         src="../../img/swapp_image_logo.svg"
         max-height="100"
         max-width="100"
