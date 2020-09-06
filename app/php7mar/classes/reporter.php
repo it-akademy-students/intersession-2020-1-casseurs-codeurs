@@ -73,7 +73,7 @@ class reporter {
 		if ($reportFolder !== false) {
 			$this->reportFolder = $reportFolder;
 		} else {
-			$this->reportFolder = PHP7MAR_DIR.DIRECTORY_SEPARATOR.'reports';
+			$this->reportFolder = base_path().DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'reports';
 		}
 		$this->fullFilePath = $this->reportFolder.DIRECTORY_SEPARATOR."migration.md";
 

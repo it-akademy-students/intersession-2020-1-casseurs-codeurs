@@ -62,17 +62,6 @@ class ProcessSecurity implements ShouldQueue
         $this->userConnected = $userConnected;
     }
 
-    private function is_dir_empty($dir) {
-        $handle = opendir($dir);
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                closedir($handle);
-                return FALSE;
-            }
-        }
-        closedir($handle);
-        return TRUE;
-    }
     /**
      * Execute the job.
      *
@@ -96,6 +85,8 @@ class ProcessSecurity implements ShouldQueue
             $content = base64_decode($this->getGithubContent($baseContentUrl.$path)->content);
             $this->addFile($path, $content, realpath(base_path().'/public/Scan/'));
         }
+        //Nombre de fichier scannés:
+        $scannedFiles = sizeof($paths);
         $files = [];
         if ($this->migration == 0){
             //____________________Analyse PHPStan________________________////
@@ -152,12 +143,11 @@ class ProcessSecurity implements ShouldQueue
                 // Conserver les fichiers pour les utilisateur connectés:
                 $newFiles = [];
                 foreach ($files as $file) {
+                    chmod($file, 0777);
                     $newFilename = str_replace('public\reports\\', 'storage\users\\' . $user->name . '_' . $this->githubInfo, $file);
                     rename($file, $newFilename);
-                    $newFiles[] = $newFilename;
+                    $newFiles[] = $user->name . '_' . $this->githubInfo;
                 }
-                //Nombre de fichier scannés:
-                $scannedFiles = sizeof($paths);
                 // Associer l'analyse à l'utilisateur dans la base de donnée:
                 //On vérifie l'existance d'un précédent scan sur le repos:
                 $analyse = AnalyseModel::where([
@@ -198,8 +188,8 @@ class ProcessSecurity implements ShouldQueue
             } else {
                 //Suppression des fichiers:
                 // reports:
-                $dir = realpath(base_path() . '/public/reports');
-                if (!$this->is_dir_empty($dir)) {
+                $dir = realpath(base_path() . '/public/reports').DIRECTORY_SEPARATOR;
+                if ($scannedFiles != 0) {
                     $di = new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS);
                     $ri = new \RecursiveIteratorIterator($di, \RecursiveIteratorIterator::CHILD_FIRST);
                     foreach ($ri as $file) {
@@ -209,8 +199,8 @@ class ProcessSecurity implements ShouldQueue
             }
             //Suppression des fichiers:
             // Scan:
-            $dir = realpath(base_path() . "/public/Scan");
-            if (!$this->is_dir_empty($dir)) {
+            $dir = realpath(base_path() . "/public/Scan").DIRECTORY_SEPARATOR;
+            if ($scannedFiles) {
                 $di = new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS);
                 $ri = new \RecursiveIteratorIterator($di, \RecursiveIteratorIterator::CHILD_FIRST);
                 foreach ($ri as $file) {

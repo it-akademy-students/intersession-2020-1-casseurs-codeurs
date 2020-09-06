@@ -24,7 +24,7 @@
         >
           <template v-slot:item.path="{ item }">
             <v-chip color="transparent" class="caption my-2">
-              <a :href="`public/scan/${item.path}`" download>
+              <a :href="storage/users/`${item.path}`" download>
                 <v-icon color="secondary">mdi-file-download</v-icon>
               </a>
             </v-chip>

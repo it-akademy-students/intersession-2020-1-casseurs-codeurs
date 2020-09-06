@@ -1,6 +1,6 @@
 parameters:
     phpVersion: null
-    level: 4
+    level: 6
     paths:
 #        - .\..\public\Scan # Windows path with backslashes
         - ./../public\Scan # Linux path with slashes

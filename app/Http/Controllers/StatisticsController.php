@@ -35,6 +35,7 @@ class StatisticsController extends Controller
             ])->get()->toArray();
             $list = [];
             foreach ($analyses as $analyse){
+                $repository = [];
                 $repository['name'] =$analyse['repository'];
                 foreach(json_decode($analyse['files']) as $file){
                     $filename = explode("\\",$file);
