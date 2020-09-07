@@ -144,9 +144,12 @@ class ProcessSecurity implements ShouldQueue
                 $newFiles = [];
                 foreach ($files as $file) {
                     chmod($file, 0777);
-                    $newFilename = str_replace('public\reports\\', 'storage\users\\' . $user->name . '_' . $this->githubInfo, $file);
+                    strpos($file, '/') !== false ?
+                        ($newFilename = str_replace('public/reports/', 'storage/users/' . $user->name . '_' . $this->githubInfo, $file) AND $reportType = explode('/', $file))
+                        : ($newFilename = str_replace('public\reports\\', 'storage\users\\' . $user->name . '_' . $this->githubInfo, $file) AND $reportType = explode('\\', $file));
                     rename($file, $newFilename);
-                    $newFiles[] = $user->name . '_' . $this->githubInfo;
+                    $reportType = end($reportType);
+                    $newFiles[] = $user->name . '_' . $this->githubInfo . $reportType;
                 }
                 // Associer l'analyse à l'utilisateur dans la base de donnée:
                 //On vérifie l'existance d'un précédent scan sur le repos:

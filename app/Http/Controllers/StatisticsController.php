@@ -34,6 +34,7 @@ class StatisticsController extends Controller
                 ['user_id', '=', $id ],
             ])->get()->toArray();
             $list = [];
+//            $basePath = str_replace('public', 'storage/users/', public_path());
             foreach ($analyses as $analyse){
                 $repository = [];
                 $repository['name'] =$analyse['repository'];
@@ -43,7 +44,7 @@ class StatisticsController extends Controller
                     $search = str_replace('/', '_',$analyse['repository']);
                     $filename = explode($search,$filename);
                     $filename = end($filename);
-                    $repository['files'][] = ['fileName' => $filename, 'path' => $file];
+                    $repository['files'][] = ['fileName' => $filename, 'path' => '/storage/users/' . $file];
                 }
                 if ($analyse['errorsFound'] == 0 && $analyse['securityFails'] == 0){
                     $repository['status'] = 'clean';
