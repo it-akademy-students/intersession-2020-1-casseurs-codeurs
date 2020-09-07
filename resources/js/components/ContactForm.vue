@@ -133,7 +133,7 @@ export default {
   },
   mounted() {
     if (this.$auth.user()) {
-      document.getElementById("email").value = this.$auth.user().email;
+      this.email = this.$auth.user().email
     }
   },
 };

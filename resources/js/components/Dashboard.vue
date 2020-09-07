@@ -51,7 +51,7 @@
               <v-row justify="space-around" align="baseline">
                 <!-- total repo -->
                 <v-col cols="6" md="3">
-                  <v-card color="colorSecondaryLight" class="mx-auto">
+                  <v-card color="colorSecondaryLight" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
@@ -67,7 +67,7 @@
                 </v-col>
                 <!-- bugs -->
                 <v-col cols="6" md="3">
-                  <v-card color="warning" class="mx-auto">
+                  <v-card color="warning" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
@@ -83,7 +83,7 @@
                 </v-col>
                 <!-- security holes -->
                 <v-col cols="6" md="3">
-                  <v-card color="error" class="mx-auto">
+                  <v-card color="error" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div
@@ -99,7 +99,7 @@
                 </v-col>
                 <!-- last repo -->
                 <v-col cols="6" md="3">
-                  <v-card color="colorTertiaryLight" class="mx-auto">
+                  <v-card color="colorTertiaryLight" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
                         <div

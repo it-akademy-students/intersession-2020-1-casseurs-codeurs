@@ -1,14 +1,16 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="user-profile">
     <v-col cols="12">
+      <v-row justify="end" class="pa-0 ma-0">
+        <v-col cols="1">
+          <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
+        </v-col>
+      </v-row>
       <v-row>
-        <v-col cols="11">
+        <v-col cols="12">
           <h2
             class="pa-2 text-center"
           >{{ $tc("userProfile.title", 1) }} {{ this.$auth.user().name | capitalize }}:</h2>
-        </v-col>
-        <v-col cols="1">
-          <v-icon @click="toggleShowLoggedInForms">mdi-close</v-icon>
         </v-col>
       </v-row>
     </v-col>
@@ -140,13 +142,21 @@ export default {
       return this.$router.push({ name: "home" });
     },
     handleEditProfile() {
-      this.$store.dispatch("toggleLoginForm", false);
-      this.$store.dispatch("toggleSignInOn", false);
-      this.$store.dispatch("toggleRegisterForm", false);
-      this.$store.dispatch("toggleLoggedIn", false);
-      this.$store.dispatch("toggleUserProfile", false);
-      this.$store.dispatch("toggleEditProfile", true);
-      this.$router.push({ name: "user-account-edit" });
+      let destination;
+      if (this.$route.path == "/user/account/edit") {
+        destination = this.$vuetify.goTo("#edit-form");
+      } else {
+        destination = this.$router.push("/#edit-form");
+      }
+      return (
+        this.$store.dispatch("toggleLoginForm", false),
+        this.$store.dispatch("toggleSignInOn", false),
+        this.$store.dispatch("toggleRegisterForm", false),
+        this.$store.dispatch("toggleLoggedIn", false),
+        this.$store.dispatch("toggleUserProfile", false),
+        this.$store.dispatch("toggleEditProfile", true),
+        destination
+      );
     },
     handleLogout() {
       this.$auth.logout().then(

@@ -12,7 +12,9 @@
               class="mt-0 pt-0"
             >
               <v-col cols="12">
-                <h1 :class="{'display-1 mb-3': $vuetify.breakpoint.smAndDown, 'display-2 mb-5': $vuetify.breakpoint.mdAndUp}">{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
+                <h1
+                  :class="{'display-1 mb-3': $vuetify.breakpoint.smAndDown, 'display-2 mb-5': $vuetify.breakpoint.mdAndUp}"
+                >{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
                 <span class="text-lg-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
                 <v-container fluid class="pa-0 mt-0">
                   <v-row align-content="center" no-gutters class="mt-0 pt-0">

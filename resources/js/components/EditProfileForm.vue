@@ -1,19 +1,21 @@
 <template>
-  <v-card flat color="colorPrimaryUltraLight" id="register-form">
+  <v-card flat color="colorPrimaryUltraLight" id="edit-form">
     <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
       <span color="colorPrimary--text">{{ $tc("editProfile.snackBar.error", 1) }}</span>
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
       <v-col cols="12">
+        <v-row justify="end" class="pa-0 ma-0">
+          <v-col cols="1">
+            <v-icon @click="handleCancelled">mdi-close</v-icon>
+          </v-col>
+        </v-row>
         <v-row>
-          <v-col cols="11">
+          <v-col cols="12">
             <h2
               class="pa-2 text-center"
             >{{ $tc("editProfile.title", 1) }} {{ this.$auth.user().name | capitalize }}:</h2>
-          </v-col>
-          <v-col cols="1">
-            <v-icon @click="handleCancelled">mdi-close</v-icon>
           </v-col>
         </v-row>
       </v-col>
@@ -139,6 +141,12 @@ export default {
       this.$refs.form.reset();
     },
     toggleShowUserProfile() {
+      let destination;
+      if (this.$route.path == "/user/account") {
+        destination = this.$vuetify.goTo("#user-profile");
+      } else {
+        destination = this.$router.push("/#user-profile");
+      }
       return (
         this.$store.dispatch("toggleLoginForm", false),
         this.$store.dispatch("toggleSignInOn", false),
@@ -146,7 +154,7 @@ export default {
         this.$store.dispatch("toggleLoggedIn", false),
         this.$store.dispatch("toggleUserProfile", true),
         this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user-account" })
+        destination
       );
     },
     handleCancelled() {
