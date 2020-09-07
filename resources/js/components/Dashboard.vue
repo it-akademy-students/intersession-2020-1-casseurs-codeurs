@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-row justify="center" class="pa-0 ma-0">
         <v-col cols="12">
-          <v-card class="mx-auto text-center" color="colorTertiary" @click="dialog = true">
+          <v-card class="mx-auto text-center" color="colorTertiary" @click="initDashboard">
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -154,10 +154,11 @@ export default {
       totalSecurityFails: "",
     };
   },
-  beforeMount() {
-    this.getUsersAnalizes();
-  },
   methods: {
+    initDashboard() {
+      this.getUsersAnalizes();
+      this.dialog = true;
+    },
     getUsersAnalizes() {
       let url = `/users/${this.$auth.user().id}/analyzes`;
 
