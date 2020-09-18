@@ -29,12 +29,16 @@
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
-      <v-row>
-        <v-col cols="11">
-          <h2 :class="{'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown, 'pa-2 text-center': $vuetify.breakpoint.mdAndUp}">{{ $tc("register.title", 1) }}</h2>
-        </v-col>
+      <v-row justify="end" class="pa-0 ma-0">
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <h2
+            :class="{'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown, 'pa-2 text-center': $vuetify.breakpoint.mdAndUp}"
+          >{{ $tc("register.title", 1) }}</h2>
         </v-col>
       </v-row>
     </v-col>
@@ -128,7 +132,7 @@
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
         <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.termsTitle", 1) }}</v-card-title>
-        <v-card-text >{{ $tc("register.termsText", 1) }}</v-card-text>
+        <v-card-text>{{ $tc("register.termsText", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text color="colorTertiaryLight" @click="terms = false">Ok</v-btn>
@@ -161,19 +165,8 @@ export default {
       password: "",
       password_confirmation: "",
       job: "",
-      jobs: [
-        "Frontend Developer",
-        "Backend Developer",
-        "Full Stack Developer",
-        "Admin sys",
-        "Cyber Security",
-        "Project Manager",
-        "Other",
-      ],
       accept_terms: false,
       terms: false,
-      conditions: false,
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
       snackbar: false,
       defaultForm,
       has_error: false,

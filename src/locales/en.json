@@ -176,7 +176,7 @@
       "lastRepository": "Last project analyzed",
       "numberOfScans": "Number of scans on this project",
       "totalRepository": "Total number of projects analyzed",
-      "totalSecurityFails": "Total number of security breaches found",
+      "totalSecurityFails": "Total number of security holes found",
       "totalErrorsFound": "Total number of bugs found",
       "scannedFiles": "Number of files scanned during the last scan"
     }

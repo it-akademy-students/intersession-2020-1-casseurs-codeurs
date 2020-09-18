@@ -15,12 +15,14 @@
       <v-icon dark>mdi-alert-circle</v-icon>
     </v-snackbar>
     <v-col cols="12">
-      <v-row>
-        <v-col cols="11">
-          <h2 class="pa-2 text-center">{{ $tc("loginForm.title", 1) }}</h2>
-        </v-col>
+      <v-row justify="end" class="pa-0 ma-0">
         <v-col cols="1">
           <v-icon @click="initShowForm">mdi-close</v-icon>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <h2 class="pa-2 text-center">{{ $tc("loginForm.title", 1) }}</h2>
         </v-col>
       </v-row>
     </v-col>
@@ -225,7 +227,7 @@ export default {
     // Reset user password
     resetPwd() {
       let app = this;
-      let url = `/auth/reset-password/`;
+      let url = `/auth/reset-password`;
       let data = new FormData();
       data.append("email", this.email);
 
@@ -238,9 +240,7 @@ export default {
       this.axios
         .post(url, data, header)
         .then((response) => {
-          return (
-            (app.success = true), (app.snackbar = true)
-          );
+          return (app.success = true), (app.snackbar = true);
         })
         .catch((error) => {
           console.log(error);
