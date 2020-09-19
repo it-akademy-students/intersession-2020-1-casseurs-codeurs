@@ -15,7 +15,7 @@ L'application est visible à l'adresse suivante : <http://erre-tec.hd.free.fr/>
 
 Version : 1.0.0  
 Date : 2020-07-27  
-Responsables : [Team](TEAM.md)  
+Responsables : [Les Casseurs Codeurs](TEAM.md)  
 
 ----------------
 
