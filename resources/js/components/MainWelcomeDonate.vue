@@ -365,14 +365,4 @@ export default {
   color: #62cb5c !important;
 }
 
-// .v-btn {
-//   &:hover {
-//   border-color: #967dff;
-//   transform: translateY(-3px);
-//   box-shadow: 0 1rem 2rem rgba(#000,.2);
-//   }
-//   &:hover &__content{
-//     color: #967dff;
-//   }
-// }
 </style>
