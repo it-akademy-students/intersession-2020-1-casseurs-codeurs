@@ -22,7 +22,7 @@
   },
   "mainWelcomeDonate": {
     "welcome": "Welcome on SWAPP!",
-    "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors or security holes.",
+    "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors and/or security holes.",
     "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^5.4.",
     "welcomeAction": "Scan your repository",
     "welcomeBtn": "Analyze!",
@@ -40,7 +40,7 @@
       "successStripe": "Thank you for your donation"
       },
     "donate": "Support the project ",
-    "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and / or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
+    "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and/or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
     "donateAction": "Take part in the maintenance of this project: make a donation!",
     "donateBtn": "I support!"
   },
@@ -64,7 +64,7 @@
       "signUp": "Sign up"
     },
     "whyTitle": "Why should you create an account?",
-    "whyText": "The basic functions of the application are available free of charge without registration. However, connected users benefit from additional features: report by e-mail, possibility of php version upgrade, history of reports." 
+    "whyText": "The basic functions of the application are available free of charge without registration. However, connected users benefit from additional features: report by e-mail, possibility of help on php version upgrade, history of reports."
   },
   "register": {
     "title": "Register to benefit from all the features of the SWAPP application",
@@ -82,7 +82,7 @@
       "cancel": "Cancel"
     },
     "termsTitle": "Terms",
-    "termsText": "Licenses: The content of the app is under MIT License. The engine of the site is under Laravel, under and the theme of the site is a creation of Les Casseurs Codeurs. Computing and Freedom: In accordance with the provisions of the Data Protection Act of January 6, 1978 as amended by the Law of August 6, 2004, all computer data concerning you is treated in a strictly confidential manner. You have the right to access, rectify and oppose your data. To do this, all you have to do is send us a request by e-mail, indicating your name, first name, address.Editor:Les Casseurs Codeurs. Use the contact form to contact them. Director of publication: Mohamed Zoghlami. Host: erre-tec",
+    "termsText": "Licenses: The content of the app is under MIT License. The application engine is powered by Laravel and the site's theme is a creation of: Les Casseurs Codeurs. Computing and Freedom: In accordance with the provisions of the Data Protection Act of January 6, 1978 as amended by the Law of August 6, 2004, all computer data concerning you is treated in a strictly confidential manner. You have the right to access, rectify and oppose your data. To do this, all you have to do is send us a request by e-mail, indicating your name, first name, address.Editor: Les Casseurs Codeurs. Use the contact form to contact them. Director of publication: Mohamed Zoghlami. Host: erre-tec",
     "snackBar": {
       "success": "Congratulations! Your account have been successfully created!",
       "error": "Ooops! Error, can not register at the moment. If the problem persists, please contact an administrator."
@@ -125,13 +125,13 @@
       "migration": "Migration tools php5 > php7"
     },
     "stats": {
-      "text": "SWAPP application allows you to detect bugs and security vulnerabilities in your code! Go to your dashboard to view your history",
+      "text": "SWAPP application allows you to detect bugs and/or security vulnerabilities in your code! Go to your dashboard to view your history",
       "found": "SWAPP has already detected ",
       "errorsFound": "bugs",
       "securityFails": "security vulnerabilities, through",
       "scannedFiles": "files analyzed in ",
       "project": "projects",
-      "migrationAssistance": "repositories, and facilitated the migration of old versions of php to php7 for more than "
+      "migrationAssistance": "repositories, and facilitated the migration of old versions of php5 upto php7 for more "
     }
   },
   "editProfile": {
@@ -208,7 +208,7 @@
     "repo": "Valid github adress is required"
   },
   "cookies": {
-    "text": "We use cookies to store and / or access non-sensitive personal information stored on your device (unique identifiers, session, etc.), which we process in order to carry out site usage statistics, personalize the content and measure the results. performance, produce audience data, develop and improve the application.Click the 'Agree' button to consent to these uses on this site.",
+    "text": "We use cookies to store and/or access non-sensitive personal information stored on your device (unique identifiers, session, etc.), which we process in order to carry out site usage statistics, personalize the content and measure the results. performance, produce audience data, develop and improve the application.Click the 'Agree' button to consent to these uses on this site.",
     "actions": {
       "agree": "Agree",
       "disagree": "Disagree"
