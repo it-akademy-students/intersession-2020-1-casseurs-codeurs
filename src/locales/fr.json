@@ -21,7 +21,7 @@
   },
   "mainWelcomeDonate": {
     "welcome": "Bienvenue sur SWAPP !",
-    "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs ou des failles de sécurité.",
+    "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs et/ou des failles de sécurité.",
     "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^5.4",
     "welcomeAction": "Scannez votre projet GitHub",
     "welcomeBtn": "Analyser !",
@@ -40,7 +40,7 @@
       },
     "mainWelcomeDonate": {
       "welcome": "Bienvenue sur SWAPP !",
-      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs ou des failles de sécurité.",
+      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs et/ou des failles de sécurité.",
       "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^5.4",
       "welcomeAction": "Scannez votre projet GitHub",
       "welcomeBtn": "Analyser !",
@@ -58,12 +58,12 @@
         "successStripe": "Merci pour votre don"
         },
       "donate": "Soutenez le project ",
-      "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et / ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
+      "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et/ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
       "donateAction": "Participez à la maintenance de ce projet: faites un don !",
       "donateBtn": "Je soutiens !"
     },
     "donate": "Soutenez le project ",
-    "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et / ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
+    "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et/ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
     "donateAction": "Participez à la maintenance de ce projet: faites un don !",
     "donateBtn": "Je soutiens !"
   },
@@ -87,7 +87,7 @@
       "signUp": "S'inscrire"
     },
     "whyTitle": "Pourquoi devriez-vous créer un compte?",
-    "whyText": "Les fonctions de base de l'application sont disponibles gratuitement sans inscription. Cependant, les utilisateurs connectés bénéficient de fonctionnalités supplémentaires: rapport par e-mail, possibilité de mise à jour de la version php, historique des rapports."
+    "whyText": "Les fonctions de base de l'application sont disponibles gratuitement sans inscription. Cependant, les utilisateurs connectés bénéficient de fonctionnalités supplémentaires: rapport par e-mail, possibilité d'aide à la mise à jour de la version du code php, historique des rapports."
   },
   "register": {
     "title": "Inscrivez-vous pour bénéficier de toutes les fonctionnalités de l'application SWAPP",
@@ -113,8 +113,8 @@
       "cancel": "Annuler"
     },
     "termsTitle": "Terms",
-    "termsText": "Licences :   Le contenu du guide est sous MIT License.  Le moteur du site est sous Laravel, sous et le thème du site est une création de Les Casseurs Codeurs.  Informatique et libertés :  Conformément aux dispositions de la loi Informatique et Libertés du 6 janvier 1978 modifiée par la Loi du 6 août 2004, toutes les données informatiques vous concernant sont traitées de manières strictement confidentielles. Vous disposez d’un droit d’accès, de rectification, et d’opposition sur vos données. Pour cela il vous suffit de nous en faire la demande par courrier électronique en nous indiquant vos nom, prénom, adresse.  Éditeur:  Les Casseurs Codeurs  Utilisez le formulaire de contact pour nous contacter.  Directeur de la publication :  Mohamed Zoghlami  Hébergeur : erre-tec",
-    
+    "termsText": "Licences :   Le contenu du guide est sous MIT License.  Le moteur de l'application est sous Laravel et le thème du site est une création de: Les Casseurs Codeurs.  Informatique et libertés :  Conformément aux dispositions de la loi Informatique et Libertés du 6 janvier 1978 modifiée par la Loi du 6 août 2004, toutes les données informatiques vous concernant sont traitées de manières strictement confidentielles. Vous disposez d’un droit d’accès, de rectification, et d’opposition sur vos données. Pour cela il vous suffit de nous en faire la demande par courrier électronique en nous indiquant vos nom, prénom, adresse.  Éditeur:  Les Casseurs Codeurs  Utilisez le formulaire de contact pour nous contacter.  Directeur de la publication :  Mohamed Zoghlami  Hébergeur : erre-tec",
+
     "snackBar": {
       "success": "Félicitations ! Votre compte a été créé avec succès !",
       "error": "Ooops ! Erreur, impossible de s'inscrire pour le moment. Si le problème persiste, veuillez contacter un administrateur."
@@ -158,13 +158,13 @@
       "migration": "Outils de migration php5 vers php7"
     },
     "stats": {
-      "text": "L'application SWAPP vous permet de détecter les bogues et les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique",
+      "text": "L'application SWAPP vous permet de détecter les bogues et/ou les vulnérabilités de sécurité dans votre code! Rendez-vous dans votre dashboard pour consulter votre historique",
       "found": "SWAPP a déjà permis de détecter  ",
       "errorsFound": "bogues",
       "securityFails": "failles de sécurité, à travers ",
       "scannedFiles": "fichiers analysés dans ",
       "project": "projets",
-      "migrationAssistance": "dépôts GitHub et permis de faciliter la migration d'anciennes versions de php vers php7 pour plus de "
+      "migrationAssistance": "dépôts GitHub et permis de faciliter la migration d'anciennes versions de php5 vers php7 pour plus de "
     }
   },
   "editProfile": {
