@@ -42,8 +42,15 @@ export default {
     return {
       expanded: [],
       singleExpand: true,
-
-      headers: [
+      results: [],
+    };
+  },
+  beforeMount() {
+    this.getUserRepository();
+  },
+  computed: {
+    headers() {
+      return [
         {
           text: this.$tc("ResultTable.headers.name", 1),
           align: "start",
@@ -86,8 +93,10 @@ export default {
           value: "data-table-expand",
           class: "colorGreyDark colorSecondary--text",
         },
-      ],
-      headersExpanded: [
+      ];
+    },
+    headersExpanded() {
+      return [
         {
           text: this.$tc("ResultTable.headersExpanded.fileName", 1),
           value: "fileName",
@@ -98,12 +107,8 @@ export default {
           value: "path",
           class: "colorGreyDark colorTertiaryLight--text",
         },
-      ],
-      results: [],
-    };
-  },
-  beforeMount() {
-    this.getUserRepository();
+      ];
+    },
   },
   methods: {
     getColor(status) {
