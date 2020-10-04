@@ -13,7 +13,6 @@
   "notFound": {
     "msg": "Ooops... Sorry, we didn't find what you were looking for...",
     "goBack": "Go Back"
-
   },
   "footer": {
     "copyright": "2020, performed by ",
@@ -22,7 +21,7 @@
   },
   "mainWelcomeDonate": {
     "welcome": "Welcome on SWAPP!",
-    "welcomeText": "Simply paste the url of your github * deposit into the form, click submit and wait for the scan result to see if your code has any errors and/or security holes.",
+    "welcomeText": "Simply paste the url of your github * deposit into the form, click 'ANALYZE!' and wait for the scan result to see if your code has any errors and/or security holes.",
     "welcomeAsterisk": "*Only available for public repositories hosted on github and coded in PHP ^5.4.",
     "welcomeAction": "Scan your repository",
     "welcomeBtn": "Analyze!",
@@ -35,11 +34,13 @@
       "labelOption2": "Only migration reporting tools"
     },
     "welcomeModale": {
-      "success":  "Success",
+      "success": "Success",
       "successMsg": "We will sent your result by email",
+      "error": "Ooops",
+      "errorMsg": "GitHub API call limit exceeded, please try again in an hour. Check out the GitHub API documentation for more details",
       "successStripe": "Thank you for your donation"
-      },
-    "donate": "Support the project ",
+    },
+    "donate": "Support the project! ",
     "donateText": "SWAPP is an open source project and always will be that automates the detection of security vulnerabilities and/or code bugs. You have the possibility to support the project by making a donation to help us guarantee this service.",
     "donateAction": "Take part in the maintenance of this project: make a donation!",
     "donateBtn": "I support!"
@@ -75,7 +76,15 @@
       "hint": "Minimum 8 characters",
       "labelPwdConfirm": "Password Confirmation",
       "labelJob": "Your Job",
-      "jobs": ["Frontend Developer","Backend Developer","Full Stack Developer", "Admin sys", "Cyber Security", "Project Manager", "Other"],
+      "jobs": [
+        "Frontend Developer",
+        "Backend Developer",
+        "Full Stack Developer",
+        "Admin sys",
+        "Cyber Security",
+        "Project Manager",
+        "Other"
+      ],
       "acceptTerms": "Please read and accept",
       "termsLink": "terms",
       "create": "Create my account",
@@ -108,7 +117,6 @@
     "title": "Forgot password:",
     "subtitle": "Please enter your account email address",
     "action": "Send"
-
   },
   "resetPwd": {
     "title": "Reset your password",

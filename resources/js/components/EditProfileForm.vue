@@ -1,9 +1,5 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="edit-form">
-    <v-snackbar v-if="has_error && !success" v-model="snackbar" absolute top right color="error">
-      <span color="colorPrimary--text">{{ $tc("editProfile.snackBar.error", 1) }}</span>
-      <v-icon dark>mdi-alert-circle</v-icon>
-    </v-snackbar>
     <v-col cols="12">
       <v-col cols="12">
         <v-row justify="end" class="pa-0 ma-0">
@@ -13,14 +9,20 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <h2
-              class="pa-2 text-center"
-            >{{ $tc("editProfile.title", 1) }} {{ this.$auth.user().name | capitalize }}:</h2>
+            <h2 class="pa-2 text-center">
+              {{ $tc("editProfile.title", 1) }}
+              {{ this.$auth.user().name | capitalize }}:
+            </h2>
           </v-col>
         </v-row>
       </v-col>
     </v-col>
-    <v-form ref="form" name="form" @submit.prevent="handleUpdateProfil" method="POST">
+    <v-form
+      ref="form"
+      name="form"
+      @submit.prevent="handleUpdateProfil"
+      method="POST"
+    >
       <v-container fluid>
         <v-row>
           <v-col cols="12">
@@ -52,21 +54,33 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="handleCancelled">{{ $tc("editProfile.form.cancel", 1) }}</v-btn>
+        <v-btn text @click="handleCancelled">{{
+          $tc("editProfile.form.cancel", 1)
+        }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          text
-          class="colorTertiaryLight--text"
-          type="submit"
-        >{{ $tc("editProfile.form.edit", 1) }}</v-btn>
+        <v-btn text class="colorTertiaryLight--text" type="submit">{{
+          $tc("editProfile.form.edit", 1)
+        }}</v-btn>
       </v-card-actions>
+      <!-- snackbar user feed-back -->
+      <v-snackbar
+        v-if="has_error && !success"
+        v-model="snackbar"
+        absolute
+        top
+        right
+        color="error"
+      >
+        <span color="colorPrimary--text">{{
+          $tc("editProfile.snackBar.error", 1)
+        }}</span>
+        <v-icon dark>mdi-alert-circle</v-icon>
+      </v-snackbar>
     </v-form>
   </v-card>
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-
 export default {
   name: "EditProfileForm",
   data() {
@@ -86,14 +100,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "toggleRegisterForm",
-      "toggleLoginForm",
-      "toggleSignInOn",
-      "toggleUserProfile",
-      "toggleLoggedIn",
-      "toggleEditProfile",
-    ]),
     handleUpdateProfil() {
       const app = this;
 
@@ -124,11 +130,7 @@ export default {
           });
           this.$auth
             .fetch()
-            .then(
-              this.$store.dispatch("setUser", this.$auth.user()),
-              this.resetForm(),
-              this.toggleShowUserProfile()
-            );
+            .then(this.resetForm(), this.toggleShowUserProfile());
         })
         .catch((err) => {
           app.success = false;
@@ -138,24 +140,11 @@ export default {
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
-      this.$refs.form.reset();
     },
     toggleShowUserProfile() {
-      let destination;
-      if (this.$route.path == "/user/account") {
-        destination = this.$vuetify.goTo("#user-profile");
-      } else {
-        destination = this.$router.push("/#user-profile");
-      }
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", true),
-        this.$store.dispatch("toggleEditProfile", false),
-        destination
-      );
+      this.$route.path == "/user/account"
+        ? this.$vuetify.goTo("#user-profile")
+        : this.$router.push("/#user-profile");
     },
     handleCancelled() {
       return this.resetForm(), this.toggleShowUserProfile();

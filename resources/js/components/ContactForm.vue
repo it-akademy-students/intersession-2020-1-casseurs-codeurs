@@ -9,9 +9,9 @@
     <v-card color="colorPrimaryUltraLight" class="pa-3 card">
       <v-icon class="top-right" @click="closeModal">mdi-close</v-icon>
       <v-card-title>
-        <v-card-text
-          class="headline text-center colorSecondary--text"
-        >{{ $tc("contactForm.title", 1) }}</v-card-text>
+        <v-card-text class="headline text-center colorSecondary--text">{{
+          $tc("contactForm.title", 1)
+        }}</v-card-text>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -23,7 +23,7 @@
                   required
                   color="secondary"
                   v-model="lastname"
-                  :rules="[v => !!v || 'Last name is required']"
+                  :rules="[(v) => !!v || 'Last name is required']"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -32,7 +32,7 @@
                   color="secondary"
                   v-model="firstname"
                   required
-                  :rules="[v => !!v || 'First name is required']"
+                  :rules="[(v) => !!v || 'First name is required']"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -42,7 +42,7 @@
                   required
                   color="secondary"
                   v-model="email"
-                  :rules="[v => !!v || 'Email is required']"
+                  :rules="[(v) => !!v || 'Email is required']"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -51,7 +51,7 @@
                   :label="$tc('contactForm.form.labelMsg', 1)"
                   v-model="message"
                   required
-                  :rules="[v => !!v || 'Message is required']"
+                  :rules="[(v) => !!v || 'Message is required']"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -61,21 +61,25 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn
-          color="warning"
-          text
-          @click="closeModal"
-        >{{ $tc("contactForm.form.actions.cancel", 1) }}</v-btn>
+        <v-btn color="warning" text @click="closeModal">{{
+          $tc("contactForm.form.actions.cancel", 1)
+        }}</v-btn>
         <v-btn
           :disabled="!isValid"
           color="success"
           text
           @click.prevent="submitForm"
-        >{{ $tc("contactForm.form.actions.send", 1) }}</v-btn>
+          >{{ $tc("contactForm.form.actions.send", 1) }}</v-btn
+        >
       </v-card-actions>
     </v-card>
-    <v-dialog content-class="success-modal" v-show="isSubmitSucced" v-model="isSubmitSucced" dark>
-      <h4 class="message-success">{{ $tc( "contactForm.success", 1 ) }}</h4>
+    <v-dialog
+      content-class="success-modal"
+      v-show="isSubmitSucced"
+      v-model="isSubmitSucced"
+      dark
+    >
+      <h4 class="message-success">{{ $tc("contactForm.success", 1) }}</h4>
     </v-dialog>
   </v-dialog>
 </template>
@@ -101,6 +105,9 @@ export default {
      * @constructor
      */
     showContact() {
+      this.$auth.user()
+        ? (this.email = this.$auth.user().email)
+        : (this.email = "");
       return this.$store.getters.isShowContact;
     },
   },
@@ -130,11 +137,6 @@ export default {
         }, 3000);
       });
     },
-  },
-  mounted() {
-    if (this.$auth.user()) {
-      this.email = this.$auth.user().email
-    }
   },
 };
 </script>

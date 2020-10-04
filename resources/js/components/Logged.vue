@@ -1,13 +1,20 @@
 <template>
-  <v-container class="pa-0 ma-0" id="user-logged">
-    <v-row align-content="center" justify="space-around" no-gutters class="pa-0 ma-auto">
+  <v-container class="pa-0" id="user-logged">
+    <v-row
+      align-content="center"
+      justify="space-around"
+      no-gutters
+      class="pa-0 ma-auto"
+    >
       <v-col xs="12">
         <v-row justify="center" align-content="center" class="pa-0 ma-0">
           <v-col cols="12">
             <v-row justify="center">
-              <h2
-                class="text-center"
-              >{{ $tc("logged.title.hello", 1) }} {{ this.$auth.user().name | capitalize }} {{ $tc("logged.title.welcome", 1) }}</h2>
+              <h2 class="text-center">
+                {{ $tc("logged.title.hello", 1) }}
+                {{ this.$auth.user().name | capitalize }}
+                {{ $tc("logged.title.welcome", 1) }}
+              </h2>
             </v-row>
           </v-col>
           <v-col cols="12">
@@ -23,25 +30,17 @@
             <v-row justify="center">
               <p class="text-center">
                 {{ $tc("logged.stats.found", 1) }}
-                <span
-                  class="colorTertiary--text"
-                >{{ errorsFound }}</span>
+                <span class="colorTertiary--text">{{ errorsFound }}</span>
                 {{ $tc("logged.stats.errorsFound", 1) }},
-                <span
-                  class="colorTertiary--text"
-                >{{ securityFails }}</span>
+                <span class="colorTertiary--text">{{ securityFails }}</span>
                 {{ $tc("logged.stats.securityFails", 1) }}
-                <span
-                  class="colorTertiary--text"
-                >{{ scannedFiles }}</span>
+                <span class="colorTertiary--text">{{ scannedFiles }}</span>
                 {{ $tc("logged.stats.scannedFiles", 1) }}
-                <span
-                  class="colorTertiary--text"
-                >{{ repositoryScanned }}</span>
+                <span class="colorTertiary--text">{{ repositoryScanned }}</span>
                 {{ $tc("logged.stats.migrationAssistance", 1) }}
-                <span
-                  class="colorTertiary--text"
-                >{{ migrationAssistance }}</span>
+                <span class="colorTertiary--text">{{
+                  migrationAssistance
+                }}</span>
                 {{ $tc("logged.stats.project", 1) }}
               </p>
             </v-row>

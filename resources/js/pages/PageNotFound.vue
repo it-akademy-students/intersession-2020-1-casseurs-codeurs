@@ -1,7 +1,9 @@
 <template>
   <v-container class="pa-5 mt-16">
     <v-row justify="center" align="center" class="pa-5 mb-5 mt-16">
-      <h2 class="display-1 text-center pa-md-4 ma-auto">{{ $tc("notFound.msg", 1) }}</h2>
+      <h2 class="display-1 text-center pa-md-4 ma-auto">
+        {{ $tc("notFound.msg", 1) }}
+      </h2>
     </v-row>
     <v-spacer></v-spacer>
     <v-row justify="center" align="center" class="pa-5 my-5">

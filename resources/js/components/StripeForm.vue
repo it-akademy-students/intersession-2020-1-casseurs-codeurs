@@ -1,5 +1,10 @@
 <template>
-  <v-dialog content-class="modalStripe" v-model="dialog" dark @click:outside="method">
+  <v-dialog
+    content-class="modalStripe"
+    v-model="dialog"
+    dark
+    @click:outside="method"
+  >
     <div class="stripe-form">
       <form method="POST" id="payment-form">
         <div class="email top-form">
@@ -15,12 +20,20 @@
           </div>
         </div>
         <div class="form-row top-form">
-          <label for="card-number">{{ $tc( "stripeForm.cardName", 1 ) }}</label>
+          <label for="card-number">{{ $tc("stripeForm.cardName", 1) }}</label>
           <div>
-            <input type="text" class="StripeElement" id="name_on_card" name="name_on_card" required/>
+            <input
+              type="text"
+              class="StripeElement"
+              id="name_on_card"
+              name="name_on_card"
+              required
+            />
           </div>
           <div class="top-form">
-            <label for="card-number">{{ $tc( "stripeForm.creditCardNumbers", 1 ) }}</label>
+            <label for="card-number">{{
+              $tc("stripeForm.creditCardNumbers", 1)
+            }}</label>
             <div id="card-number">
               <!-- A Stripe Element will be inserted here. -->
             </div>
@@ -31,7 +44,9 @@
         </div>
         <div class="form-card-row">
           <div>
-            <label for="card-date">{{ $tc( "stripeForm.expirationDate", 1 ) }}</label>
+            <label for="card-date">{{
+              $tc("stripeForm.expirationDate", 1)
+            }}</label>
             <div id="card-date">
               <!-- A Stripe Element will be inserted here. -->
             </div>
@@ -50,26 +65,36 @@
           </div>
         </div>
         <div id="amount">
-          <label for="amount">{{ $tc( "stripeForm.amount", 1 ) }}</label>
+          <label for="amount">{{ $tc("stripeForm.amount", 1) }}</label>
           <div>
             <select v-model="amount" class="StripeElement" id="input-amount">
               <option
                 v-bind:key="option.value"
                 v-for="option in options"
                 v-bind:value="option.value"
-              >{{ option.text }} €</option>
+              >
+                {{ option.text }} €
+              </option>
             </select>
           </div>
         </div>
-        <button
-          @click="validePayment"
-          class="my-5 btn btn--violet button"
-        >{{ $tc( "stripeForm.submit", 1 ) }}</button>
+        <button @click="validePayment" class="my-5 btn btn--violet button">
+          {{ $tc("stripeForm.submit", 1) }}
+        </button>
       </form>
     </div>
-    <v-dialog content-class="success-modal" v-show="stripeResponse" v-model="stripeResponse" dark>
-      <h4 class="message-success">{{ $tc( "mainWelcomeDonate.welcomeModale.success", 1 ) }}</h4>
-      <p class="message">{{ $tc( "mainWelcomeDonate.welcomeModale.successStripe", 1 ) }}</p>
+    <v-dialog
+      content-class="success-modal"
+      v-show="stripeResponse"
+      v-model="stripeResponse"
+      dark
+    >
+      <h4 class="message-success">
+        {{ $tc("mainWelcomeDonate.welcomeModale.success", 1) }}
+      </h4>
+      <p class="message">
+        {{ $tc("mainWelcomeDonate.welcomeModale.successStripe", 1) }}
+      </p>
     </v-dialog>
   </v-dialog>
 </template>
@@ -79,12 +104,12 @@ import { loadStripe } from "@stripe/stripe-js";
 let stripe;
 const stripeObj = loadStripe(
   "pk_test_51HKQ6eEDdpH3cWNoddQJ31BBxp3uWCFyFVuj7Ge0ObIwOBj59a4wfqmjPT1NDg09UeYPHeYeDW7JOgFnuiDO7HNu00jDCMt69v"
-).then(res => (stripe = res));
+).then((res) => (stripe = res));
 const axios = require("axios").default;
 export default {
   name: "StripeElement",
   props: {
-    method: { type: Function }
+    method: { type: Function },
   },
   data: () => ({
     dialog: true,
@@ -106,11 +131,11 @@ export default {
       { text: "12", value: "12" },
       { text: "13", value: "13" },
       { text: "14", value: "14" },
-      { text: "15", value: "15" }
+      { text: "15", value: "15" },
     ],
   }),
   methods: {
-    initializeStripe: function(event) {
+    initializeStripe: function (event) {
       // Create an instance of Elements.
       const elements = stripe.elements();
       // Custom styling can be passed to options when creating an Element.
@@ -122,23 +147,23 @@ export default {
           fontSmoothing: "antialiased",
           fontSize: "16px",
           "::placeholder": {
-            color: "#aab7c4"
-          }
+            color: "#aab7c4",
+          },
         },
         invalid: {
           color: "#fa755a",
-          iconColor: "#fa755a"
-        }
+          iconColor: "#fa755a",
+        },
       };
       // Create an instance of the card Element.
       const cardNumber = elements.create("cardNumber", {
         style: style,
-        showIcon: true
+        showIcon: true,
       });
       // Add an instance of the card Element into the `card-element` <div>.
       cardNumber.mount("#card-number");
       // // Handle real-time validation errors from the card Element.
-      cardNumber.on("change", function(event) {
+      cardNumber.on("change", function (event) {
         const displayError = document.getElementById("card-number-errors");
         if (event.error) {
           displayError.textContent = event.error.message;
@@ -147,12 +172,12 @@ export default {
         }
       });
       const cardExpiry = elements.create("cardExpiry", {
-        style: style
+        style: style,
       });
       // Add an instance of the card Element into the `card-element` <div>.
       cardExpiry.mount("#card-date");
       // // Handle real-time validation errors from the card Element.
-      cardExpiry.on("change", function(event) {
+      cardExpiry.on("change", function (event) {
         const displayError = document.getElementById("card-date-errors");
         if (event.error) {
           displayError.textContent = event.error.message;
@@ -161,11 +186,11 @@ export default {
         }
       });
       const cardCvc = elements.create("cardCvc", {
-        style: style
+        style: style,
       });
       cardCvc.mount("#card-cvc");
       // // Handle real-time validation errors from the card Element.
-      cardCvc.on("change", function(event) {
+      cardCvc.on("change", function (event) {
         const displayError = document.getElementById("card-cvc-errors");
         if (event.error) {
           displayError.textContent = event.error.message;
@@ -175,12 +200,12 @@ export default {
       });
       // // Handle form submission.
       const form = document.getElementById("payment-form");
-      form.addEventListener("submit", function(event) {
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         const options = {
-          name: document.getElementById("name_on_card").value
+          name: document.getElementById("name_on_card").value,
         };
-        stripe.createToken(cardNumber, options).then(function(result) {
+        stripe.createToken(cardNumber, options).then(function (result) {
           if (result.error) {
             // Inform the user if there was an error.
             var errorElement = document.getElementById("card-number-errors");
@@ -193,10 +218,10 @@ export default {
               .post("/donate", {
                 email: formEmail,
                 amount: amount,
-                token: result.token.id
+                token: result.token.id,
               })
-              .then(res => console.log({ res }))
-              .catch(err => console.log({ err }));
+              .then((res) => console.log({ res }))
+              .catch((err) => console.log({ err }));
           }
         });
       });
@@ -210,16 +235,15 @@ export default {
         this.method();
       }, 5000);
     },
-
   },
   mounted() {
     setTimeout(() => {
       this.initializeStripe();
     }, 400);
-    if(this.$auth.user()) {
-      document.getElementById("email").value = this.$auth.user().email
+    if (this.$auth.user()) {
+      document.getElementById("email").value = this.$auth.user().email;
     }
-  }
+  },
 };
 </script>
 
@@ -279,10 +303,7 @@ export default {
 #amount {
   width: 100px;
 }
-// #card-cvc,
-// #amount {
-//     margin-left: 20px;
-// }
+
 #input-amount {
   width: 100px;
 }

@@ -11,7 +11,9 @@
     class="elevation-1 colorPrimaryUltraLight"
   >
     <template v-slot:item.status="{ item }">
-      <v-chip small :color="getColor(item.status)" class="caption my-2">{{ item.status }}</v-chip>
+      <v-chip small :color="getColor(item.status)" class="caption my-2">{{
+        item.status
+      }}</v-chip>
     </template>
 
     <template v-slot:expanded-item="{ headers, item }">

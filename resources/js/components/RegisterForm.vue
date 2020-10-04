@@ -1,33 +1,5 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="register-form">
-    <v-snackbar
-      v-if="snackbar && success"
-      v-model="snackbar"
-      absolute
-      top
-      right
-      color="colorSecondaryLight"
-    >
-      <span color="colorPrimary--text">{{ $tc("register.snackBar.success", 1) }}</span>
-      <v-icon dark>mdi-checkbox-marked-circle</v-icon>
-    </v-snackbar>
-    <v-snackbar
-      v-if="snackbar && has_error && !success"
-      v-model="snackbar"
-      absolute
-      top
-      right
-      color="error"
-    >
-      <span
-        v-if="error == 'registration_validation_error'"
-        color="colorPrimary--text"
-      >{{ $tc("register.snackBar.error", 1) }}</span>
-      <span v-if="has_error && errs.name" class="colorPrimary--text">{{ errs.name }}</span>
-      <span v-if="has_error && errs.email" class="colorPrimary--text">{{ errs.email }}</span>
-      <span v-if="has_error && errs.password" class="colorPrimary--text">{{ errs.password }}</span>
-      <v-icon dark>mdi-alert-circle</v-icon>
-    </v-snackbar>
     <v-col cols="12">
       <v-row justify="end" class="pa-0 ma-0">
         <v-col cols="1">
@@ -37,8 +9,13 @@
       <v-row>
         <v-col cols="12">
           <h2
-            :class="{'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown, 'pa-2 text-center': $vuetify.breakpoint.mdAndUp}"
-          >{{ $tc("register.title", 1) }}</h2>
+            :class="{
+              'subtitle-2 pa-2 text-center ': $vuetify.breakpoint.smAndDown,
+              'pa-2 text-center': $vuetify.breakpoint.mdAndUp,
+            }"
+          >
+            {{ $tc("register.title", 1) }}
+          </h2>
         </v-col>
       </v-row>
     </v-col>
@@ -111,7 +88,8 @@
                     href="javascript:;"
                     @click.stop="terms = true"
                     class="btn-text btn-text--violet"
-                  >{{ $tc("register.form.termsLink", 1) }}</a>
+                    >{{ $tc("register.form.termsLink", 1) }}</a
+                  >
                 </div>
               </template>
             </v-checkbox>
@@ -119,23 +97,68 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn text @click="handleCancelled">{{ $tc("register.form.cancel", 1) }}</v-btn>
+        <v-btn text @click="handleCancelled">{{
+          $tc("register.form.cancel", 1)
+        }}</v-btn>
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           color="colorTertiaryLight"
           type="submit"
-        >{{ $tc("register.form.create", 1) }}</v-btn>
+          >{{ $tc("register.form.create", 1) }}</v-btn
+        >
       </v-card-actions>
+      <!-- snackbar user feed-back -->
+      <v-snackbar
+        v-if="snackbar && success"
+        v-model="snackbar"
+        absolute
+        top
+        right
+        color="colorSecondaryLight"
+      >
+        <span color="colorPrimary--text">{{
+          $tc("register.snackBar.success", 1)
+        }}</span>
+        <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+      </v-snackbar>
+      <v-snackbar
+        v-if="snackbar && has_error && !success"
+        v-model="snackbar"
+        absolute
+        bottom
+        right
+        color="error"
+      >
+        <span
+          v-if="error == 'registration_validation_error'"
+          color="colorPrimary--text"
+          >{{ $tc("register.snackBar.error", 1) }}</span
+        >
+        <span v-if="has_error && errs.name" class="colorPrimary--text">{{
+          errs.name
+        }}</span>
+        <span v-if="has_error && errs.email" class="colorPrimary--text">{{
+          errs.email
+        }}</span>
+        <span v-if="has_error && errs.password" class="colorPrimary--text">{{
+          errs.password
+        }}</span>
+        <v-icon dark>mdi-alert-circle</v-icon>
+      </v-snackbar>
     </v-form>
     <v-dialog v-model="terms" width="70%">
       <v-card class="colorPrimaryUltraLight">
-        <v-card-title class="title colorTertiaryLight--text">{{ $tc("register.termsTitle", 1) }}</v-card-title>
+        <v-card-title class="title colorTertiaryLight--text">{{
+          $tc("register.termsTitle", 1)
+        }}</v-card-title>
         <v-card-text>{{ $tc("register.termsText", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="colorTertiaryLight" @click="terms = false">Ok</v-btn>
+          <v-btn text color="colorTertiaryLight" @click="terms = false"
+            >Ok</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -143,8 +166,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-
 export default {
   name: "RegisterForm",
   data() {
@@ -188,14 +209,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      "toggleRegisterForm",
-      "toggleSignInOn",
-      "toggleLoginForm",
-      "toggleEditProfile",
-      "toggleUserProfile",
-      "toggleLoggedIn",
-    ]),
     register() {
       var app = this;
       this.$auth
@@ -215,12 +228,6 @@ export default {
               (app.success = true),
               (app.snackbar = true),
               this.resetForm(),
-              this.$store.dispatch("toggleLoginForm", true),
-              this.$store.dispatch("toggleSignInOn", false),
-              this.$store.dispatch("toggleRegisterForm", false),
-              this.$store.dispatch("toggleLoggedIn", false),
-              this.$store.dispatch("toggleUserProfile", false),
-              this.$store.dispatch("toggleEditProfile", false),
               this.$router.push({
                 name: "home-login",
                 params: { successRegistrationRedirect: true },
@@ -240,18 +247,9 @@ export default {
     },
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
-      this.$refs.form.reset();
     },
     initShowForm() {
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", true),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home" })
-      );
+      return this.$router.push({ name: "home" });
     },
     handleCancelled() {
       return this.resetForm(), this.initShowForm();

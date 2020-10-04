@@ -1,19 +1,5 @@
 <template>
   <v-card flat color="colorPrimaryUltraLight" id="login-form">
-    <v-snackbar
-      v-if="snackbar && has_error && !success"
-      v-model="snackbar"
-      absolute
-      top
-      right
-      color="error"
-    >
-      <span
-        v-if="this.error == 'login_error'"
-        color="colorPrimary--text"
-      >Ooops! {{ this.error }} {{ $tc("loginForm.snackBar.error", 1) }}</span>
-      <v-icon dark>mdi-alert-circle</v-icon>
-    </v-snackbar>
     <v-col cols="12">
       <v-row justify="end" class="pa-0 ma-0">
         <v-col cols="1">
@@ -57,17 +43,34 @@
       <v-card-actions>
         <v-btn
           text
-          @click="forgotPwd= true"
+          @click="forgotPwd = true"
           class="colorTertiaryLight--text"
-        >{{ $tc("loginForm.actions.forgotPwd", 1) }}</v-btn>
+          >{{ $tc("loginForm.actions.forgotPwd", 1) }}</v-btn
+        >
         <v-spacer></v-spacer>
         <v-btn
           :disabled="!formIsValid"
           text
           class="colorTertiaryLight--text"
           type="submit"
-        >{{ $tc("loginForm.actions.login", 1) }}</v-btn>
+          >{{ $tc("loginForm.actions.login", 1) }}</v-btn
+        >
       </v-card-actions>
+      <!-- snackbar user feed-back -->
+      <v-snackbar
+        v-if="snackbar && has_error && !success"
+        v-model="snackbar"
+        absolute
+        top
+        right
+        color="error"
+      >
+        <span v-if="this.error == 'login_error'" color="colorPrimary--text"
+          >{{ $tc("mainWelcomeDonate.welcomeModale.error", 1) }},
+          {{ this.error }} {{ $tc("loginForm.snackBar.error", 1) }}</span
+        >
+        <v-icon dark>mdi-alert-circle</v-icon>
+      </v-snackbar>
     </v-form>
 
     <!--Reset password form -->
@@ -81,20 +84,24 @@
           right
           color="colorSecondaryLight"
         >
-          <span color="colorPrimary--text">{{ $tc("loginForm.snackBar.success", 1) }}</span>
+          <span color="colorPrimary--text">{{
+            $tc("loginForm.snackBar.success", 1)
+          }}</span>
           <v-icon dark>mdi-checkbox-marked-circle</v-icon>
         </v-snackbar>
         <v-col cols="12">
           <v-row>
             <v-col cols="11">
-              <v-card-title class="title colorTertiaryLight--text">{{ $tc('forgotPwd.title', 1) }}</v-card-title>
+              <v-card-title class="title colorTertiaryLight--text">{{
+                $tc("forgotPwd.title", 1)
+              }}</v-card-title>
             </v-col>
             <v-col cols="1">
               <v-icon @click="initShowForm">mdi-close</v-icon>
             </v-col>
           </v-row>
         </v-col>
-        <v-card-text>{{ $tc('forgotPwd.subtitle', 1) }}</v-card-text>
+        <v-card-text>{{ $tc("forgotPwd.subtitle", 1) }}</v-card-text>
 
         <v-form name="reset-form" @submit.prevent="resetPwd" method="post">
           <v-container fluid>
@@ -114,11 +121,9 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              text
-              class="colorTertiaryLight--text"
-              type="submit"
-            >{{ $tc('forgotPwd.action', 1) }}</v-btn>
+            <v-btn text class="colorTertiaryLight--text" type="submit">{{
+              $tc("forgotPwd.action", 1)
+            }}</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -127,8 +132,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-
 export default {
   name: "LoginForm",
   data() {
@@ -154,40 +157,14 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      "toggleLoginForm",
-      "toggleSignInOn",
-      "toggleRegisterForm",
-      "toggleLoggedIn",
-      "toggleUserProfile",
-      "toggleEditProfile",
-      "setUser",
-    ]),
     resetForm() {
       this.form = Object.assign({}, this.defaultForm);
-      this.$refs.form.reset();
     },
     showLoggedIn() {
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", true),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "user" })
-      );
+      return this.$router.push({ name: "user" });
     },
     initShowForm() {
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", true),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home" })
-      );
+      return this.$router.push({ name: "home" });
     },
     login() {
       // get the redirect object
@@ -210,7 +187,6 @@ export default {
               (app.snackbar = true),
               this.showLoggedIn(),
               this.resetForm(),
-              this.$store.dispatch("setUser", succ.data.data),
               this.$router.push({ name: "user" })
             );
           },
@@ -223,7 +199,6 @@ export default {
           }
         );
     },
-
     // Reset user password
     resetPwd() {
       let app = this;
@@ -236,7 +211,6 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-
       this.axios
         .post(url, data, header)
         .then((response) => {
