@@ -38,7 +38,7 @@ const config = {
   refreshData: {
     url: 'auth/refresh', 
     method: 'GET', 
-    enabled: false, 
+    enabled: true, 
     interval: 30
   }
 }

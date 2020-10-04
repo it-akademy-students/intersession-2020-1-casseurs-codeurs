@@ -172,7 +172,7 @@
         "send": "Send"
       }
     },
-    "success": "Message sent"
+    "success": "Message successfully sent"
   },
   "dashboard": {
     "title": "Your Dashboard",
