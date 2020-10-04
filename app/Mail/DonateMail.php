@@ -29,7 +29,7 @@ class DonateMail extends Mailable
      */
     public function build()
     {
-        $mail = $this->from('it.intersession.swapp@gmail.com')
+        $mail = $this->from('it.intersession.swapp@gmail.com', 'SWAPP - Security Scan for Web Apps')
             ->subject("Thanks for your support")
             ->markdown('emails.donate')->with('amount' , $this->amount);
         

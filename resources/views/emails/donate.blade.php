@@ -1,6 +1,6 @@
 @component('mail::message')
 
-# Merci pour votre don de {{$amount}}
+# Merci pour votre don de {{$amount}} € !
 
-{{ config('app.name') }}
+{{ config('app.name') }} team
 @endcomponent
