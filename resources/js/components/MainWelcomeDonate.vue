@@ -13,26 +13,37 @@
             >
               <v-col cols="12">
                 <h1
-                  :class="{'display-1 mb-3': $vuetify.breakpoint.smAndDown, 'display-2 mb-5': $vuetify.breakpoint.mdAndUp}"
-                >{{ $tc("mainWelcomeDonate.welcome", 1) }}</h1>
-                <span class="text-lg-h6 mt-5">{{ $tc("mainWelcomeDonate.welcomeText", 1) }}</span>
+                  :class="{
+                    'display-1 mb-3': $vuetify.breakpoint.smAndDown,
+                    'display-2 mb-5': $vuetify.breakpoint.mdAndUp,
+                  }"
+                >
+                  {{ $tc("mainWelcomeDonate.welcome", 1) }}
+                </h1>
+                <span class="text-lg-h6 mt-5">{{
+                  $tc("mainWelcomeDonate.welcomeText", 1)
+                }}</span>
                 <v-container fluid class="pa-0 mt-0">
                   <v-row align-content="center" no-gutters class="mt-0 pt-0">
                     <v-col cols="12">
                       <div class="my-3">
-                        <h2 class="display-1">{{ $tc( "mainWelcomeDonate.welcomeAction", 1 ) }}</h2>
+                        <h2 class="display-1">
+                          {{ $tc("mainWelcomeDonate.welcomeAction", 1) }}
+                        </h2>
                       </div>
                     </v-col>
                     <!-- form -->
                     <v-col cols="12">
                       <form class="form">
                         <v-container class="ma-0 pa-0" fluid>
-                          <v-row align-content="space-between" justify="space-around">
+                          <v-row
+                            align-content="space-between"
+                            justify="space-around"
+                          >
                             <v-col cols="12" lg="9" class="pb-0 input">
-                              <div
-                                class="errorAlertRepo"
-                                v-show="errorRepo"
-                              >{{ $tc("repoError.repo", 1) }}</div>
+                              <div class="errorAlertRepo" v-show="errorRepo">
+                                {{ $tc("repoError.repo", 1) }}
+                              </div>
                               <input
                                 id="repository"
                                 type="url"
@@ -44,10 +55,9 @@
                                 v-on:keyup="cancelErrorRepo"
                                 @focus="cancelErrorRepo"
                               />
-                              <label
-                                for="repository"
-                                class="form__label"
-                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1) }}</label>
+                              <label for="repository" class="form__label">{{
+                                $tc("mainWelcomeDonate.welcomeForm.labelUrl", 1)
+                              }}</label>
                             </v-col>
                             <v-col cols="12" lg="3" class="pb-0">
                               <input
@@ -57,13 +67,23 @@
                                 placeholder="master"
                                 v-model="branch"
                               />
-                              <label
-                                for="branch"
-                                class="form__label"
-                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelBranch", 1) }}</label>
+                              <label for="branch" class="form__label">{{
+                                $tc(
+                                  "mainWelcomeDonate.welcomeForm.labelBranch",
+                                  1
+                                )
+                              }}</label>
                             </v-col>
-                            <v-col cols="12" class="ma-0 pa-0" v-if="$auth.check()">
-                              <v-radio-group row class="ma-0 pa-0" v-model="radioGroup">
+                            <v-col
+                              cols="12"
+                              class="ma-0 pa-0"
+                              v-if="$auth.check()"
+                            >
+                              <v-radio-group
+                                row
+                                class="ma-0 pa-0"
+                                v-model="radioGroup"
+                              >
                                 <v-row
                                   justify="space-around"
                                   align-content="center"
@@ -72,7 +92,12 @@
                                 >
                                   <v-col cols="12" md="4">
                                     <v-radio
-                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption1', 1)"
+                                      :label="
+                                        $tc(
+                                          'mainWelcomeDonate.welcomeForm.labelOption1',
+                                          1
+                                        )
+                                      "
                                       value="1"
                                       name="migration"
                                       color="secondary"
@@ -81,7 +106,12 @@
                                   </v-col>
                                   <v-col cols="12" md="4">
                                     <v-radio
-                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption2', 1)"
+                                      :label="
+                                        $tc(
+                                          'mainWelcomeDonate.welcomeForm.labelOption2',
+                                          1
+                                        )
+                                      "
                                       value="2"
                                       name="migration"
                                       color="secondary"
@@ -90,7 +120,12 @@
                                   </v-col>
                                   <v-col cols="12" md="4">
                                     <v-radio
-                                      :label="$tc('mainWelcomeDonate.welcomeForm.labelOption0', 1)"
+                                      :label="
+                                        $tc(
+                                          'mainWelcomeDonate.welcomeForm.labelOption0',
+                                          1
+                                        )
+                                      "
                                       value="0"
                                       name="migration"
                                       color="secondary"
@@ -101,10 +136,9 @@
                               </v-radio-group>
                             </v-col>
                             <v-col cols="12" lg="9" class="pt-0 input">
-                              <div
-                                class="errorAlertEmail"
-                                v-show="errorEmail"
-                              >{{ $tc('repoError.email', 1) }}</div>
+                              <div class="errorAlertEmail" v-show="errorEmail">
+                                {{ $tc("repoError.email", 1) }}
+                              </div>
                               <input
                                 id="mail"
                                 pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
@@ -115,22 +149,35 @@
                                 v-on:keyup="cancelErrorEmail"
                                 @focus="cancelErrorEmail"
                               />
-                              <label
-                                for="mail"
-                                class="form__label"
-                              >{{ $tc("mainWelcomeDonate.welcomeForm.labelEmail", 1) }}</label>
+                              <label for="mail" class="form__label">{{
+                                $tc(
+                                  "mainWelcomeDonate.welcomeForm.labelEmail",
+                                  1
+                                )
+                              }}</label>
                             </v-col>
                             <v-col cols="12" lg="3" class="pt-0">
-                              <v-row justify="end" justify-lg="center" class="ma-0 pa-0">
+                              <v-row
+                                justify="end"
+                                justify-lg="center"
+                                class="ma-0 pa-0"
+                              >
                                 <button
                                   class="btn btn--green"
                                   @click.prevent="handleGithubUrl"
-                                >{{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}</button>
+                                >
+                                  {{ $tc("mainWelcomeDonate.welcomeBtn", 1) }}
+                                </button>
                               </v-row>
                             </v-col>
                           </v-row>
                         </v-container>
-                        <v-dialog content-class="modal" v-show="loading" v-model="loading" dark>
+                        <v-dialog
+                          content-class="modal"
+                          v-show="loading"
+                          v-model="loading"
+                          dark
+                        >
                           <v-img
                             class="mx-1 loader"
                             src="../../img/swapp_image_logo.svg"
@@ -139,7 +186,11 @@
                             contain
                             alt="logo"
                           ></v-img>
-                          <v-skeleton-loader class="mx-auto" max-width="300" type="card"></v-skeleton-loader>
+                          <v-skeleton-loader
+                            class="mx-auto"
+                            max-width="300"
+                            type="card"
+                          ></v-skeleton-loader>
                         </v-dialog>
                         <v-dialog
                           content-class="success-modal"
@@ -147,17 +198,37 @@
                           v-model="fetching"
                           dark
                         >
-                          <h4
-                            class="message-success"
-                          >{{ $tc( "mainWelcomeDonate.welcomeModale.success", 1 ) }}</h4>
-                          <p
-                            class="message"
-                          >{{ $tc( "mainWelcomeDonate.welcomeModale.successMsg", 1 ) }}</p>
+                          <h4 class="message-success">
+                            {{
+                              this.userFeedBackScanned
+                                ? $tc(
+                                    "mainWelcomeDonate.welcomeModale.success",
+                                    1
+                                  )
+                                : $tc(
+                                    "mainWelcomeDonate.welcomeModale.error",
+                                    1
+                                  )
+                            }}
+                          </h4>
+                          <p class="message">
+                            {{
+                              this.userFeedBackScanned
+                                ? $tc(
+                                    "mainWelcomeDonate.welcomeModale.successMsg",
+                                    1
+                                  )
+                                : $tc(
+                                    "mainWelcomeDonate.welcomeModale.errorMsg",
+                                    1
+                                  )
+                            }}
+                          </p>
                         </v-dialog>
                       </form>
-                      <span
-                        class="subheading mb-5 pt-2"
-                      >{{ $tc("mainWelcomeDonate.welcomeAsterisk", 1) }}</span>
+                      <span class="subheading mb-5 pt-2">{{
+                        $tc("mainWelcomeDonate.welcomeAsterisk", 1)
+                      }}</span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -176,7 +247,11 @@
 
           <!-- donate section -->
           <v-container fluid class="px-5 mt-0 hidden-md-and-down">
-            <v-row align-content="space-between" justify="space-around" no-gutters>
+            <v-row
+              align-content="space-between"
+              justify="space-around"
+              no-gutters
+            >
               <v-col cols="12">
                 <v-container fluid class="pa-0 mt-1">
                   <v-row align-content="center" no-gutters>
@@ -184,14 +259,18 @@
                       <v-container fluid>
                         <v-row align="baseline" class="mr-5">
                           <v-col cols="12" lg="10">
-                            <h2 class="mb-1 mt-2">{{ $tc( "mainWelcomeDonate.donateAction", 1 ) }}</h2>
+                            <h2 class="mb-1 mt-2">
+                              {{ $tc("mainWelcomeDonate.donateAction", 1) }}
+                            </h2>
                           </v-col>
                           <v-col cols="12" lg="2">
                             <button
                               class="btn btn--green"
                               role="link"
                               @click="showStripeForm"
-                            >{{ $tc("mainWelcomeDonate.donateBtn", 1) }}</button>
+                            >
+                              {{ $tc("mainWelcomeDonate.donateBtn", 1) }}
+                            </button>
                           </v-col>
                         </v-row>
                       </v-container>
@@ -230,6 +309,7 @@ export default {
     errorEmail: false,
     errorRepo: false,
     radioGroup: "0",
+    userFeedBackScanned: true,
   }),
   methods: {
     handleGithubUrl: function () {
@@ -255,13 +335,23 @@ export default {
         const branch = this.branch;
         let url = `github/${username}/${repo}/${email}/${migration}/${branch}`;
         url = url.replace("//", "/");
-        this.axios.get(url).then((response) => {
-          this.loading = false;
-          this.fetching = true;
-          setTimeout(() => {
-            this.fetching = false;
-          }, 3000);
-        });
+        this.axios
+          .get(url)
+          .then((response) => {
+            this.loading = false;
+            this.fetching = true;
+            if (response.data.code == 200) {
+              this.userFeedBackScanned = true;
+            } else {
+              this.userFeedBackScanned = false;
+            }
+            setTimeout(() => {
+              this.fetching = false;
+            }, 4000);
+          })
+          .catch((err) => {
+            console.log({ err });
+          });
       }
     },
     showStripeForm: function () {
@@ -309,7 +399,7 @@ export default {
   height: 200px;
   position: relative;
   padding: 40px;
-  background: black;
+  background: #3a3a3f;
 }
 
 .message-success {
@@ -364,5 +454,4 @@ export default {
 .v-radio > label {
   color: #62cb5c !important;
 }
-
 </style>

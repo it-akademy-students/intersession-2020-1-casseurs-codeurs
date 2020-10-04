@@ -1,7 +1,9 @@
 <template>
   <v-container class="pa-5 mt-16">
     <v-row justify="center" align="center" class="pa-5 mb-5 mt-16">
-      <h2 class="display-1 text-center pa-md-4 ma-auto">{{ $tc('resetPwd.title', 1) }}</h2>
+      <h2 class="display-1 text-center pa-md-4 ma-auto">
+        {{ $tc("resetPwd.title", 1) }}
+      </h2>
     </v-row>
     <v-spacer></v-spacer>
     <v-row justify="center" align="center" class="pa-5 my-5">
@@ -13,11 +15,17 @@
         right
         color="colorSecondaryLight"
       >
-        <span color="colorPrimary--text">{{ $tc("resetPasswordForm.snackBar.success", 1) }}</span>
+        <span color="colorPrimary--text">{{
+          $tc("resetPasswordForm.snackBar.success", 1)
+        }}</span>
         <v-icon dark>mdi-checkbox-marked-circle</v-icon>
       </v-snackbar>
-
-      <v-form ref="form" name="form" @submit.prevent="changePassword" method="post">
+      <v-form
+        ref="form"
+        name="form"
+        @submit.prevent="changePassword"
+        method="post"
+      >
         <v-container fluid>
           <v-row>
             <v-col cols="12">
@@ -61,15 +69,15 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="colorTertiaryLight" type="submit">{{ $tc('resetPwd.action', 1) }}</v-btn>
+          <v-btn text color="colorTertiaryLight" type="submit">{{
+            $tc("resetPwd.action", 1)
+          }}</v-btn>
         </v-card-actions>
       </v-form>
     </v-row>
   </v-container>
 </template>
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
-
 export default {
   name: "ResetPasswordForm",
   data() {
@@ -85,15 +93,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "toggleRegisterForm",
-      "toggleSignInOn",
-      "toggleLoginForm",
-      "toggleEditProfile",
-      "toggleUserProfile",
-      "toggleLoggedIn",
-    ]),
-
     changePassword() {
       this.axios
         .post("/auth/reset/password/", {
@@ -106,12 +105,6 @@ export default {
           (result) => {
             (this.success = true),
               (this.snackbar = true),
-              this.$store.dispatch("toggleLoginForm", true),
-              this.$store.dispatch("toggleSignInOn", false),
-              this.$store.dispatch("toggleRegisterForm", false),
-              this.$store.dispatch("toggleLoggedIn", false),
-              this.$store.dispatch("toggleUserProfile", false),
-              this.$store.dispatch("toggleEditProfile", false),
               this.$router.push({ name: "home-login" });
           },
           (error) => {

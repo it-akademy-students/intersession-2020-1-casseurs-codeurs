@@ -4,21 +4,13 @@
       {{ $tc("logged.stats.found", 1) }}
       <span class="colorTertiary--text">{{ errorsFound }}</span>
       {{ $tc("logged.stats.errorsFound", 1) }},
-      <span
-        class="colorTertiary--text"
-      >{{ securityFails }}</span>
+      <span class="colorTertiary--text">{{ securityFails }}</span>
       {{ $tc("logged.stats.securityFails", 1) }}
-      <span
-        class="colorTertiary--text"
-      >{{ scannedFiles }}</span>
+      <span class="colorTertiary--text">{{ scannedFiles }}</span>
       {{ $tc("logged.stats.scannedFiles", 1) }}
-      <span
-        class="colorTertiary--text"
-      >{{ repositoryScanned }}</span>
+      <span class="colorTertiary--text">{{ repositoryScanned }}</span>
       {{ $tc("logged.stats.migrationAssistance", 1) }}
-      <span
-        class="colorTertiary--text"
-      >{{ migrationAssistance }}</span>
+      <span class="colorTertiary--text">{{ migrationAssistance }}</span>
       {{ $tc("logged.stats.project", 1) }}
     </v-banner>
     <v-card flat class="pa-3" color="colorPrimaryLight">
@@ -26,43 +18,63 @@
         <v-col cols="12" lg="7">
           <v-card flat color="colorPrimaryLight pa-3">
             <main-welcome-donate />
-            <contact />
+            <!-- contact form -->
+            <contact-form />
           </v-card>
         </v-col>
         <v-col cols="12" lg="1">
           <v-layout justify-center>
-            <v-divider class="ma-3 mt-5 divider-y hidden-md-and-down" inset vertical></v-divider>
+            <v-divider
+              class="ma-3 mt-5 divider-y hidden-md-and-down"
+              inset
+              vertical
+            ></v-divider>
           </v-layout>
         </v-col>
         <v-col cols="12" lg="4">
           <v-card color="colorPrimaryUltraLight" class="pa-5 mt-5">
-            <sign-in-on v-if="this.$store.getters.isShowSignInOn && !this.$auth.check()" />
-            <login-form v-if="this.$store.getters.isShowLoginForm && !this.$auth.check()" />
-            <register-form v-if="this.$store.getters.isShowRegisterForm && !this.$auth.check()" />
-            <user-profile v-if="this.$store.getters.isShowUserProfile && this.$auth.check()" />
-            <logged v-if="this.$store.getters.isShowLoggedIn && this.$auth.check()" />
-            <edit-profile-form v-if="this.$store.getters.isShowEditProfile && this.$auth.check()" />
+            <sign-in-on v-if="$route.fullPath == '/' && !this.$auth.check()" />
+            <login-form
+              v-if="
+                ($route.fullPath == '/#login-form' && !this.$auth.check()) ||
+                ($route.fullPath == '/login' && !this.$auth.check())
+              "
+            />
+            <register-form
+              v-if="
+                ($route.fullPath == '/#register-form' && !this.$auth.check()) ||
+                ($route.fullPath == '/register' && !this.$auth.check())
+              "
+            />
+            <user-profile
+              v-if="$route.fullPath == '/#user-profile' && this.$auth.check()"
+            />
+            <logged v-if="$route.fullPath == '/user' && this.$auth.check() || $route.fullPath == '/' && this.$auth.check()" />
+            <edit-profile-form
+              v-if="$route.fullPath == '/#edit-form' && this.$auth.check()"
+            />
           </v-card>
         </v-col>
       </v-row>
     </v-card>
 
-    <v-dialog v-model="dialog" persistent max-width="290" transition="fade-transition">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290"
+      transition="fade-transition"
+    >
       <v-card color="colorPrimaryLight">
         <v-card-title class="headline secondary--text">Cookies:</v-card-title>
-        <v-card-text>{{ $tc('cookies.text', 1) }}</v-card-text>
+        <v-card-text>{{ $tc("cookies.text", 1) }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="secondary"
-            text
-            @click="dialog = false"
-          >{{ $tc('cookies.actions.disagree', 1) }}</v-btn>
-          <v-btn
-            color="secondary"
-            text
-            @click="dialog = false"
-          >{{ $tc('cookies.actions.agree', 1) }}</v-btn>
+          <v-btn color="secondary" text @click="dialog = false">{{
+            $tc("cookies.actions.disagree", 1)
+          }}</v-btn>
+          <v-btn color="secondary" text @click="dialog = false">{{
+            $tc("cookies.actions.agree", 1)
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,7 +89,7 @@ import RegisterForm from "@/js/components/RegisterForm";
 import UserProfile from "@/js/components/UserProfile";
 import Logged from "@/js/components/Logged";
 import EditProfileForm from "@/js/components/EditProfileForm";
-import Contact from "@/js/pages/Contact";
+import ContactForm from "@/js/components/ContactForm";
 
 export default {
   name: "MainApp",
@@ -89,7 +101,7 @@ export default {
     UserProfile,
     Logged,
     EditProfileForm,
-    Contact,
+    ContactForm,
   },
   beforeMount() {
     this.getStats();

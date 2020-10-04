@@ -3,7 +3,11 @@
     <v-row justify="center">
       <v-row justify="center" class="pa-0 ma-0">
         <v-col cols="12">
-          <v-card class="mx-auto text-center" color="colorTertiary" @click="initDashboard">
+          <v-card
+            class="mx-auto text-center"
+            color="colorTertiary"
+            @click="initDashboard"
+          >
             <v-card-text>
               <v-sheet color="rgba(0, 0, 0, .12)">
                 <v-sparkline
@@ -19,7 +23,9 @@
               </v-sheet>
             </v-card-text>
             <v-card-text>
-              <div class="display-1 font-weight-thin">{{ $tc("dashboard.btn.title", 1) }}</div>
+              <div class="display-1 font-weight-thin">
+                {{ $tc("dashboard.btn.title", 1) }}
+              </div>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="justify-center">
@@ -42,7 +48,9 @@
               <v-icon color="secondary">mdi-close</v-icon>
             </v-btn>
 
-            <v-toolbar-title class="secondary--text">{{ $tc("dashboard.title", 1) }}</v-toolbar-title>
+            <v-toolbar-title class="secondary--text">{{
+              $tc("dashboard.title", 1)
+            }}</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
 
@@ -51,17 +59,25 @@
               <v-row justify="space-around" align="baseline">
                 <!-- total repo -->
                 <v-col cols="6" md="3">
-                  <v-card color="colorSecondaryLight" class="mx-auto" min-height="200px">
+                  <v-card
+                    color="colorSecondaryLight"
+                    class="mx-auto"
+                    min-height="200px"
+                  >
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div
-                          class="colorPrimaryLight--text font-weight-black"
-                        >{{ $tc("dashboard.card.totalRepository", 1) }}</div>
-                        <v-icon color="colorPrimaryLight" size="25">mdi-file-code</v-icon>
+                        <div class="colorPrimaryLight--text font-weight-black">
+                          {{ $tc("dashboard.card.totalRepository", 1) }}
+                        </div>
+                        <v-icon color="colorPrimaryLight" size="25"
+                          >mdi-file-code</v-icon
+                        >
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
-                      >{{ totalRepository }}</p>
+                      >
+                        {{ totalRepository }}
+                      </p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -70,14 +86,18 @@
                   <v-card color="warning" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div
-                          class="colorPrimaryLight--text font-weight-black"
-                        >{{ $tc("dashboard.card.totalErrorsFound", 1) }}</div>
-                        <v-icon color="colorPrimaryLight" size="25">mdi-bug</v-icon>
+                        <div class="colorPrimaryLight--text font-weight-black">
+                          {{ $tc("dashboard.card.totalErrorsFound", 1) }}
+                        </div>
+                        <v-icon color="colorPrimaryLight" size="25"
+                          >mdi-bug</v-icon
+                        >
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
-                      >{{ totalErrorsFound }}</p>
+                      >
+                        {{ totalErrorsFound }}
+                      </p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -86,30 +106,42 @@
                   <v-card color="error" class="mx-auto" min-height="200px">
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div
-                          class="colorPrimaryLight--text font-weight-black"
-                        >{{ $tc("dashboard.card.totalSecurityFails", 1) }}</div>
-                        <v-icon color="colorPrimaryLight" size="25">mdi-security</v-icon>
+                        <div class="colorPrimaryLight--text font-weight-black">
+                          {{ $tc("dashboard.card.totalSecurityFails", 1) }}
+                        </div>
+                        <v-icon color="colorPrimaryLight" size="25"
+                          >mdi-security</v-icon
+                        >
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4 mx-4"
-                      >{{ totalSecurityFails }}</p>
+                      >
+                        {{ totalSecurityFails }}
+                      </p>
                     </v-card-text>
                   </v-card>
                 </v-col>
                 <!-- last repo -->
                 <v-col cols="6" md="3">
-                  <v-card color="colorTertiaryLight" class="mx-auto" min-height="200px">
+                  <v-card
+                    color="colorTertiaryLight"
+                    class="mx-auto"
+                    min-height="200px"
+                  >
                     <v-card-text>
                       <v-row justify="space-between">
-                        <div
-                          class="colorPrimaryLight--text font-weight-black"
-                        >{{ $tc("dashboard.card.lastRepository", 1) }}</div>
-                        <v-icon color="colorPrimaryLight" size="25">mdi-source-repository</v-icon>
+                        <div class="colorPrimaryLight--text font-weight-black">
+                          {{ $tc("dashboard.card.lastRepository", 1) }}
+                        </div>
+                        <v-icon color="colorPrimaryLight" size="25"
+                          >mdi-source-repository</v-icon
+                        >
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
-                      >{{ lastRepository }}</p>
+                      >
+                        {{ lastRepository }}
+                      </p>
                     </v-card-text>
                   </v-card>
                 </v-col>
@@ -127,7 +159,7 @@
               </v-row>
             </v-container>
           </v-card-text>
-          <div style="flex: 1 1 auto;"></div>
+          <div style="flex: 1 1 auto"></div>
         </v-card>
       </v-dialog>
     </v-row>

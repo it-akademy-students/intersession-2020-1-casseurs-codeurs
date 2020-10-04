@@ -6,7 +6,9 @@
         <v-list-group class="colorSecondary--text">
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title class="colorSecondary--text">{{ $tc("navMenu.links.account", 1) }}</v-list-item-title>
+              <v-list-item-title class="colorSecondary--text">{{
+                $tc("navMenu.links.account", 1)
+              }}</v-list-item-title>
             </v-list-item-content>
           </template>
           <v-list-item
@@ -16,7 +18,9 @@
             @click="showProfile"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
+              <v-list-item-title>{{
+                $tc("navMenu.links.profile", 1)
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -27,7 +31,9 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
+              <v-list-item-title>{{
+                $tc("navMenu.links.signIn", 1)
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -38,7 +44,9 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
+              <v-list-item-title>{{
+                $tc("navMenu.links.signUp", 1)
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -49,7 +57,9 @@
             @click.stop="drawer = !drawer"
           >
             <v-list-item-content class="colorTertiaryLight--text">
-              <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
+              <v-list-item-title>{{
+                $tc("navMenu.links.logout", 1)
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -58,37 +68,30 @@
       <v-hover>
         <div
           slot-scope="{ hover }"
-          :class="
-            `${
-                hover
-                  ? 'colorTertiary--text'
-                  : 'colorSecondary--text'
-            }
+          :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'}
             pl-4
             contact
-              `                   
-          "
+              `"
           @click="showModalContact"
-        >Contact</div>
+        >
+          Contact
+        </div>
       </v-hover>
       <v-hover>
         <div
           slot-scope="{ hover }"
-          :class="
-            `${
-                hover
-                  ? 'colorTertiary--text'
-                  : 'colorSecondary--text'
-            }
+          :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'}
             pl-4
-            mt-4`
-          "
+            mt-4`"
         >
           <a
             target="_blank"
             href="https://github.com/it-akademy-students/intersession-2020-1-casseurs-codeurs"
-            :class="`${hover ? 'colorTertiary--text' : 'colorSecondary--text'} mt-4`"
-          >Github</a>
+            :class="`${
+              hover ? 'colorTertiary--text' : 'colorSecondary--text'
+            } mt-4`"
+            >Github</a
+          >
         </div>
       </v-hover>
     </v-navigation-drawer>
@@ -108,13 +111,16 @@
         alt="logo"
       ></v-img>
       <v-toolbar-title
-        :class="{'subtitle-2 secondary--text': $vuetify.breakpoint.smAndDown, 'display-1 secondary--text': $vuetify.breakpoint.mdAndUp}"
-        style="font-family: 'Open Sans', sans-serif;"
+        :class="{
+          'subtitle-2 secondary--text': $vuetify.breakpoint.smAndDown,
+          'display-1 secondary--text': $vuetify.breakpoint.mdAndUp,
+        }"
+        style="font-family: 'Open Sans', sans-serif"
       >
         {{ $tc("navMenu.appName", 1) }}
-        <span
-          class="hidden-sm-and-down text-wrap"
-        >{{ $tc("navMenu.appSlogan", 1) }}</span>
+        <span class="hidden-sm-and-down text-wrap">{{
+          $tc("navMenu.appSlogan", 1)
+        }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
@@ -127,13 +133,9 @@
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
-                :class="
-                  `${
-                      hover
-                        ? 'colorTertiary--text'
-                        : 'colorSecondary--text '
-                  }`
-                "
+                :class="`${
+                  hover ? 'colorTertiary--text' : 'colorSecondary--text '
+                }`"
               >
                 <v-list-item-title>Contact</v-list-item-title>
               </v-list-item-content>
@@ -148,13 +150,9 @@
             <v-hover>
               <v-list-item-content
                 slot-scope="{ hover }"
-                :class="
-                  `${
-                      hover
-                        ? 'colorTertiary--text'
-                        : 'colorSecondary--text '
-                  }`
-                "
+                :class="`${
+                  hover ? 'colorTertiary--text' : 'colorSecondary--text '
+                }`"
               >
                 <v-list-item-title>GitHub</v-list-item-title>
               </v-list-item-content>
@@ -176,14 +174,13 @@
                       <v-icon
                         size="20"
                         slot-scope="{ hover }"
-                        :class="
-                          `${
-                              hover
-                                ? 'colorTertiary--text'
-                                : 'colorSecondary--text '
-                          }`
-                        "
-                      >mdi-account</v-icon>
+                        :class="`${
+                          hover
+                            ? 'colorTertiary--text'
+                            : 'colorSecondary--text '
+                        }`"
+                        >mdi-account</v-icon
+                      >
                     </v-hover>
                   </v-btn>
                 </template>
@@ -193,11 +190,16 @@
                       <v-list-item-content
                         class="pr-3 colorPrimary"
                         slot-scope="{ hover }"
-                        :class="
-                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        :class="`${
+                          hover
+                            ? 'colorTertiary--text'
+                            : 'colorSecondary--text '
+                        }`"
                         @click="showProfile"
                       >
-                        <v-list-item-title>{{ $tc("navMenu.links.profile", 1) }}</v-list-item-title>
+                        <v-list-item-title>{{
+                          $tc("navMenu.links.profile", 1)
+                        }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -207,11 +209,16 @@
                       <v-list-item-content
                         class="pr-3 colorPrimary"
                         slot-scope="{ hover }"
-                        :class="
-                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        :class="`${
+                          hover
+                            ? 'colorTertiary--text'
+                            : 'colorSecondary--text '
+                        }`"
                         @click="showLoginForm"
                       >
-                        <v-list-item-title>{{ $tc("navMenu.links.signIn", 1) }}</v-list-item-title>
+                        <v-list-item-title>{{
+                          $tc("navMenu.links.signIn", 1)
+                        }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -221,11 +228,16 @@
                       <v-list-item-content
                         class="pr-3 colorPrimary"
                         slot-scope="{ hover }"
-                        :class="
-                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        :class="`${
+                          hover
+                            ? 'colorTertiary--text'
+                            : 'colorSecondary--text '
+                        }`"
                         @click="showRegisterForm"
                       >
-                        <v-list-item-title>{{ $tc("navMenu.links.signUp", 1) }}</v-list-item-title>
+                        <v-list-item-title>{{
+                          $tc("navMenu.links.signUp", 1)
+                        }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -235,11 +247,16 @@
                       <v-list-item-content
                         class="pr-3 colorPrimary"
                         slot-scope="{ hover }"
-                        :class="
-                          `${hover? 'colorTertiary--text': 'colorSecondary--text '}`"
+                        :class="`${
+                          hover
+                            ? 'colorTertiary--text'
+                            : 'colorSecondary--text '
+                        }`"
                         @click.prevent="handleLogout"
                       >
-                        <v-list-item-title>{{ $tc("navMenu.links.logout", 1) }}</v-list-item-title>
+                        <v-list-item-title>{{
+                          $tc("navMenu.links.logout", 1)
+                        }}</v-list-item-title>
                       </v-list-item-content>
                     </v-hover>
                   </v-list-item>
@@ -255,112 +272,44 @@
 
 <script>
 import LangSwitcher from "@/js/components/LangSwitcher";
-import store from "../stores/store";
-import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "NavMenu",
-  store: store,
   components: { LangSwitcher },
   data: () => ({
     drawer: false,
   }),
   methods: {
-    ...mapActions([
-      "toggleRegisterForm",
-      "toggleLoginForm",
-      "toggleSignInOn",
-      "toggleUserProfile",
-      "toggleLoggedIn",
-      "toggleEditProfile",
-    ]),
-
     showModalContact: () => {
       store.commit("showContact");
     },
     showLoginForm() {
-      let destination;
-      if (this.$route.path == "/login") {
-        destination = this.$vuetify.goTo("#login-form");
-      } else {
-        destination = this.$router.push("/#login-form");
-      }
-      return (
-        this.$store.dispatch("toggleLoginForm", true),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        destination
-      );
+      this.$route.path == "/login"
+        ? this.$vuetify.goTo("#login-form")
+        : this.$router.push("/#login-form");
     },
     showRegisterForm() {
-      let destination;
-      if (this.$route.path == "/register") {
-        destination = this.$vuetify.goTo("#register-form");
-      } else {
-        destination = this.$router.push("/#register-form");
-      }
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", true),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        destination
-      );
+      this.$route.path == "/register"
+        ? this.$vuetify.goTo("#register-form")
+        : this.$router.push("/#register-form");
     },
     showProfile() {
-      let destination;
-      if (this.$route.path == "/user/account") {
-        destination = this.$vuetify.goTo("#user-profile");
-      } else {
-        destination = this.$router.push("/#user-profile");
-      }
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", true),
-        this.$store.dispatch("toggleEditProfile", false),
-        destination
-      );
+      this.$route.path == "/user/account"
+        ? this.$vuetify.goTo("#user-profile")
+        : this.$router.push("/#user-profile");
     },
     showLoggedIn() {
-      let destination;
-      if (this.$route.path == "/user") {
-        destination = this.$vuetify.goTo("#user-logged");
-      } else {
-        destination = this.$router.push("/#user-logged");
-      }
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", false),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", true),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        destination
-      );
+      this.$route.path == "/user"
+        ? this.$vuetify.goTo("#user-logged")
+        : this.$router.push("/#user-logged");
     },
     initShowForm() {
-      return (
-        this.$store.dispatch("toggleLoginForm", false),
-        this.$store.dispatch("toggleSignInOn", true),
-        this.$store.dispatch("toggleRegisterForm", false),
-        this.$store.dispatch("toggleLoggedIn", false),
-        this.$store.dispatch("toggleUserProfile", false),
-        this.$store.dispatch("toggleEditProfile", false),
-        this.$router.push({ name: "home" })
-      );
+      return this.$router.push({ name: "home" });
     },
     handleLogout() {
       this.$auth.logout().then(
         (succ) => {
-          return this.initShowForm(), this.$store.dispatch("setUser", "");
+          return this.initShowForm();
         },
         (err) => {
           console.log({ err });

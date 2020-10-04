@@ -11,7 +11,7 @@
     }
   },
   "notFound": {
-    "msg": "Ooops... Désolé, nous n'avons pas trouvé ce que vous recherchiez...",
+    "msg": "Oups... Désolé, nous n'avons pas trouvé ce que vous recherchiez...",
     "goBack": "Retour"
   },
   "footer": {
@@ -33,36 +33,14 @@
       "labelOption1": "Avec les outils de migration",
       "labelOption2": "Uniquement les outils de migration"
     },
-    "footer": {
-        "copyright": "2020, réalisé par ",
-        "brand": "Les Casseurs Codeurs",
-        "link": ". Code source disponible sur "
-      },
-    "mainWelcomeDonate": {
-      "welcome": "Bienvenue sur SWAPP !",
-      "welcomeText": "Collez simplement l'url de votre dépôt github * dans le formulaire, cliquez sur 'ANALYSER !' et attendez le résultat par email pour voir si votre code comporte des erreurs et/ou des failles de sécurité.",
-      "welcomeAsterisk": "*Uniquement disponible pour les dépôts publics hébergés sur github et codés en PHP ^5.4",
-      "welcomeAction": "Scannez votre projet GitHub",
-      "welcomeBtn": "Analyser !",
-      "welcomeForm": {
-        "labelUrl": "Saisissez l'URL de votre dépôt",
-        "labelBranch": "Saisissez la Branch",
-        "labelEmail": "Entrez votre email",
-        "labelOption0": "Sans les outils de migration",
-        "labelOption1": "Avec les outils de migration",
-        "labelOption2": "Uniquement les outils de migration"
-      },
-      "welcomeModale": {
-        "success":  "Succès",
-        "successMsg": "Vous allez recevoir les résultats par e-mail",
-        "successStripe": "Merci pour votre don"
-        },
-      "donate": "Soutenez le project ",
-      "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et/ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
-      "donateAction": "Participez à la maintenance de ce projet: faites un don !",
-      "donateBtn": "Je soutiens !"
+    "welcomeModale": {
+      "success": "Succès",
+      "successMsg": "Vous allez recevoir les résultats par e-mail",
+      "error": "Oups",
+      "errorMsg": "Limite d'appel à l'API GitHub dépassée, Merci de réessayer dans une heure. Consultez la documentation de l'API GitHub pour plus de détails",
+      "successStripe": "Merci pour votre don"
     },
-    "donate": "Soutenez le project ",
+    "donate": "Soutenez le project ! ",
     "donateText": "SWAPP est un projet open source qui automatise la détection des vulnérabilités de sécurité et/ou des bogues de code. Vous avez la possibilité de soutenir le projet en faisant un don pour nous aider à garantir ce service.",
     "donateAction": "Participez à la maintenance de ce projet: faites un don !",
     "donateBtn": "Je soutiens !"
@@ -114,10 +92,9 @@
     },
     "termsTitle": "Terms",
     "termsText": "Licences :   Le contenu du guide est sous MIT License.  Le moteur de l'application est sous Laravel et le thème du site est une création de: Les Casseurs Codeurs.  Informatique et libertés :  Conformément aux dispositions de la loi Informatique et Libertés du 6 janvier 1978 modifiée par la Loi du 6 août 2004, toutes les données informatiques vous concernant sont traitées de manières strictement confidentielles. Vous disposez d’un droit d’accès, de rectification, et d’opposition sur vos données. Pour cela il vous suffit de nous en faire la demande par courrier électronique en nous indiquant vos nom, prénom, adresse.  Éditeur:  Les Casseurs Codeurs  Utilisez le formulaire de contact pour nous contacter.  Directeur de la publication :  Mohamed Zoghlami  Hébergeur : erre-tec",
-
     "snackBar": {
       "success": "Félicitations ! Votre compte a été créé avec succès !",
-      "error": "Ooops ! Erreur, impossible de s'inscrire pour le moment. Si le problème persiste, veuillez contacter un administrateur."
+      "error": "Oups ! Erreur, impossible de s'inscrire pour le moment. Si le problème persiste, veuillez contacter un administrateur."
     }
   },
   "loginForm": {
@@ -140,12 +117,10 @@
     "title": "Mot de passe oublié :",
     "subtitle": "Veuillez renseigner l'adresse e-mail de votre compte",
     "action": "Envoyer"
-
   },
   "resetPwd": {
     "title": "Réinitialisez votre mot de passe",
     "action": "Valider mon nouveau mot de passe"
-
   },
   "logged": {
     "title": {
@@ -181,7 +156,7 @@
     },
     "snackBar": {
       "success": "Félicitations! Votre profil a été mis à jour avec succès !",
-      "error": "Ooops ! Erreur, impossible de modifier votre profil pour le moment. Si le problème persiste, veuillez contacter un administrateur."
+      "error": "Oups ! Erreur, impossible de modifier votre profil pour le moment. Si le problème persiste, veuillez contacter un administrateur."
     }
   },
   "contactForm": {
