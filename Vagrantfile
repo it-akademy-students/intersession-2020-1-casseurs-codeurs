@@ -139,7 +139,6 @@ echo "+--------------------------------------------\n"
 echo "Installation terminée."
 echo "+--------------------------------------------\n"
 
-echo "Configurez votre fichier host du système hôte pour faire pointer psi.primservices.localdomain vers 192.168.33.200"
 echo "** Lancez http://192.168.33.200 dans votre navigateur **"
 echo "** Lisez README.md pour plus d'informations **"
 
