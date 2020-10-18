@@ -186,7 +186,7 @@
       "totalRepository": "Nombres total de projets analysés",
       "totalSecurityFails": "Nombres total de failles de sécurités trouvés",
       "totalErrorsFound": "Nombre total de bogues trouvés",
-      "scannedFiles": "Nombres de fichiers scannés lors de la dernière analyse"
+      "scannedFiles": "Nombres total de fichiers scannés"
     }
   },
   "ResultTable": {
@@ -202,7 +202,8 @@
     "headersExpanded": {
       "fileName": "Nom du fichier :",
       "download": "Télécharger :"
-    }
+    },
+    "search": "Rechercher"
   },
   "stripeForm": {
     "cardName": "Nom",
@@ -221,5 +222,12 @@
       "agree": "Accepter",
       "disagree": "Refuser"
     }
+  },
+  "BarChart": {
+    "errorsFound": "Nbre d'erreurs",
+    "numberOfScans": "Nbre total de scan",
+    "scannedFiles": "Nbre de fichiers scannés",
+    "securityFails": "Nbre de failles",
+    "totalScannedFiles": "Total de fichiers scannés"
   }
 }
