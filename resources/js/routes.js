@@ -111,10 +111,6 @@ const Route = new VueRouter({
                 auth: undefined
             }
         },
-
-        
-
-        
     ]
 });
 

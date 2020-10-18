@@ -67,7 +67,7 @@ export default {
         .append("text")
         .text((d) => `${d[this.yKey]}`)
         .attr("x", (d) => this.xScale(d[this.xKey]))
-        .attr("y", (d) => this.dataMax / 0.45)
+        .attr("y", (d) => this.svgHeight / 1.4)
         .attr("font-family", "sans-serif")
         .attr("font-size", "8px")
         .attr("fill", "white")

@@ -57,6 +57,7 @@ export default {
       singleExpand: true,
       results: [],
       search: "",
+      newData: '',
     };
   },
   beforeMount() {
