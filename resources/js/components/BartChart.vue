@@ -18,6 +18,7 @@ export default {
     data: Array,
   },
   mounted() {
+    this.cleanSvg();
     this.drawSvgBartChart();
     this.svgWidth = d3
       .select("#bar-chart")
@@ -28,7 +29,20 @@ export default {
     chart: null,
     svgWidth: null,
   }),
+  watch: {
+    xKey() {
+      this.cleanSvg();
+      this.drawSvgBartChart();
+    },
+  },
   methods: {
+    cleanSvg() {
+      if (this.chart !== null) {
+        console.log("je passe par là");
+        this.chart.selectAll("*").remove();
+        d3.select("#bar-chart").selectAll("*").remove();
+      }
+    },
     drawSvgBartChart() {
       this.svgWidth = 200;
 
@@ -84,6 +98,8 @@ export default {
         .attr("dy", ".15em")
         .attr("font-size", "4px")
         .attr("transform", (d) => "rotate(-20)");
+
+      this.chart = svg;
     },
   },
   computed: {

@@ -284,10 +284,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.chart {
-  margin: 120px auto;
-  display: block;
-}
-</style>

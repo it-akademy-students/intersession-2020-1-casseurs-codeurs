@@ -24,8 +24,20 @@ export default {
   data: () => ({
     svgWidth: null,
     status: null,
+    chart: null,
   }),
+  watch: {
+    data() {
+      this.cleanSvg();
+      this.drawSvgBartChart();
+    },
+  },
   methods: {
+    cleanSvg() {
+      if (this.chart !== null) {
+        d3.select("#bar-chart").selectAll("*").remove();
+      }
+    },
     drawSvgGaugeChart() {
       switch (this.data) {
         case "clean":
@@ -126,6 +138,8 @@ export default {
         .style("text-decoration", "underline")
         .style("font-weight", "bold")
         .text(`${this.$tc("ResultTable.headers.status", 1)} ${this.data}`);
+
+      this.chart = svg;
     },
   },
   computed: {
