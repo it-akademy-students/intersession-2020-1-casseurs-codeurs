@@ -18,8 +18,6 @@ Dockerfile
 /nginx/*
 /mysql/*
 /docker/*
-/php/*
-/mysql/*
 cmd.md
 .vscode/*
 public/mix-manifest.json

@@ -40,9 +40,6 @@ Route::prefix('auth')->group(function () {
         // Get user info
         Route::get('user', 'AuthController@user');
 
-        // Route::post('user/{id}/analyzes', 'StatisticsController@totalPerUser');
-        // Route::post('user/{id}/repository', 'StatisticsController@repositoryPerUser');
-
         // Refresh the JWT Token
         Route::get('refresh', 'AuthController@refresh');
         // Logout user from application

@@ -182,18 +182,18 @@
     },
     "card": {
       "lastRepository": "Last project analyzed",
-      "numberOfScans": "Number of scans on this project",
-      "totalRepository": "Total number of projects analyzed",
-      "totalSecurityFails": "Total number of security holes found",
-      "totalErrorsFound": "Total number of bugs found",
-      "scannedFiles": "Number of files scanned during the last scan"
+      "numberOfScans": "Number of scans for this project",
+      "totalRepository": "Number of projects analyzed",
+      "totalSecurityFails": "Number of security holes found",
+      "totalErrorsFound": "Number of bugs found",
+      "scannedFiles": "Number of files scanned"
     }
   },
   "ResultTable": {
     "headers": {
       "name": "Repository name:",
-      "errorsFound": "Numbers of errors founds:",
-      "securityFalls": "Numbers of security holes founds:",
+      "errorsFound": "Numbers of errors found:",
+      "securityFalls": "Numbers of security holes found:",
       "scannedFiles": "Numbers of scanned files:",
       "numberOfScans": "Numbers of scans:",
       "totalScannedFiles": "Total of scanned files:",
@@ -202,7 +202,8 @@
     "headersExpanded": {
       "fileName": "File name:",
       "download": "Download:"
-    }
+    },
+    "search": "Search"
   },
   "stripeForm": {
     "cardName": "Name on card",
@@ -213,7 +214,7 @@
   },
   "repoError": {
     "email": "Valid email is required",
-    "repo": "Valid github adress is required"
+    "repo": "Valid github address is required"
   },
   "cookies": {
     "text": "We use cookies to store and/or access non-sensitive personal information stored on your device (unique identifiers, session, etc.), which we process in order to carry out site usage statistics, personalize the content and measure the results. performance, produce audience data, develop and improve the application.Click the 'Agree' button to consent to these uses on this site.",
@@ -221,5 +222,12 @@
       "agree": "Agree",
       "disagree": "Disagree"
     }
+  },
+  "BarChart": {
+    "errorsFound": "Num of bugs",
+    "numberOfScans": "Num of scans",
+    "scannedFiles": "Num of scanned files",
+    "securityFails": "Num of security holes",
+    "totalScannedFiles": "Total scanned files"
   }
 }

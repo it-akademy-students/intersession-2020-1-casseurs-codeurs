@@ -70,7 +70,7 @@
                           {{ $tc("dashboard.card.totalRepository", 1) }}
                         </div>
                         <v-icon color="colorPrimaryLight" size="25"
-                          >mdi-file-code</v-icon
+                          >mdi-source-repository</v-icon
                         >
                       </v-row>
                       <p
@@ -131,18 +131,53 @@
                     <v-card-text>
                       <v-row justify="space-between">
                         <div class="colorPrimaryLight--text font-weight-black">
-                          {{ $tc("dashboard.card.lastRepository", 1) }}
+                          {{ $tc("dashboard.card.scannedFiles", 1) }}
                         </div>
                         <v-icon color="colorPrimaryLight" size="25"
-                          >mdi-source-repository</v-icon
+                          >mdi-file-code</v-icon
                         >
                       </v-row>
                       <p
                         class="display-1 text--primary colorPrimaryLight--text font-weight-black mt-4"
                       >
-                        {{ lastRepository }}
+                        {{ scannedFiles }}
                       </p>
                     </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row>
+                <!-- bar chart -->
+                <v-col cols="12" md="6" v-if="this.barChartData.length > 0">
+                  <v-card
+                    color="colorPrimaryUltraLight"
+                    class="mx-auto"
+                    min-height="200px"
+                  >
+                    <bart-chart
+                      :title="`${$tc('dashboard.card.lastRepository', 1)}: ${
+                        this.lastRepository
+                      }`"
+                      xKey="name"
+                      yKey="amount"
+                      :data="barChartData"
+                    />
+                  </v-card>
+                </v-col>
+
+                <!-- gauge chart -->
+                <v-col cols="12" md="6" v-if="this.GaugeChartData.length > 0">
+                  <v-card
+                    color="colorPrimaryUltraLight"
+                    class="mx-auto"
+                    min-height="200px"
+                  >
+                    <gauge-chart
+                      :title="`${$tc('dashboard.card.lastRepository', 1)}: ${
+                        this.lastRepository
+                      }`"
+                      :data="GaugeChartData"
+                    />
                   </v-card>
                 </v-col>
               </v-row>
@@ -168,27 +203,34 @@
 
 <script>
 import ResultTable from "@/js/components/ResultTable";
-
+import BartChart from "@/js/components/BartChart";
+import GaugeChart from "@/js/components/GaugeChart";
 export default {
   name: "Dashboard",
   components: {
     ResultTable,
+    BartChart,
+    GaugeChart,
   },
-  data() {
-    return {
-      dialog: false,
-      values: [423, 446, 675, 510, 590, 610, 760],
-      lastRepository: "",
-      numberOfScans: "",
-      scannedFiles: "",
-      totalErrorsFound: "",
-      totalRepository: "",
-      totalSecurityFails: "",
-    };
+  data: () => ({
+    dialog: false,
+    values: [423, 446, 675, 510, 590, 610, 760],
+    lastRepository: "",
+    numberOfScans: "",
+    scannedFiles: "",
+    totalErrorsFound: "",
+    totalRepository: "",
+    totalSecurityFails: "",
+    barChartData: [],
+    GaugeChartData: "",
+  }),
+  beforeMount() {
+    this.getUserRepository();
   },
   methods: {
     initDashboard() {
       this.getUsersAnalizes();
+      this.getUserRepository();
       this.dialog = true;
     },
     getUsersAnalizes() {
@@ -208,6 +250,32 @@ export default {
           this.totalRepository = res.data.data.totalRepository;
           this.scannedFiles = res.data.data.scannedFiles;
           this.lastRepository = res.data.data.lastRepository;
+        })
+        .catch((err) => {
+          console.log({ err });
+        });
+    },
+    getUserRepository() {
+      let url = `/users/${this.$auth.user().id}/repository`;
+      let header = {
+        headers: {
+          Authorization: `bearer ${this.$auth.token()}`,
+        },
+      };
+      axios
+        .get(url, header)
+        .then((res) => {
+          const last_repo = [...res.data.data].pop();
+          this.GaugeChartData = last_repo.status;
+          delete last_repo.name;
+          delete last_repo.status;
+          for (let i in last_repo) {
+            this.barChartData.push({
+              name: this.$tc(`BarChart.${i}`, 1),
+              amount: last_repo[i],
+            });
+          }
+          return this.barChartData, this.GaugeChartData;
         })
         .catch((err) => {
           console.log({ err });

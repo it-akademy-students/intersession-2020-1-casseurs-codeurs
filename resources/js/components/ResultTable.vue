@@ -8,8 +8,19 @@
     :sort-desc="[true, true]"
     item-key="name"
     show-expand
+    :search="search"
     class="elevation-1 colorPrimaryUltraLight"
   >
+    <template v-slot:top>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        :label="$tc('ResultTable.search', 1)"
+        class="mx-4"
+        color="colorSecondary"
+      ></v-text-field>
+    </template>
+
     <template v-slot:item.status="{ item }">
       <v-chip small :color="getColor(item.status)" class="caption my-2">{{
         item.status
@@ -45,6 +56,8 @@ export default {
       expanded: [],
       singleExpand: true,
       results: [],
+      search: "",
+      newData: "",
     };
   },
   beforeMount() {
