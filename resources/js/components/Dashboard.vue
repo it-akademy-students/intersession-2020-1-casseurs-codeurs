@@ -249,7 +249,7 @@ export default {
           this.numberOfScans = res.data.data.numberOfScans;
           this.totalRepository = res.data.data.totalRepository;
           this.scannedFiles = res.data.data.scannedFiles;
-          this.lastRepository = res.data.data.lastRepository;
+          // this.lastRepository = res.data.data.lastRepository;
         })
         .catch((err) => {
           console.log({ err });
@@ -267,6 +267,7 @@ export default {
         .then((res) => {
           const last_repo = [...res.data.data].pop();
           this.GaugeChartData = last_repo.status;
+          this.lastRepository = last_repo.name;
           delete last_repo.name;
           delete last_repo.status;
           for (let i in last_repo) {
@@ -275,7 +276,7 @@ export default {
               amount: last_repo[i],
             });
           }
-          return this.barChartData, this.GaugeChartData;
+          return this.barChartData, this.GaugeChartData, this.lastRepository;
         })
         .catch((err) => {
           console.log({ err });
